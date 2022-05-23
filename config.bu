@@ -12,6 +12,11 @@ storage:
       contents:
         inline: |
           export EDITOR=micro
+    - path: /etc/bashrc
+      overwrite: false
+      append:
+        - inline: |
+            export PS1="\n\e[01;31m\h \e[01;36m\w\n\e[0;32m➜\e[m "
   links:
     - path: /etc/localtime
       target: ../usr/share/zoneinfo/Europe/Madrid
@@ -22,11 +27,11 @@ passwd:
         - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDwZrgt8W9uGndgD2aoMOjN0lhvFYsYzfietr5gu5lUV andrey@sitnik.ru
 systemd:
   units:
-    - name: rpm-ostree-tools.service
+    - name: rpm-ostree-micro.service
       enabled: true
       contents: |
         [Unit]
-        Description=Replace nano to micro
+        Description=Install micro
         Wants=network-online.target
         After=network-online.target
         Before=zincati.service
