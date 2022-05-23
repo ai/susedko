@@ -35,7 +35,7 @@ config.bu: builder/node_modules
 
 config.ign: config.bu
 	podman run --rm -i \
-	  quay.io/coreos/butane:release < ./config.bu > ./config.ign
+	  quay.io/coreos/butane:release --strict < ./config.bu > ./config.ign
 
 validate_config: config.ign
 	podman run --rm -i \
