@@ -1,6 +1,8 @@
 # Sitnik’s Home Server
 
-Fedora CoreOS ignition config for my home server.
+[Fedora CoreOS] ignition config for my home server.
+
+[Fedora CoreOS]: https://docs.fedoraproject.org/en-US/fedora-coreos/getting-started/
 
 
 ## Development
