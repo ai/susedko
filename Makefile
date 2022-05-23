@@ -21,7 +21,7 @@ demo: config.ign $(qemu_image)
 	  -nic user,model=virtio,hostfwd=tcp::2222-:22
 
 shell:
-	ssh -p 2222 core@localhost
+	ssh -o "StrictHostKeyChecking=no" -p 2222 core@localhost
 
 # Utils
 
