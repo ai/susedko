@@ -5,12 +5,12 @@ qemu_image = $(images)/fedora-coreos-qemu.qcow2
 
 # Main
 
-.PHONY: main clean demo shell
+.PHONY: main clean demo shell config.bu
 
 main: config.ign
 
 clean:
-	rm -f config.ign
+	rm -Rf config.ign builder/node_modules
 	rm -Rf $(images)
 	podman rmi --all
 
@@ -24,6 +24,14 @@ shell:
 	ssh -o "StrictHostKeyChecking=no" -p 2222 core@localhost
 
 # Utils
+
+builder/node_modules:
+	podman run --rm -v "./:/workdir" -w /workdir/builder \
+	  docker.io/node:18-alpine npm install
+
+config.bu: builder/node_modules
+	podman run --rm -v "./:/workdir" -w /workdir/builder \
+	  docker.io/node:18-alpine node build.js
 
 config.ign: config.bu
 	podman run --rm -i \

@@ -1,0 +1,7 @@
+storage:
+  files:
+    - path: /etc/hostname
+      mode: 0o644
+      contents:
+        inline: |
+          susedko

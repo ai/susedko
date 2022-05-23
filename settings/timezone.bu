@@ -1,0 +1,4 @@
+storage:
+  links:
+    - path: /etc/localtime
+      target: ../usr/share/zoneinfo/Europe/Madrid

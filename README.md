@@ -10,7 +10,7 @@
 To test locally or to install image to server’s SD card you need:
 
 ```sh
-sudo dnf install make podman coreos-installer qemu-system-x86-core
+sudo dnf install make podman qemu-system-x86-core
 ```
 
 Run in one console:

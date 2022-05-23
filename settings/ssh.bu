@@ -1,0 +1,5 @@
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDwZrgt8W9uGndgD2aoMOjN0lhvFYsYzfietr5gu5lUV andrey@sitnik.ru
