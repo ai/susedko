@@ -13,18 +13,18 @@ To test locally or to install image to server’s SD card you need:
 sudo dnf install make podman qemu-system-x86-core
 ```
 
-Run in one console:
+Run in one terminal:
 
 ```sh
 make demo
 ```
 
-Press <kbd>Ctrl + A</kbd> <kbd>X</kbd> to exit demo shell.
-
-And then run in another console:
+And then run in another terminal:
 
 ```sh
 make shell
 ```
+
+Press <kbd>Ctrl + A</kbd> <kbd>X</kbd> to exit demo server shell.
 
 Call `make clean` to remove all temporary files from the dir and system.
