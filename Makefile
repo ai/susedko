@@ -5,9 +5,9 @@ qemu_image = $(images)/fedora-coreos-qemu.qcow2
 
 # Main
 
-.PHONY: main clean demo shell config.bu
+.PHONY: clean demo shell test config.bu
 
-main: config.ign
+test: config.ign
 
 clean:
 	rm -Rf config.ign builder/node_modules
