@@ -12,6 +12,9 @@ storage:
       contents:
         inline: |
           export EDITOR=micro
+  links:
+    - path: /etc/localtime
+      target: ../usr/share/zoneinfo/Europe/Madrid
 passwd:
   users:
     - name: core
