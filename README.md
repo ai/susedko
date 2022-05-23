@@ -9,11 +9,22 @@
 
 To test locally or to install image to server’s SD card you need:
 
-* `podman`
-* `make`
+```sh
+sudo dnf install make podman coreos-installer qemu-system-x86-core
+```
 
-Run:
+Run in one console:
 
 ```sh
-make
+make demo
 ```
+
+Press <kbd>Ctrl + A</kbd> <kbd>X</kbd> to exit demo shell.
+
+And then run in another console:
+
+```sh
+make shell
+```
+
+Call `make clean` to remove all temporary files from the dir and system.
