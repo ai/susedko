@@ -7,7 +7,7 @@ qemu_image = $(images)/fedora-coreos-qemu.qcow2
 
 .PHONY: clean demo shell test config.bu
 
-test: config.ign
+test: validate_config
 
 clean:
 	rm -Rf config.ign builder/node_modules
@@ -36,6 +36,10 @@ config.bu: builder/node_modules
 config.ign: config.bu
 	podman run --rm -i \
 	  quay.io/coreos/butane:release < ./config.bu > ./config.ign
+
+validate_config: config.ign
+	podman run --rm -i \
+	  quay.io/coreos/ignition-validate:release - < ./config.ign
 
 $(images):
 	mkdir -p $(images)
