@@ -4,13 +4,14 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-User=langtool
-Group=langtool
-TimeoutStartSec=0
+; User=langtool
+; Group=langtool
+Restart=on-failure
 ExecStartPre=-/bin/podman kill langtool
 ExecStartPre=-/bin/podman rm langtool
 ExecStartPre=/bin/podman pull docker.io/erikvl87/languagetool
 ExecStart=/bin/podman run -p 8010:8010 --name langtool docker.io/erikvl87/languagetool
+ExecStop=/usr/bin/podman stop -t 10 langtool
 
 [Install]
 WantedBy=multi-user.target
