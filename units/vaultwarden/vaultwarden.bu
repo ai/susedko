@@ -1,0 +1,19 @@
+systemd:
+  units:
+    - name: vaultwarden.service
+      enabled: true
+passwd:
+  users:
+    - name: vaultwarden
+      primary_group: vaultwarden
+      shell: /bin/false
+  groups:
+    - name: vaultwarden
+storage:
+  directories:
+    - path: /media/warden
+      mode: 0o600
+      user:
+        name: vaultwarden
+      group:
+        name: vaultwarden
