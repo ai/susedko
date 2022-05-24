@@ -6,7 +6,6 @@ passwd:
   users:
     - name: langtool
       primary_group: langtool
-      no_create_home: true
       shell: /bin/false
   groups:
     - name: langtool
