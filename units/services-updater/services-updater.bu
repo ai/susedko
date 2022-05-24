@@ -1,0 +1,6 @@
+systemd:
+  units:
+    - name: services-updater.service
+      enabled: true
+    - name: services-updater.timer
+      enabled: true
