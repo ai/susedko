@@ -4,6 +4,8 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
+User=langtool
+Group=langtool
 TimeoutStartSec=0
 ExecStartPre=-/bin/podman kill langtool
 ExecStartPre=-/bin/podman rm langtool

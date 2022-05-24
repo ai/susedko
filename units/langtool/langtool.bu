@@ -2,3 +2,8 @@ systemd:
   units:
     - name: langtool.service
       enabled: true
+passwd:
+  users:
+    - name: langtool
+  groups:
+    - name: langtool
