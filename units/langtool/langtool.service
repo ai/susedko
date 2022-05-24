@@ -1,0 +1,14 @@
+[Unit]
+Description=LanguageTool Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/bin/podman kill langtool
+ExecStartPre=-/bin/podman rm langtool
+ExecStartPre=/bin/podman pull docker.io/erikvl87/languagetool
+ExecStart=/bin/podman run -p 8010:8010 --name langtool docker.io/erikvl87/languagetool
+
+[Install]
+WantedBy=multi-user.target
