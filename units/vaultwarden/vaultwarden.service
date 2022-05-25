@@ -10,7 +10,12 @@ Restart=on-failure
 ExecStartPre=-/bin/podman kill vaultwarden
 ExecStartPre=-/bin/podman rm vaultwarden
 ExecStartPre=/bin/podman pull docker.io/vaultwarden/server:alpine
-ExecStart=/bin/podman run -e SIGNUPS_ALLOWED=false -v /media/warden/:/data/ -p 80:8011 --name vaultwarden docker.io/vaultwarden/server:alpine
+ExecStart=/bin/podman run \
+          -e SIGNUPS_ALLOWED=false \
+          -v /media/warden/:/data/ \
+          -p 80:8011 \
+          --name vaultwarden \
+          docker.io/vaultwarden/server:alpine
 ExecStop=/usr/bin/podman stop -t 10 vaultwarden
 
 [Install]

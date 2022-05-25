@@ -10,7 +10,12 @@ Restart=on-failure
 ExecStartPre=-/bin/podman kill langtool
 ExecStartPre=-/bin/podman rm langtool
 ExecStartPre=/bin/podman pull docker.io/erikvl87/languagetool
-ExecStart=/bin/podman run -p 8010:8010 -e langtool_languageModel=/ngrams -v /media/langtool/ngrams:/ngrams --name langtool docker.io/erikvl87/languagetool
+ExecStart=/bin/podman run \
+          -p 8010:8010 \
+          -e langtool_languageModel=/ngrams \
+          -v /media/langtool/ngrams:/ngrams \
+          --name langtool \
+          docker.io/erikvl87/languagetool
 ExecStop=/usr/bin/podman stop -t 10 langtool
 
 [Install]
