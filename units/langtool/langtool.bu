@@ -12,6 +12,7 @@ passwd:
 storage:
   directories:
     - path: /media/langtool/ngrams
+      overwrite: false
       mode: 0o644
       user:
         name: langtool

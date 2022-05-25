@@ -12,6 +12,7 @@ passwd:
 storage:
   directories:
     - path: /media/warden
+      overwrite: false
       mode: 0o600
       user:
         name: vaultwarden
