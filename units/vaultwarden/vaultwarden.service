@@ -15,6 +15,7 @@ ExecStart=/bin/podman run \
           -v /media/warden/:/data/ \
           -p 80:8011 \
           --name vaultwarden \
+          --label "io.containers.autoupdate=image" \
           docker.io/vaultwarden/server:alpine
 ExecStop=/usr/bin/podman stop -t 10 vaultwarden
 

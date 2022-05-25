@@ -15,6 +15,7 @@ ExecStart=/bin/podman run \
           -e langtool_languageModel=/ngrams \
           -v /media/langtool/ngrams:/ngrams \
           --name langtool \
+          --label "io.containers.autoupdate=image" \
           docker.io/erikvl87/languagetool
 ExecStop=/usr/bin/podman stop -t 10 langtool
 
