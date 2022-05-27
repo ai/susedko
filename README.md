@@ -1,4 +1,4 @@
-# Sitnik’s Home Server
+# Susedko Home Server
 
 [Fedora CoreOS] ignition config for my home server.
 
