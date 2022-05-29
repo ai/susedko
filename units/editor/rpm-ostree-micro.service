@@ -1,5 +1,5 @@
 [Unit]
-Description=Install micro
+Description=Micro Installer
 Wants=network-online.target
 After=network-online.target
 Before=zincati.service

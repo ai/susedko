@@ -1,5 +1,5 @@
 [Unit]
-Description=Podman auto-update service
+Description=Containers auto-update
 Wants=network.target
 After=network-online.target
 
