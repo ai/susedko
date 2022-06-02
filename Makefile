@@ -23,6 +23,12 @@ demo: config.ign $(qemu_image)
 shell:
 	ssh -o "StrictHostKeyChecking=no" -p 2222 ai@localhost
 
+flash: config.ign
+	sudo podman run --pull=always --privileged --rm \
+	  -v /dev:/dev -v /run/udev:/run/udev -v .:/data -w /data \
+	  quay.io/coreos/coreos-installer:release \
+	  install /dev/sdb -i ./config.ign
+
 # Utils
 
 builder/node_modules:
