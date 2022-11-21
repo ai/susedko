@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
+      - name: Print Podman versions
+        run: podman -v
       - name: Run tests
         run: make test
       - name: Print Butane config
