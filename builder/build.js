@@ -22,6 +22,7 @@ function merge(base, add, path) {
 
 function processFile(path) {
   let parsed = parse(readFileSync(path).toString())
+  if (parsed.disabled) return
   if (parsed.systemd && parsed.systemd.units) {
     for (let unit of parsed.systemd.units) {
       unit.contents = readFileSync(join(path, '..', unit.name)).toString()

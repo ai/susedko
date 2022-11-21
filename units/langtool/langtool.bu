@@ -1,3 +1,4 @@
+disabled: true
 systemd:
   units:
     - name: langtool.service
