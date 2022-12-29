@@ -2,6 +2,6 @@
   "private": "true",
   "type": "module",
   "dependencies": {
-    "yaml": "^2.1.3"
+    "yaml": "^2.2.0"
   }
 }
