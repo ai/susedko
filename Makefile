@@ -10,7 +10,7 @@ qemu_image = $(images)/fedora-coreos-qemu.qcow2
 test: validate_config
 
 clean:
-	rm -Rf config.ign builder/node_modules
+	rm -Rf config.ign config.bu builder/node_modules
 	rm -Rf $(images)
 	podman rmi --all --force
 
