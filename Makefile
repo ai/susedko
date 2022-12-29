@@ -12,7 +12,7 @@ test: validate_config
 clean:
 	rm -Rf config.ign builder/node_modules
 	rm -Rf $(images)
-	podman rmi --all
+	podman rmi --all --force
 
 demo: config.ign $(qemu_image)
 	qemu-kvm -m 2048 -cpu host -nographic -snapshot \
@@ -27,16 +27,16 @@ flash: config.ign
 	sudo podman run --pull=always --privileged --rm \
 	  -v /dev:/dev -v /run/udev:/run/udev -v .:/data -w /data \
 	  quay.io/coreos/coreos-installer:release \
-	  install /dev/sdb -i ./config.ign
+	  install /dev/sda -i ./config.ign
 
 # Utils
 
 builder/node_modules:
-	podman run --rm -v "./:/workdir" -w /workdir/builder \
+	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:18-alpine npm install
 
 config.bu: builder/node_modules
-	podman run --rm -v "./:/workdir" -w /workdir/builder \
+	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:18-alpine node build.js
 
 config.ign: config.bu
