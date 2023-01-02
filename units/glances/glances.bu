@@ -1,0 +1,11 @@
+systemd:
+  units:
+    - name: glances.service
+      enabled: true
+passwd:
+  users:
+    - name: glances
+      primary_group: glances
+      shell: /bin/false
+  groups:
+    - name: glances

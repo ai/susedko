@@ -1,0 +1,24 @@
+[Unit]
+Description=Glances Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=glances
+Group=glances
+Restart=on-failure
+ExecStartPre=-/bin/podman kill glances
+ExecStartPre=-/bin/podman rm glances
+ExecStartPre=/bin/podman pull docker.io/nicolargo/glances
+ExecStart=/bin/podman run \
+          -d --restart="always" \
+          -p 61208-61209:61208-61209 \
+          -e GLANCES_OPT="-w" \
+          --pid host \
+          --name glances \
+          --label "io.containers.autoupdate=image" \
+          docker.io/nicolargo/glances
+ExecStop=/usr/bin/podman stop -t 10 status
+
+[Install]
+WantedBy=multi-user.target
