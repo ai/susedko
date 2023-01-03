@@ -1,6 +1,6 @@
 import { readFileSync, rmSync, readdirSync, writeFileSync } from 'node:fs'
+import { join, relative, basename } from 'node:path'
 import { parse, stringify } from 'yaml'
-import { join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = join(fileURLToPath(import.meta.url), '..', '..')
@@ -20,14 +20,29 @@ function merge(base, add, path) {
   }
 }
 
+function read(dir, file) {
+  return readFileSync(join(dir, file)).toString()
+}
+
 function processFile(path) {
+  let dir = join(path, '..')
   let parsed = parse(readFileSync(path).toString())
   if (parsed.disabled) return
-  if (parsed.systemd && parsed.systemd.units) {
-    for (let unit of parsed.systemd.units) {
-      unit.contents = readFileSync(join(path, '..', unit.name)).toString()
+
+  for (let unit of parsed.systemd?.units ?? []) {
+    if (!unit.contents) {
+      unit.contents = read(dir, unit.name)
     }
   }
+
+  for (let file of parsed.storage?.files ?? []) {
+    if (!file.contents && !file.append) {
+      file.contents = {
+        inline: read(dir, basename(file.path))
+      }
+    }
+  }
+
   merge(config, parsed, relative(ROOT, path))
 }
 
