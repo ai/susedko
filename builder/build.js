@@ -20,13 +20,13 @@ function merge(base, add, path) {
   }
 }
 
-function read(dir, file) {
-  return readFileSync(join(dir, file)).toString()
+function read(...parts) {
+  return readFileSync(join(...parts)).toString()
 }
 
 function processFile(path) {
   let dir = join(path, '..')
-  let parsed = parse(readFileSync(path).toString())
+  let parsed = parse(read(path))
   if (parsed.disabled) return
 
   for (let unit of parsed.systemd?.units ?? []) {
