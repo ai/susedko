@@ -2,3 +2,8 @@ systemd:
   units:
     - name: avahi.service
       enabled: true
+storage:
+  files:
+    - path: /var/bin/add-local-domain.sh
+      mode: 0o555
+

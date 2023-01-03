@@ -1,5 +1,5 @@
 [Unit]
-Description=Micro Installer
+Description=Avahi mDNS Server
 Wants=network-online.target
 After=network-online.target
 Before=zincati.service
@@ -8,7 +8,7 @@ ConditionPathExists=!/var/lib/%N.stamp
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/bin/rpm-ostree install --apply-live --allow-inactive avahi
+ExecStart=/usr/bin/rpm-ostree install --apply-live --allow-inactive avahi avahi-tools
 ExecStart=/bin/touch /var/lib/%N.stamp
 
 [Install]
