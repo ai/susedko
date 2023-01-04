@@ -11,10 +11,10 @@ passwd:
     - name: glances
 storage:
   files:
-    - path: /usr/local/etc/sites/status.local.conf
+    - path: /usr/local/etc/sites/susedko.local.conf
       mode: 0o444
       user:
-        name: avahi
+        name: domains
       group:
-        name: avahi
+        name: domains
 

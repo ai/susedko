@@ -9,15 +9,17 @@ Group=glances
 Restart=on-failure
 ExecStartPre=-/bin/podman kill glances
 ExecStartPre=-/bin/podman rm glances
-ExecStartPre=/bin/podman pull docker.io/nicolargo/glances
+ExecStartPre=/bin/podman pull docker.io/nicolargo/glances:alpine-latest-full
 ExecStart=/bin/podman run \
           --read-only \
           -p 61208-61209:61208-61209 \
           -e GLANCES_OPT="-w" \
+          -v /var/run/docker.sock:/var/run/docker.sock:ro \
           --pid host \
+          --network host \
           --name glances \
           --label "io.containers.autoupdate=image" \
-          docker.io/nicolargo/glances
+          docker.io/nicolargo/glances:alpine-latest-full
 ExecStop=/usr/bin/podman stop -t 10 status
 
 [Install]
