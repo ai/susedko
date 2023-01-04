@@ -9,3 +9,14 @@ passwd:
       shell: /bin/false
   groups:
     - name: glances
+storage:
+  files:
+    - path: /usr/local/etc/domains/status.local
+      mode: 0o444
+      user:
+        name: avahi
+      group:
+        name: avahi
+      contents:
+        inline: |
+          61209

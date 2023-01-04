@@ -1,0 +1,13 @@
+[Unit]
+Description=Avahi Aliases Publisher
+After=avahi-installer.service avahi-daemon.service
+Requires=avahi-installer.service
+
+[Service]
+User=avahi
+Group=avahi
+Restart=on-failure
+ExecStart=/usr/local/bin/avahi-publisher.sh
+
+[Install]
+WantedBy=multi-user.target
