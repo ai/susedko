@@ -6,6 +6,8 @@ systemd:
       enabled: true
     - name: balancer.service
       enabled: true
+    - name: port80.service
+      enabled: true
 passwd:
   users:
     - name: domains
