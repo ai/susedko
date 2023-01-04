@@ -11,6 +11,7 @@ ExecStartPre=-/bin/podman kill glances
 ExecStartPre=-/bin/podman rm glances
 ExecStartPre=/bin/podman pull docker.io/nicolargo/glances
 ExecStart=/bin/podman run \
+          --read-only \
           -p 61208-61209:61208-61209 \
           -e GLANCES_OPT="-w" \
           --pid host \
