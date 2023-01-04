@@ -11,12 +11,10 @@ passwd:
     - name: glances
 storage:
   files:
-    - path: /usr/local/etc/domains/status.local
+    - path: /usr/local/etc/sites/status.local.conf
       mode: 0o444
       user:
         name: avahi
       group:
         name: avahi
-      contents:
-        inline: |
-          61209
+

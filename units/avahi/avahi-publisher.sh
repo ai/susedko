@@ -2,9 +2,12 @@
 
 IP=$(ip route get 1 | awk '{print $7;exit}')
 
-for domain in $(ls /usr/local/etc/domains); do
-  if [[ $domain == *\.local ]]; then
-    avahi-publish -a $domain -R $IP &
+for file in $(ls /usr/local/etc/sites); do
+  if [[ $file == *\.local.conf ]]; then
+    domain="$(basename $file .conf)"
+    if [[ $file != $HOSTNAME]]; then
+      avahi-publish -a $domain -R $IP &
+    fi
   fi
 done
 
