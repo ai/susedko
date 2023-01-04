@@ -1,0 +1,23 @@
+[Unit]
+Description=Load Balancer Server
+Wants=network-online.target
+
+[Service]
+User=domains
+Group=domains
+Restart=on-failure
+ExecStartPre=-/bin/podman kill balancer
+ExecStartPre=-/bin/podman rm balancer
+ExecStartPre=/bin/podman pull docker.io/nginxinc/nginx-unprivileged:1-alpine
+ExecStart=/bin/podman run \
+          --read-only \
+          --network host \
+          -p 8080:8080 \
+          -v /usr/local/etc/sites/:/etc/nginx/conf.d/:ro \
+          --name balancer \
+          --label "io.containers.autoupdate=image" \
+          docker.io/nginxinc/nginx-unprivileged:1-alpine
+ExecStop=/usr/bin/podman stop -t 10 status
+
+[Install]
+WantedBy=multi-user.target

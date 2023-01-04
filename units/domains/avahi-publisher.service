@@ -4,8 +4,8 @@ After=avahi-installer.service avahi-daemon.service
 Requires=avahi-installer.service
 
 [Service]
-User=avahi
-Group=avahi
+User=domains
+Group=domains
 Restart=on-failure
 ExecStart=/usr/local/bin/avahi-publisher.sh
 

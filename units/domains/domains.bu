@@ -1,0 +1,32 @@
+systemd:
+  units:
+    - name: avahi-installer.service
+      enabled: true
+    - name: avahi-publisher.service
+      enabled: true
+    - name: balancer.service
+      enabled: true
+passwd:
+  users:
+    - name: domains
+      primary_group: domains
+      shell: /bin/false
+  groups:
+    - name: domains
+storage:
+  files:
+    - path: /usr/local/bin/avahi-publisher.sh
+      overwrite: false
+      mode: 0o544
+      user:
+        name: domains
+      group:
+        name: domains
+  directories:
+    - path: /usr/local/etc/sites
+      overwrite: false
+      mode: 0o555
+      user:
+        name: domains
+      group:
+        name: domains
