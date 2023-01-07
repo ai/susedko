@@ -7,6 +7,7 @@ Wants=network-online.target
 User=vaultwarden
 Group=vaultwarden
 Restart=on-failure
+Environment=REGISTRY_AUTH_FILE="/usr/local/etc/docker-auth.json"
 ExecStartPre=-/bin/podman kill vaultwarden
 ExecStartPre=-/bin/podman rm vaultwarden
 ExecStartPre=/bin/podman pull docker.io/vaultwarden/server:alpine

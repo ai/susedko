@@ -7,6 +7,7 @@ Wants=network-online.target
 User=glances
 Group=glances
 Restart=on-failure
+Environment=REGISTRY_AUTH_FILE="/usr/local/etc/docker-auth.json"
 ExecStartPre=-/bin/podman kill glances
 ExecStartPre=-/bin/podman rm glances
 ExecStartPre=/bin/podman pull docker.io/nicolargo/glances:alpine-latest-full
