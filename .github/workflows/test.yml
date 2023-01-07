@@ -15,6 +15,8 @@ jobs:
         run: podman -v
       - name: Fake Docker Hub auth
         run: echo "{}" > units/dockerhub/docker-auth.json
+      - name: Fake dhparam.pem
+        run: echo "" > units/domains/dhparam.pem
       - name: Run tests
         run: make test
       - name: Print Butane config
