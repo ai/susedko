@@ -14,7 +14,10 @@ ExecStart=/bin/podman run \
           --read-only \
           --network host \
           -p 8080:8080 \
-          -v /usr/local/etc/sites/:/etc/nginx/conf.d/:ro \
+          -p 8443:8443 \
+          -v /usr/local/etc/ssl/:/usr/local/etc/ssl/:ro \
+          -v /usr/local/etc/nginx/:/usr/local/etc/nginx/:ro \
+          -v /usr/local/etc/nginx/conf.d/:/etc/nginx/conf.d/:ro \
           --name balancer \
           --label "io.containers.autoupdate=image" \
           docker.io/nginxinc/nginx-unprivileged:1-alpine

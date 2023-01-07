@@ -1,5 +1,5 @@
 [Unit]
-Description=Port 80
+Description=HTTP/HTTPS Ports for Non-Root
 Wants=network-online.target
 After=network-online.target
 Before=zincati.service
@@ -8,7 +8,10 @@ ConditionPathExists=!/var/lib/%N.stamp
 [Service]
 Type=oneshot
 RemainAfterExit=yes
+ExecStart=iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8443
 ExecStart=iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+ExecStart=iptables -t nat -A OUTPUT -o lo -p tcp --dport 443 -j REDIRECT --to-port 8443
+ExecStart=iptables -t nat -A OUTPUT -o lo -p tcp --dport 80 -j REDIRECT --to-port 8080
 ExecStart=/bin/touch /var/lib/%N.stamp
 
 [Install]

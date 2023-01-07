@@ -6,7 +6,7 @@ systemd:
       enabled: true
     - name: balancer.service
       enabled: true
-    - name: port80.service
+    - name: ports.service
       enabled: true
 passwd:
   users:
@@ -18,15 +18,63 @@ passwd:
 storage:
   files:
     - path: /usr/local/bin/avahi-publisher.sh
-      overwrite: false
       mode: 0o544
       user:
         name: domains
       group:
         name: domains
+    - path: /usr/local/etc/nginx/conf.d/default.conf
+      mode: 0o444
+      user:
+        name: domains
+      group:
+        name: domains
+    - path: /usr/local/etc/nginx/ssl.conf
+      mode: 0o444
+      user:
+        name: domains
+      group:
+        name: domains
+    - path: /usr/local/etc/nginx/proxy.conf
+      mode: 0o444
+      user:
+        name: domains
+      group:
+        name: domains
+    - path: /usr/local/etc/nginx/dhparam.pem
+      mode: 0o400
+      user:
+        name: domains
+      group:
+        name: domains
+    - path: /etc/pki/ca-trust/source/anchors/ssl.crt
+      mode: 0o444
+    - path: /usr/local/etc/ssl/ssl.crt
+      mode: 0o444
+      user:
+        name: domains
+      group:
+        name: domains
+    - path: /usr/local/etc/ssl/ssl.key
+      mode: 0o400
+      user:
+        name: domains
+      group:
+        name: domains
   directories:
+    - path: /usr/local/etc/nginx
+      mode: 0o555
+      user:
+        name: domains
+      group:
+        name: domains
+    - path: /usr/local/etc/ssl
+      mode: 0o555
+      user:
+        name: domains
+      group:
+        name: domains
     - path: /usr/local/etc/sites
-      overwrite: false
       mode: 0o555
       user:
         name: domains
