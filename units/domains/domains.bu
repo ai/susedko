@@ -47,8 +47,6 @@ storage:
         name: domains
       group:
         name: domains
-    - path: /etc/pki/ca-trust/source/anchors/ssl.crt
-      mode: 0o444
     - path: /usr/local/etc/ssl/ssl.crt
       mode: 0o444
       user:
@@ -61,6 +59,9 @@ storage:
         name: domains
       group:
         name: domains
+  links:
+    - path: /etc/pki/ca-trust/source/anchors/ssl.pem
+      target: /usr/local/etc/ssl/ssl.crt
   directories:
     - path: /usr/local/etc/nginx
       mode: 0o555
