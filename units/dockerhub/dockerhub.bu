@@ -1,0 +1,6 @@
+storage:
+  files:
+    - path: /usr/local/shared/docker-auth.json
+      mode: 0o444
+    - path: /etc/profile.d/containers-auth.sh
+      mode: 0o444

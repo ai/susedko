@@ -18,7 +18,7 @@ demo: config.ign $(qemu_image)
 	qemu-kvm -m 2048 -cpu host -nographic -snapshot \
 	  -drive if=virtio,file=$(qemu_image) \
 	  -fw_cfg name=opt/com.coreos/config,file=./config.ign \
-	  -nic user,model=virtio,hostfwd=tcp::2222-:22,hostfwd=tcp::8080-:80
+	  -nic user,model=virtio,hostfwd=tcp::2222-:22
 
 shell:
 	ssh -o "StrictHostKeyChecking=no" -p 2222 ai@localhost
@@ -35,7 +35,7 @@ builder/node_modules:
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:18-alpine npm install
 
-config.bu: builder/node_modules
+config.bu: builder/node_modules units/dockerhub/docker-auth.json
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:18-alpine node build.js
 
@@ -56,3 +56,6 @@ $(qemu_image): | $(images)
 	  -s stable -p qemu -f qcow2.xz --decompress -C /data
 	mv $(images)/fedora-coreos-*-qemu.x86_64.qcow2 \
 	  $(qemu_image)
+
+units/dockerhub/docker-auth.json:
+	podman login --authfile units/dockerhub/docker-auth.json

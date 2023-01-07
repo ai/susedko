@@ -1,3 +1,4 @@
 config.ign
 config.bu
 node_modules
+units/dockerhub/docker-auth.json
