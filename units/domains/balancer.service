@@ -17,7 +17,7 @@ ExecStart=/bin/podman run \
           --name balancer \
           --label "io.containers.autoupdate=image" \
           docker.io/nginxinc/nginx-unprivileged:1-alpine
-ExecStop=/usr/bin/podman stop -t 10 status
+ExecStop=/bin/podman stop -t 10 status
 
 [Install]
 WantedBy=multi-user.target

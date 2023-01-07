@@ -17,7 +17,7 @@ ExecStart=/bin/podman run \
           --name vaultwarden \
           --label "io.containers.autoupdate=image" \
           docker.io/vaultwarden/server:alpine
-ExecStop=/usr/bin/podman stop -t 10 vaultwarden
+ExecStop=/bin/podman stop -t 10 vaultwarden
 
 [Install]
 WantedBy=multi-user.target
