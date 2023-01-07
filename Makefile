@@ -18,7 +18,7 @@ clean:
 	rm -Rf units/domains/*.csr
 	podman rmi --all --force
 
-demo: config.ign $(qemu_image) units/domains/ssl.key
+demo: config.ign $(qemu_image)
 	qemu-kvm -m 2048 -cpu host -nographic -snapshot \
 	  -drive if=virtio,file=$(qemu_image) \
 	  -fw_cfg name=opt/com.coreos/config,file=./config.ign \
@@ -27,7 +27,7 @@ demo: config.ign $(qemu_image) units/domains/ssl.key
 shell:
 	ssh -o "StrictHostKeyChecking=no" -p 2222 ai@localhost
 
-flash: config.ign units/domains/ssl.key
+flash: config.ign
 	sudo podman run --pull=always --privileged --rm \
 	  -v /dev:/dev -v /run/udev:/run/udev -v .:/data -w /data \
 	  quay.io/coreos/coreos-installer:release \
@@ -39,7 +39,7 @@ builder/node_modules:
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:18-alpine npm install
 
-config.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/dhparam.pem
+config.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.key
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:18-alpine node build.js
 
@@ -71,7 +71,7 @@ sitniks.key:
 units/domains/dhparam.pem:
 	openssl dhparam -out units/domains/dhparam.pem 4096
 
-units/domains/ssl.key: units/domains/ssl.ext sitniks.key
+units/domains/ssl.key: units/domains/ssl.ext sitniks.key units/domains/dhparam.pem
 	openssl req -new -nodes -newkey rsa:2048 \
 	  -keyout units/domains/ssl.key -out units/domains/ssl.csr \
 	  -subj "/C=ES/ST=Barcelona/L=Barcelona/O=Sitniks/CN=susedko.local"
