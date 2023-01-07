@@ -39,7 +39,7 @@ builder/node_modules:
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:18-alpine npm install
 
-config.bu: builder/node_modules units/dockerhub/docker-auth.json
+config.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/dhparam.pem
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:18-alpine node build.js
 
@@ -71,7 +71,7 @@ sitniks.key:
 units/domains/dhparam.pem:
 	openssl dhparam -out units/domains/dhparam.pem 4096
 
-units/domains/ssl.key: units/domains/ssl.ext sitniks.key units/domains/dhparam.pem
+units/domains/ssl.key: units/domains/ssl.ext sitniks.key
 	openssl req -new -nodes -newkey rsa:2048 \
 	  -keyout units/domains/ssl.key -out units/domains/ssl.csr \
 	  -subj "/C=ES/ST=Barcelona/L=Barcelona/O=Sitniks/CN=susedko.local"
