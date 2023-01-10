@@ -13,6 +13,8 @@ passwd:
     - name: domains
       primary_group: domains
       shell: /bin/false
+      groups:
+        - dockerhub
   groups:
     - name: domains
 storage:

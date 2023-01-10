@@ -8,6 +8,8 @@ passwd:
     - name: vaultwarden
       primary_group: vaultwarden
       shell: /bin/false
+      groups:
+        - dockerhub
   groups:
     - name: vaultwarden
 storage:
