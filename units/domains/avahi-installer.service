@@ -9,6 +9,7 @@ ConditionPathExists=!/var/lib/%N.stamp
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/bin/rpm-ostree install --apply-live --allow-inactive avahi avahi-tools
+ExecStart=systemctl start avahi-daemon
 ExecStart=/bin/touch /var/lib/%N.stamp
 
 [Install]
