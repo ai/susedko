@@ -1,7 +1,7 @@
 [Unit]
 Description=Glances Server
-After=network-online.target
-Wants=network-online.target
+Wants=NetworkManager-wait-online.service
+After=NetworkManager-wait-online.service
 
 [Service]
 User=glances

@@ -1,6 +1,7 @@
 [Unit]
 Description=Load Balancer Server
-Wants=network-online.target
+Wants=NetworkManager-wait-online.service
+After=NetworkManager-wait-online.service
 
 [Service]
 User=domains

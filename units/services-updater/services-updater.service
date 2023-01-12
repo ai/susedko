@@ -1,7 +1,7 @@
 [Unit]
 Description=Containers auto-update
-Wants=network.target
-After=network-online.target
+Wants=NetworkManager-wait-online.service
+After=NetworkManager-wait-online.service
 
 [Service]
 Type=oneshot
