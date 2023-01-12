@@ -28,3 +28,17 @@ make shell
 Press <kbd>Ctrl + A</kbd> <kbd>X</kbd> to exit demo server shell.
 
 Call `make clean` to remove all temporary files from the dir and system.
+
+
+## Install
+
+Insert USB flash drive and call:
+
+```sh
+make flash
+```
+
+It will write image to `/dev/sda`. Change `Makefile` if you need another path.
+
+Then insert drive to machine and boot it. It will automatically install
+system to `/dev/mmcblk1` (change `Makefile` for another drive).
