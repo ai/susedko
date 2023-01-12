@@ -2,6 +2,10 @@
 
 images = $(HOME)/.local/share/libvirt/images
 qemu_image = $(images)/fedora-coreos-qemu.qcow2
+install_to_disk = /dev/mmcblk1
+flash_drive = /dev/sda
+ssl_ca = "/C=ES/CN=Sitniks"
+ssl_by = "/C=ES/ST=Barcelona/L=Barcelona/O=Sitniks/CN=susedko.local"
 
 # Main
 
@@ -28,10 +32,21 @@ shell:
 	ssh -o "StrictHostKeyChecking=no" -p 2222 ai@localhost
 
 flash: config.ign
-	sudo podman run --pull=always --privileged --rm \
-	  -v /dev:/dev -v /run/udev:/run/udev -v .:/data -w /data \
-	  quay.io/coreos/coreos-installer:release \
-	  install /dev/sda -i ./config.ign
+	podman run --security-opt label=disable --rm -v .:/data -w /data \
+    quay.io/coreos/coreos-installer:release download -s stable -p metal -f iso
+	podman run --privileged --rm -v .:/data -w /data \
+	  quay.io/coreos/coreos-installer:release iso customize \
+		 --dest-ignition config.ign \
+		 --dest-device $(install_to_disk) \
+		 -o ./fedora-coreos.iso \
+		./fedora-coreos-*.iso
+	rm ./fedora-coreos-*.iso*
+	sudo fdisk -l $(flash_drive)
+	@echo "Press Enter to flash drive or Ctrl+C to cancel"
+	@read
+	sudo dd if=./fedora-coreos.iso of=$(flash_drive) bs=1M status=progress
+	rm ./fedora-coreos.iso
+	sudo umount $(flash_drive)1
 
 # Utils
 
@@ -66,16 +81,15 @@ units/dockerhub/docker-auth.json:
 
 sitniks.key:
 	openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 \
-	  -keyout sitniks.key -out sitniks.crt -subj "/C=ES/CN=Sitniks"
+	  -keyout sitniks.key -out sitniks.crt -subj $(ssl_ca)
 
 units/domains/dhparam.pem:
 	openssl dhparam -out units/domains/dhparam.pem 4096
 
 units/domains/ssl.key: units/domains/ssl.ext sitniks.key units/domains/dhparam.pem
 	openssl req -new -nodes -newkey rsa:2048 \
-	  -keyout units/domains/ssl.key -out units/domains/ssl.csr \
-	  -subj "/C=ES/ST=Barcelona/L=Barcelona/O=Sitniks/CN=susedko.local"
-	openssl x509 -req -sha256 -days 1024 -in units/domains/ssl.csr \
+	  -keyout units/domains/ssl.key -out units/domains/ssl.csr -subj $(ssl_by)
+	openssl x509 -req -sha256 -days 1461 -in units/domains/ssl.csr \
 	  -CA sitniks.crt -CAkey sitniks.key -CAcreateserial \
 	  -extfile units/domains/ssl.ext -out units/domains/ssl.crt
 	rm units/domains/ssl.csr
