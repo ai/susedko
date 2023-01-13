@@ -1,5 +1,7 @@
 config.ign
-config.bu
+config.ign
+demo.bu
+demo.ign
 node_modules
 units/dockerhub/docker-auth.json
 *.key

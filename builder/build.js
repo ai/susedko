@@ -29,6 +29,20 @@ function processFile(path) {
   let parsed = parse(read(path))
   if (parsed.disabled) return
 
+  if (parsed.not_demo) {
+    if (!process.env.DEMO) {
+      parsed = { ...parsed, ...parsed.not_demo }
+    }
+    delete parsed.not_demo
+  }
+
+  if (parsed.demo) {
+    if (process.env.DEMO) {
+      parsed = { ...parsed, ...parsed.demo }
+    }
+    delete parsed.demo
+  }
+
   for (let unit of parsed.systemd?.units ?? []) {
     if (!unit.contents) {
       unit.contents = read(dir, unit.name)
@@ -57,4 +71,5 @@ readdirSync(join(ROOT, 'units')).forEach(dir => {
   processFile(join(ROOT, 'units', dir, `${dir}.bu`))
 })
 
-writeFileSync(join(ROOT, 'config.bu'), stringify(config, { lineWidth: 0 }))
+let output = process.env.DEMO ? 'demo.bu' : 'config.bu'
+writeFileSync(join(ROOT, output), stringify(config, { lineWidth: 0 }))

@@ -22,11 +22,11 @@ clean:
 	rm -Rf units/domains/*.csr
 	podman rmi --all --force
 
-demo: config.ign $(qemu_image)
+demo: demo.ign $(qemu_image)
 	qemu-kvm -m 2048 -cpu host -nographic -snapshot \
 	  -drive if=virtio,file=$(qemu_image) \
-	  -fw_cfg name=opt/com.coreos/config,file=./config.ign \
-	  -nic user,model=virtio,hostfwd=tcp::2222-:22
+	  -fw_cfg name=opt/com.coreos/config,file=./demo.ign \
+	  -nic user,model=virtio,hostfwd=tcp::2222-:22,hostfwd=tcp::8443-:443
 
 shell:
 	ssh -o "StrictHostKeyChecking=no" -p 2222 ai@localhost
@@ -61,6 +61,15 @@ config.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/s
 config.ign: config.bu
 	podman run --rm -i \
 	  quay.io/coreos/butane:release --strict < ./config.bu > ./config.ign
+
+demo.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.key
+	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
+	  -e DEMO=1 \
+	  docker.io/node:18-alpine node build.js
+
+demo.ign: demo.bu
+	podman run --rm -i \
+	  quay.io/coreos/butane:release --strict < ./demo.bu > ./demo.ign
 
 validate_config: config.ign
 	podman run --rm -i \
