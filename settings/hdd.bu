@@ -1,0 +1,12 @@
+not_demo:
+  storage:
+    disks:
+      - device: /dev/disk/by-id/scsi-35000c500ed1d1d37
+        wipe_table: true
+        partitions:
+        - label: vault
+    filesystems:
+      - device: /dev/disk/by-partlabel/vault
+        path: /var/mnt/vault
+        format: btrfs
+        with_mount_unit: true
