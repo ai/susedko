@@ -9,7 +9,7 @@ ssl_by = "/C=ES/ST=Barcelona/L=Barcelona/O=Sitniks/CN=susedko.local"
 
 # Main
 
-.PHONY: clean demo shell test config.bu
+.PHONY: clean demo shell test flash demo.bu config.bu
 
 test: validate_config
 
