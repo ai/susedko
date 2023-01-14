@@ -1,0 +1,24 @@
+[Unit]
+Description=Transmission Server
+Wants=NetworkManager-wait-online.service
+After=NetworkManager-wait-online.service
+
+[Service]
+User=torrent
+Group=torrent
+; Restart=on-failure
+ExecStartPre=-/bin/podman kill transmission
+ExecStartPre=-/bin/podman rm transmission
+ExecStartPre=/bin/podman pull lscr.io/linuxserver/transmission:latest
+ExecStart=/bin/podman run \
+          -p 51413:51413 -p 51413:51413/udp \
+          -v /var/mnt/vault/.config/transmission:/config:z \
+          -v /var/mnt/vault/.cache/transmission/incomplete:/downloads/incomplete \
+          -v /var/mnt/vault/ai:/downloads/complete \
+          --name transmission \
+          --label "io.containers.autoupdate=image" \
+          lscr.io/linuxserver/transmission:latest
+ExecStop=/bin/podman stop -t 10 transmission
+
+[Install]
+WantedBy=multi-user.target

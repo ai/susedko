@@ -7,3 +7,4 @@ passwd:
         - systemd-journal
         - dockerhub
         - share
+        - torrent

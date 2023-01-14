@@ -27,13 +27,13 @@ storage:
           </service-group>
   directories:
     - path: /var/mnt/vault/ai
-      mode: 0o550
+      mode: 0o770
       user:
         name: ai
       group:
         name: ai
     - path: /var/mnt/vault/shared
-      mode: 0o550
+      mode: 0o770
       user:
         name: share
       group:

@@ -1,0 +1,27 @@
+systemd:
+  units:
+    - name: transmission.service
+      enabled: true
+passwd:
+  users:
+    - name: torrent
+      primary_group: torrent
+      shell: /bin/false
+      groups:
+        - share
+  groups:
+    - name: torrent
+storage:
+  directories:
+    - path: /var/mnt/vault/.config/transmission
+      mode: 0o770
+      user:
+        name: torrent
+      group:
+        name: torrent
+    - path: /var/mnt/vault/.cache/transmission/incomplete
+      mode: 0o770
+      user:
+        name: torrent
+      group:
+        name: torrent
