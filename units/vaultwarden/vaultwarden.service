@@ -6,7 +6,7 @@ After=systemd-networkd-wait-online.service
 [Service]
 User=vaultwarden
 Group=vaultwarden
-Restart=on-failure
+; Restart=on-failure
 Environment=REGISTRY_AUTH_FILE="/usr/local/etc/docker-auth.json"
 ExecStartPre=-/bin/podman kill vaultwarden
 ExecStartPre=-/bin/podman rm vaultwarden

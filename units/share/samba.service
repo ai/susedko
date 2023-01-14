@@ -6,7 +6,7 @@ After=NetworkManager-wait-online.service
 [Service]
 User=share
 Group=share
-Restart=on-failure
+; Restart=on-failure
 Environment=REGISTRY_AUTH_FILE="/usr/local/etc/docker-auth.json"
 ExecStartPre=-/bin/podman kill samba
 ExecStartPre=-/bin/podman rm samba
