@@ -19,6 +19,7 @@ passwd:
     - name: domains
 storage:
   files:
+    - path: /etc/avahi/avahi-daemon.conf
     - path: /usr/local/bin/avahi-publisher.sh
       mode: 0o544
       user:
