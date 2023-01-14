@@ -28,6 +28,6 @@ storage:
     - path: /var/mnt/vault/ai/New
       mode: 0o770
       user:
-        name: ai
+        name: torrent
       group:
         name: torrent
