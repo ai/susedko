@@ -4,4 +4,4 @@ storage:
       overwrite: false
       append:
         - inline: |
-            export PS1="\n\e[01;31m\h \e[01;36m\w\n\e[0;32m➜\e[m "
+            export PS1="\n\e[01;31m\h \e[01;36m\w\n\e[0;32m❯\e[m "
