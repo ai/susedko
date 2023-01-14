@@ -32,6 +32,12 @@ storage:
         name: ai
       group:
         name: ai
+    - path: /var/mnt/vault/ai/.backup
+      mode: 0o770
+      user:
+        name: ai
+      group:
+        name: ai
     - path: /var/mnt/vault/shared
       mode: 0o771
       user:
