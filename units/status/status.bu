@@ -4,13 +4,13 @@ systemd:
       enabled: true
 passwd:
   users:
-    - name: glances
-      primary_group: glances
+    - name: status
+      primary_group: status
       shell: /bin/false
       groups:
         - dockerhub
   groups:
-    - name: glances
+    - name: status
 storage:
   files:
     - path: /usr/local/etc/nginx/conf.d/susedko.local.conf

@@ -4,8 +4,8 @@ Wants=NetworkManager-wait-online.service
 After=NetworkManager-wait-online.service
 
 [Service]
-User=glances
-Group=glances
+User=status
+Group=status
 Restart=on-failure
 Environment=REGISTRY_AUTH_FILE="/usr/local/etc/docker-auth.json"
 ExecStartPre=-/bin/podman kill glances
