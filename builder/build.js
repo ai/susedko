@@ -24,6 +24,12 @@ function read(...parts) {
   return readFileSync(join(...parts)).toString()
 }
 
+const AI_PASSWORD = read(ROOT, 'ai.password')
+
+function replace_envs(template) {
+  return template.replace(/__AI_PASSWORD__/g, AI_PASSWORD)
+}
+
 function processFile(path) {
   let dir = join(path, '..')
   let parsed = parse(read(path))
@@ -45,14 +51,14 @@ function processFile(path) {
 
   for (let unit of parsed.systemd?.units ?? []) {
     if (!unit.contents) {
-      unit.contents = read(dir, unit.name)
+      unit.contents = replace_envs(read(dir, unit.name))
     }
   }
 
   for (let file of parsed.storage?.files ?? []) {
     if (!file.contents && !file.append) {
       file.contents = {
-        inline: read(dir, basename(file.path))
+        inline: replace_envs(read(dir, basename(file.path)))
       }
     }
   }
