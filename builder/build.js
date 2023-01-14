@@ -24,7 +24,7 @@ function read(...parts) {
   return readFileSync(join(...parts)).toString()
 }
 
-const AI_PASSWORD = read(ROOT, 'ai.password')
+const AI_PASSWORD = read(ROOT, 'ai.password').trim()
 
 function replace_envs(template) {
   return template.replace(/__AI_PASSWORD__/g, AI_PASSWORD)
