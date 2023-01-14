@@ -10,3 +10,5 @@ not_demo:
         path: /var/mnt/vault
         format: btrfs
         with_mount_unit: true
+        mount_options:
+          - noatime
