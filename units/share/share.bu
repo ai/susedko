@@ -1,0 +1,40 @@
+systemd:
+  units:
+    - name: samba.service
+      enabled: true
+passwd:
+  users:
+    - name: share
+      primary_group: share
+      shell: /bin/false
+      groups:
+        - dockerhub
+  groups:
+    - name: share
+storage:
+  files:
+    - path: /etc/avahi/services/samba.service
+      contents:
+        inline: |
+          <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+          <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+          <service-group>
+              <name replace-wildcards="yes">%h filer</name>
+              <service>
+                  <type>_smb._tcp</type>
+                  <port>139</port>
+              </service>
+          </service-group>
+  directories:
+    - path: /var/mnt/vault/ai
+      mode: 0o550
+      user:
+        name: ai
+      group:
+        name: ai
+    - path: /var/mnt/vault/shared
+      mode: 0o550
+      user:
+        name: share
+      group:
+        name: share

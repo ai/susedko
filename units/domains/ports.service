@@ -12,6 +12,8 @@ ExecStart=iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port
 ExecStart=iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 ExecStart=iptables -t nat -A OUTPUT -o lo -p tcp --dport 443 -j REDIRECT --to-port 8443
 ExecStart=iptables -t nat -A OUTPUT -o lo -p tcp --dport 80 -j REDIRECT --to-port 8080
+ExecStart=iptables -t nat -A OUTPUT -o lo -p tcp --dport 139 -j REDIRECT --to-port 1139
+ExecStart=iptables -t nat -A OUTPUT -o lo -p tcp --dport 445 -j REDIRECT --to-port 145
 ExecStart=/bin/touch /var/lib/%N.stamp
 
 [Install]
