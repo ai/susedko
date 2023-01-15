@@ -19,7 +19,7 @@ ExecStart=/bin/podman run \
           --pid host \
           --network host \
           --name glances \
-          --label "io.containers.autoupdate=image" \
+          --label "io.containers.autoupdate=registry" \
           docker.io/nicolargo/glances:alpine-latest-full
 ExecStop=/bin/podman stop -t 10 glances
 

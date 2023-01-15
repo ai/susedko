@@ -18,7 +18,7 @@ ExecStart=/bin/podman run \
           -v /var/mnt/vault/.cache/transmission/incomplete:/downloads/incomplete:z \
           -v /var/mnt/vault/ai/New:/downloads/complete:z \
           --name transmission \
-          --label "io.containers.autoupdate=image" \
+          --label "io.containers.autoupdate=registry" \
           lscr.io/linuxserver/transmission:latest
 ExecStop=/bin/podman stop -t 10 transmission
 

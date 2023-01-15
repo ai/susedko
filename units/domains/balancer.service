@@ -22,7 +22,7 @@ ExecStart=/bin/podman run \
           -v /usr/local/etc/nginx/:/usr/local/etc/nginx/ \
           -v /usr/local/etc/nginx/conf.d/:/etc/nginx/conf.d/ \
           --name balancer \
-          --label "io.containers.autoupdate=image" \
+          --label "io.containers.autoupdate=registry" \
           docker.io/nginxinc/nginx-unprivileged:1-alpine
 ExecStop=/bin/podman stop -t 10 balancer
 
