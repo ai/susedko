@@ -1,7 +1,3 @@
-systemd:
-  units:
-    - name: transmission.service
-      enabled: true
 passwd:
   users:
     - name: torrent
@@ -11,6 +7,10 @@ passwd:
         - share
   groups:
     - name: torrent
+systemd:
+  units:
+    - name: transmission.service
+      enabled: true
 storage:
   directories:
     - path: /var/mnt/vault/.config/transmission

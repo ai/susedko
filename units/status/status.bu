@@ -1,7 +1,3 @@
-systemd:
-  units:
-    - name: glances.service
-      enabled: true
 passwd:
   users:
     - name: status
@@ -11,6 +7,10 @@ passwd:
         - dockerhub
   groups:
     - name: status
+systemd:
+  units:
+    - name: glances.service
+      enabled: true
 storage:
   files:
     - path: /usr/local/etc/nginx/conf.d/susedko.local.conf

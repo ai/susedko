@@ -1,7 +1,3 @@
-systemd:
-  units:
-    - name: samba.service
-      enabled: true
 passwd:
   users:
     - name: share
@@ -11,6 +7,10 @@ passwd:
         - dockerhub
   groups:
     - name: share
+systemd:
+  units:
+    - name: samba.service
+      enabled: true
 storage:
   files:
     - path: /etc/avahi/services/samba.service

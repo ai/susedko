@@ -1,8 +1,4 @@
 disabled: true
-systemd:
-  units:
-    - name: vaultwarden.service
-      enabled: true
 passwd:
   users:
     - name: vaultwarden
@@ -12,6 +8,10 @@ passwd:
         - dockerhub
   groups:
     - name: vaultwarden
+systemd:
+  units:
+    - name: vaultwarden.service
+      enabled: true
 storage:
   directories:
     - path: /var/mnt/vault/warden/
