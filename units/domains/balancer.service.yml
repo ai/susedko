@@ -13,7 +13,7 @@ podman:
     - 8080:8080
     - 8443:8443
   volumes:
-    - /usr/local/etc/ssl/:/usr/local/etc/ssl/
-    - /usr/local/etc/nginx/:/usr/local/etc/nginx/
-    - /usr/local/etc/nginx/conf.d/:/etc/nginx/conf.d/
+    - /usr/local/etc/ssl:/usr/local/etc/ssl
+    - /usr/local/etc/nginx:/usr/local/etc/nginx
+    - /usr/local/etc/nginx/conf.d:/etc/nginx/conf.d
   network: host
