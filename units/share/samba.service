@@ -13,7 +13,7 @@ ExecStartPre=-/bin/podman rm samba
 ExecStartPre=/bin/podman pull docker.io/servercontainers/samba:smbd-only-latest
 ExecStart=/bin/podman run \
           -p 1139:139 -p 1445:445 \
-          -v /var/mnt/vault/shared:/shares \
+          -v /var/mnt/vault/shared:/shares:z \
           --name samba \
           --label "io.containers.autoupdate=image" \
           docker.io/servercontainers/samba:smbd-only-latest
