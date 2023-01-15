@@ -13,6 +13,7 @@ podman:
   devices:
     - /dev/dri:/dev/dri
   volumes:
-    - /var/mnt/vault/.cache/jellyfin:/shares:z
+    - /var/mnt/vault/.cache/jellyfin:/cache:z
     - /var/mnt/vault/.config/jellyfin:/config:z
-    - /var/mnt/vault:/media:ro
+    - /var/mnt/vault/ai/New:/media/ai/New:ro
+    - /var/mnt/vault/shared:/media/shared:ro
