@@ -10,6 +10,8 @@ podman:
     - 8096:8096
   user: 1006:1006
   userns: keep-id
+  devices:
+    - /dev/dri:/dev/dri
   volumes:
     - /var/mnt/vault/.cache/jellyfin:/shares:z
     - /var/mnt/vault/.config/jellyfin:/config:z
