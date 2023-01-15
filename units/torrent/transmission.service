@@ -11,11 +11,12 @@ ExecStartPre=-/bin/podman kill transmission
 ExecStartPre=-/bin/podman rm transmission
 ExecStartPre=/bin/podman pull lscr.io/linuxserver/transmission:latest
 ExecStart=/bin/podman run \
+          -e PUID=0 -e PGID=0 \
           -p 51413:51413 -p 51413:51413/udp -p 9091:9091 \
           -e USER=ai -e PASS=__AI_PASSWORD__ \
           -v /var/mnt/vault/.config/transmission:/config:z \
-          -v /var/mnt/vault/.cache/transmission/incomplete:/downloads/incomplete \
-          -v /var/mnt/vault/ai/New:/downloads/complete \
+          -v /var/mnt/vault/.cache/transmission/incomplete:/downloads/incomplete:z \
+          -v /var/mnt/vault/ai/New:/downloads/complete:z \
           --name transmission \
           --label "io.containers.autoupdate=image" \
           lscr.io/linuxserver/transmission:latest
