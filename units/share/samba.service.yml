@@ -10,6 +10,6 @@ podman:
     - 1139:139
     - 1445:445
   env:
-    SAMBA_VOLUME_CONFIG_public: "[Public]; path=/shares; guest ok = yes; read only = no; browseable = yes"
+    SAMBA_VOLUME_CONFIG_shared: "[Shared]; path=/shares; public = yes; guest only = yes; writable = yes; force create mode = 0666; force directory mode = 0777 browseable = yes"
   volumes:
     - /var/mnt/vault/shared:/shares:z
