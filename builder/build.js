@@ -78,8 +78,8 @@ function generateService(file, input) {
     for (let i of yml.podman.annotations ?? []) {
       run += runLine(`--annotation ${i}`)
     }
-    for (let i of yml.podman.devices ?? []) {
-      run += runLine(`--device ${i}`)
+    for (let i of yml.podman.volumes ?? []) {
+      run += runLine(`--volumes ${i}`)
     }
     for (let opt of ['network', 'pid', 'userns', 'user']) {
       if (yml.podman[opt]) run += runLine(`--${opt} ${yml.podman[opt]}`)
