@@ -8,5 +8,6 @@ passwd:
         - share
         - torrent
         - aivault
+        - media
   groups:
     - name: aivault
