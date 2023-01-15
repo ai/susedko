@@ -33,7 +33,7 @@ storage:
       user:
         name: ai
       group:
-        name: ai
+        name: aivault
     - path: /var/mnt/vault/ai/.backup
       mode: 0o770
       user:

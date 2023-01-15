@@ -26,7 +26,7 @@ demo: demo.ign $(qemu_image)
 	qemu-kvm -m 2048 -cpu host -nographic -snapshot \
 	  -drive if=virtio,file=$(qemu_image) \
 	  -fw_cfg name=opt/com.coreos/config,file=./demo.ign \
-	  -nic user,model=virtio,hostfwd=tcp::2222-:22,hostfwd=tcp::8443-:443,hostfwd=tcp::9091-:9091
+	  -nic user,model=virtio,hostfwd=tcp::2222-:22,hostfwd=tcp::8443-:443,hostfwd=tcp::9091-:9091,hostfwd=tcp::8096-:8096
 
 shell:
 	ssh -o "StrictHostKeyChecking=no" -p 2222 ai@localhost

@@ -1,0 +1,16 @@
+desc: Jellyfin Media Server
+waitOnline: true
+
+user: media
+group: media
+
+podman:
+  image: docker.io/jellyfin/jellyfin:latest
+  ports:
+    - 8096:8096
+  user: 1006:1006
+  userns: keep-id
+  volumes:
+    - /var/mnt/vault/.cache/jellyfin:/shares:z
+    - /var/mnt/vault/.config/jellyfin:/config:z
+    - /var/mnt/vault:/media:ro

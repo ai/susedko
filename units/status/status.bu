@@ -15,8 +15,4 @@ storage:
   files:
     - path: /usr/local/etc/nginx/conf.d/susedko.local.conf
       mode: 0o444
-      user:
-        name: domains
-      group:
-        name: domains
 
