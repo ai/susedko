@@ -8,3 +8,4 @@ units/dockerhub/docker-auth.json
 *.crt
 !sitniks.crt
 ai.password
+*.iso

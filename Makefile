@@ -14,12 +14,9 @@ ssl_by = "/C=ES/ST=Barcelona/L=Barcelona/O=Sitniks/CN=susedko.local"
 test: validate_config
 
 clean:
-	rm -Rf *.ign *.bu builder/node_modules
+	rm -Rf *.ign *.bu *.iso builder/node_modules
+	rm -Rf units/domains/*.{crt,key,pem,csr}
 	rm -Rf $(images)
-	rm -Rf units/domains/*.crt
-	rm -Rf units/domains/*.key
-	rm -Rf units/domains/*.pem
-	rm -Rf units/domains/*.csr
 	podman rmi --all --force
 
 demo: demo.ign $(qemu_image)
@@ -31,21 +28,18 @@ demo: demo.ign $(qemu_image)
 shell:
 	ssh -o "StrictHostKeyChecking=no" -p 2222 ai@localhost
 
-flash: config.ign
-	podman run --security-opt label=disable --rm -v .:/data -w /data \
-    quay.io/coreos/coreos-installer:release download -s stable -p metal -f iso
+flash: config.ign fedora-coreos.iso
 	podman run --privileged --rm -v .:/data -w /data \
 	  quay.io/coreos/coreos-installer:release iso customize \
 		 --dest-ignition config.ign \
 		 --dest-device $(install_to_disk) \
-		 -o ./fedora-coreos.iso \
-		./fedora-coreos-*.iso
-	rm ./fedora-coreos-*.iso*
+		 -o ./flash.iso \
+		./fedora-coreos.iso
 	sudo fdisk -l $(flash_drive)
 	@echo "Press Enter to flash drive or Ctrl+C to cancel"
 	@read
-	sudo dd if=./fedora-coreos.iso of=$(flash_drive) bs=1M status=progress
-	rm ./fedora-coreos.iso
+	sudo dd if=./flash.iso of=$(flash_drive) bs=1M status=progress
+	rm ./flash.iso
 	sudo umount $(flash_drive)1
 
 # Utils
@@ -74,6 +68,12 @@ demo.ign: demo.bu
 validate_config: config.ign
 	podman run --rm -i \
 	  quay.io/coreos/ignition-validate:release - < ./config.ign
+
+fedora-coreos.iso:
+	podman run --security-opt label=disable --rm -v .:/data -w /data \
+    quay.io/coreos/coreos-installer:release download -s stable -p metal -f iso
+	rm ./fedora-coreos-*.iso.*
+	mv ./fedora-coreos-*.iso ./fedora-coreos.iso
 
 $(images):
 	mkdir -p $(images)
