@@ -1,12 +1,14 @@
 passwd:
   users:
     - name: share
+      uid: 1004
       primary_group: share
       shell: /bin/false
       groups:
         - dockerhub
   groups:
     - name: share
+      gid: 1004
 systemd:
   units:
     - name: samba.service
