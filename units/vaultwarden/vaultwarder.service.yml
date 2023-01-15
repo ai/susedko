@@ -1,0 +1,13 @@
+desc: VaultWarden
+
+user: vaultwarden
+group: vaultwarden
+
+podman:
+  image: docker.io/vaultwarden/server:alpine
+  ports:
+    - 80:8011
+  volumes:
+    - /var/mnt/vault/warden/:/data/
+  env:
+    SIGNUPS_ALLOWED: false

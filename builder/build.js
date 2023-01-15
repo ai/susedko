@@ -1,4 +1,10 @@
-import { readFileSync, rmSync, readdirSync, writeFileSync } from 'node:fs'
+import {
+  writeFileSync,
+  readFileSync,
+  readdirSync,
+  existsSync,
+  rmSync
+} from 'node:fs'
 import { join, relative, basename } from 'node:path'
 import { parse, stringify } from 'yaml'
 import { fileURLToPath } from 'node:url'
@@ -30,6 +36,75 @@ function replace_envs(template) {
   return template.replace(/__AI_PASSWORD__/g, AI_PASSWORD)
 }
 
+function runLine(str) {
+  return `          ${str} \\\n`
+}
+
+function generateService(file, input) {
+  let name = basename(file, '.service')
+  let yml = parse(input)
+
+  if (yml.waitOnline) {
+    yml.wants = (yml.wants ?? []).concat(['NetworkManager-wait-online.service'])
+    yml.after = (yml.after ?? []).concat(['NetworkManager-wait-online.service'])
+  }
+  if (yml.podman) {
+    if (yml.podman.image.startsWith('docker.io/')) {
+      yml.environment = (yml.environment ?? []).concat([
+        'REGISTRY_AUTH_FILE="/usr/local/etc/docker-auth.json"'
+      ])
+    }
+    yml.execStartPre = (yml.execStartPre ?? []).concat([
+      `-/bin/podman kill ${name}`,
+      `-/bin/podman rm ${name}`,
+      `/bin/podman pull ${yml.podman.image}`
+    ])
+    let run = `/bin/podman run \\\n`
+    if (yml.podman.readonly) run += runLine(`--read-only`)
+    for (let i of yml.podman.ports ?? []) {
+      run += runLine(`-p ${i}`)
+    }
+    for (let key in yml.podman.env ?? {}) {
+      run += runLine(`-e ${key}="${yml.podman.env[key]}"`)
+    }
+    for (let i of yml.podman.volumes ?? []) {
+      run += runLine(`-v ${i}`)
+    }
+    if (yml.podman.network) run += runLine(`--network ${yml.podman.network}`)
+    if (yml.podman.pid) run += runLine(`--pid ${yml.podman.pid}`)
+    run += runLine(`--name ${name}`)
+    run += runLine(`--label "io.containers.autoupdate=registry"`)
+    run += `          ${yml.podman.image}`
+    yml.execStart = (yml.execStart ?? []).concat([run])
+    yml.execStop = (yml.execStop ?? []).concat([
+      `/bin/podman stop -t 10 ${name}`
+    ])
+  }
+
+  let service = `[Unit]\nDescription=${yml.desc}\n`
+  if (yml.wants) service += `Wants=${yml.wants.join(' ')}\n`
+  if (yml.after) service += `After=${yml.after.join(' ')}\n`
+
+  service += `\n[Service]\n`
+  if (yml.user) service += `User=${yml.user}\n`
+  if (yml.group) service += `Group=${yml.group}\n`
+  for (let i of yml.environment ?? []) {
+    service += `Environment=${i}\n`
+  }
+  for (let i of yml.execStartPre ?? []) {
+    service += `ExecStartPre=${i}\n`
+  }
+  for (let i of yml.execStart ?? []) {
+    service += `ExecStart=${i}\n`
+  }
+  for (let i of yml.execStop ?? []) {
+    service += `ExecStop=${i}\n`
+  }
+
+  service += `\n[Install]\nWantedBy=multi-user.target\n`
+  return service
+}
+
 function processFile(path) {
   let dir = join(path, '..')
   let parsed = parse(read(path))
@@ -51,7 +126,13 @@ function processFile(path) {
 
   for (let unit of parsed.systemd?.units ?? []) {
     if (!unit.contents) {
-      unit.contents = replace_envs(read(dir, unit.name))
+      let service
+      if (existsSync(join(dir, unit.name + '.yml'))) {
+        service = generateService(unit.name, read(dir, unit.name + '.yml'))
+      } else {
+        service = read(dir, unit.name)
+      }
+      unit.contents = replace_envs(service)
     }
   }
 

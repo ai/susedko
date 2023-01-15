@@ -1,0 +1,13 @@
+desc: Samba Server
+waitOnline: true
+
+user: share
+group: share
+
+podman:
+  image: docker.io/servercontainers/samba:smbd-only-latest
+  ports:
+    - 1139:139
+    - 1445:445
+  volumes:
+    - /var/mnt/vault/shared:/shares:z

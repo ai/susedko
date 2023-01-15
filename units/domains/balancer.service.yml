@@ -1,0 +1,20 @@
+desc: Load Balancer Server
+waitOnline: true
+
+user: domains
+group: domains
+
+execStartPre:
+  - bin/podman unshare chown 101:101 /usr/local/etc/ssl/ssl.key /usr/local/etc/nginx/dhparam.pem
+
+podman:
+  image: docker.io/nginxinc/nginx-unprivileged:1-alpine
+  readonly: true
+  ports:
+    - 8080:8080
+    - 8443:8443
+  volumes:
+    - /usr/local/etc/ssl/:/usr/local/etc/ssl/
+    - /usr/local/etc/nginx/:/usr/local/etc/nginx/
+    - /usr/local/etc/nginx/conf.d/:/etc/nginx/conf.d/
+  network: host

@@ -1,0 +1,18 @@
+desc: Glances Server
+waitOnline: true
+
+user: status
+group: status
+
+podman:
+  image: docker.io/nicolargo/glances:alpine-latest-full
+  readonly: true
+  ports:
+    - 61208:61208
+    - 61209:61209
+  env:
+    GLANCES_OPT: "-w"
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+  network: host
+  pid: host

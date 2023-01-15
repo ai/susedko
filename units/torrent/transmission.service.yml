@@ -1,0 +1,21 @@
+desc: Transmission Server
+waitOnline: true
+
+user: torrent
+group: torrent
+
+podman:
+  image: lscr.io/linuxserver/transmission:latest
+  ports:
+    - 51413:51413
+    - 51413:51413/udp
+    - 9091:9091
+  env:
+    PUID: 0
+    PGID: 0
+    USER: ai
+    PASS: __AI_PASSWORD__
+  volumes:
+    - /var/mnt/vault/.config/transmission:/config:z
+    - /var/mnt/vault/.cache/transmission/incomplete:/downloads/incomplete:z
+    - /var/mnt/vault/ai/New:/downloads/complete:z

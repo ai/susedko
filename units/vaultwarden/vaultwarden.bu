@@ -14,7 +14,7 @@ passwd:
     - name: vaultwarden
 storage:
   directories:
-    - path: /media/warden
+    - path: /var/mnt/vault/warden/
       mode: 0o600
       user:
         name: vaultwarden
