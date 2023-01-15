@@ -7,10 +7,8 @@ group: share
 podman:
   image: docker.io/servercontainers/samba:smbd-only-latest
   ports:
-    - 1139:139/udp
-    - 1445:445/udp
-    - 1139:139/tcp
-    - 1445:445/tcp
+    - 1139:139
+    - 1445:445
   env:
     SAMBA_VOLUME_CONFIG_public: "[Public]; path=/shares; guest ok = yes; read only = no; browseable = yes"
   volumes:
