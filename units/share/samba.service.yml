@@ -6,8 +6,6 @@ group: share
 
 podman:
   image: docker.io/servercontainers/samba:smbd-only-latest
-  userns: keep-id
-  user: 1004:1004
   ports:
     - 1139:139
     - 1445:445
