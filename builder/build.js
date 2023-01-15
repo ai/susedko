@@ -65,13 +65,19 @@ function generateService(file, input) {
       run += runLine(`-p ${i}`)
     }
     for (let key in yml.podman.env ?? {}) {
-      run += runLine(`-e ${key}="${yml.podman.env[key]}"`)
+      let value = yml.podman.env[key]
+      if (typeof value === 'string') {
+        run += runLine(`-e ${key}="${yml.podman.env[key]}"`)
+      } else {
+        run += runLine(`-e ${key}=${yml.podman.env[key]}`)
+      }
     }
     for (let i of yml.podman.volumes ?? []) {
       run += runLine(`-v ${i}`)
     }
-    if (yml.podman.network) run += runLine(`--network ${yml.podman.network}`)
-    if (yml.podman.pid) run += runLine(`--pid ${yml.podman.pid}`)
+    for (let opt of ['network', 'pid', 'userns']) {
+      if (yml.podman[opt]) run += runLine(`--${opt} ${yml.podman[opt]}`)
+    }
     run += runLine(`--name ${name}`)
     run += runLine(`--label "io.containers.autoupdate=registry"`)
     run += `          ${yml.podman.image}`
