@@ -4,12 +4,11 @@ waitOnline: true
 user: domains
 group: domains
 
-execStartPre:
-  - bin/podman unshare chown 101:101 /usr/local/etc/ssl/ssl.key /usr/local/etc/nginx/dhparam.pem
-
 podman:
   image: docker.io/nginxinc/nginx-unprivileged:1-alpine
   readonly: true
+  userns: keep-id
+  user: 1005:1005
   ports:
     - 8080:8080
     - 8443:8443

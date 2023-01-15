@@ -11,12 +11,14 @@ systemd:
 passwd:
   users:
     - name: domains
+      uid: 1005
       primary_group: domains
       shell: /bin/false
       groups:
         - dockerhub
   groups:
     - name: domains
+      gid: 1005
 storage:
   files:
     - path: /etc/avahi/avahi-daemon.conf
