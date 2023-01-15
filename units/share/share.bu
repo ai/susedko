@@ -16,13 +16,13 @@ storage:
     - path: /etc/avahi/services/samba.service
       contents:
         inline: |
-          <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+          <?xml version="1.0" standalone='no'?>
           <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
           <service-group>
-            <name replace-wildcards="yes">Susedko</name>
+            <name>Susedko</name>
             <service>
               <type>_smb._tcp</type>
-              <port>139</port>
+              <port>445</port>
             </service>
           </service-group>
   directories:
