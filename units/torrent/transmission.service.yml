@@ -2,7 +2,7 @@ desc: Transmission Server
 waitOnline: true
 
 user: torrent
-group: torrent
+group: aivault
 
 podman:
   image: lscr.io/linuxserver/transmission:latest
