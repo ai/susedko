@@ -13,7 +13,7 @@ passwd:
       gid: 1006
 systemd:
   units:
-    - name: dri-access.service
+    - name: video-driver.service
       enabled: true
     - name: jellyfin.service
       enabled: true

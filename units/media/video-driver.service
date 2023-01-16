@@ -1,0 +1,18 @@
+[Unit]
+Description=Video Driver Installer
+Wants=NetworkManager-wait-online.service
+After=NetworkManager-wait-online.service avahi-installer.service
+Before=zincati.service
+ConditionPathExists=!/var/lib/%N.stamp
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=usermod -aG render media
+ExecStart=usermod -aG video media
+ExecStart=/usr/bin/rpm-ostree install --apply-live --allow-inactive https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+ExecStart=/usr/bin/rpm-ostree install --apply-live --allow-inactive intel-media-driver
+ExecStart=/bin/touch /var/lib/%N.stamp
+
+[Install]
+WantedBy=multi-user.target

@@ -1,6 +1,6 @@
 desc: Jellyfin Media Server
 after:
-  - dri-access.service
+  - video-driver.service
 waitOnline: true
 
 user: media
