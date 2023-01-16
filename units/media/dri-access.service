@@ -5,8 +5,8 @@ ConditionPathExists=!/var/lib/%N.stamp
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=usermod -a -G render media
-ExecStart=usermod -a -G video media
+ExecStart=usermod -aG render media
+ExecStart=usermod -aG video media
 ExecStart=/bin/touch /var/lib/%N.stamp
 
 [Install]
