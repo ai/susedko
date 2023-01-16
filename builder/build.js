@@ -79,7 +79,7 @@ function generateService(file, input) {
       run += runLine(`--annotation ${i}`)
     }
     for (let i of yml.podman.volumes ?? []) {
-      run += runLine(`--volumes ${i}`)
+      run += runLine(`-v ${i}`)
     }
     for (let opt of ['network', 'pid', 'userns', 'user']) {
       if (yml.podman[opt]) run += runLine(`--${opt} ${yml.podman[opt]}`)
