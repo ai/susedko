@@ -8,13 +8,13 @@ passwd:
         - dockerhub
         - share
         - aivault
-        - video
-        - render
   groups:
     - name: media
       gid: 1006
 systemd:
   units:
+    - name: dri-access.service
+      enabled: true
     - name: jellyfin.service
       enabled: true
 storage:

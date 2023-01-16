@@ -1,0 +1,13 @@
+[Unit]
+Description=Access to Video Driver
+ConditionPathExists=!/var/lib/%N.stamp
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=usermod -a -G render media
+ExecStart=usermod -a -G video media
+ExecStart=/bin/touch /var/lib/%N.stamp
+
+[Install]
+WantedBy=multi-user.target

@@ -1,4 +1,6 @@
 desc: Jellyfin Media Server
+after:
+  - dri-access.service
 waitOnline: true
 
 user: media
