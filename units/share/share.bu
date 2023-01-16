@@ -41,7 +41,7 @@ storage:
       group:
         name: ai
     - path: /var/mnt/vault/shared
-      mode: 0o771
+      mode: 0o777
       user:
         name: share
       group:
