@@ -30,4 +30,4 @@ storage:
       user:
         name: torrent
       group:
-        name: torrent
+        name: aivault
