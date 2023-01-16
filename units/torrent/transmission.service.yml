@@ -2,7 +2,7 @@ desc: Transmission Server
 waitOnline: true
 
 user: torrent
-group: aivault
+group: torrent
 
 podman:
   image: lscr.io/linuxserver/transmission:latest
@@ -18,4 +18,5 @@ podman:
   volumes:
     - /var/mnt/vault/.config/transmission:/config:z
     - /var/mnt/vault/.cache/transmission/incomplete:/downloads/incomplete:z
-    - /var/mnt/vault/ai/New:/downloads/complete:z
+    - /var/mnt/vault/ai/New:/var/mnt/vault/ai/New
+    - /var/mnt/vault/shared:/var/mnt/vault/shared
