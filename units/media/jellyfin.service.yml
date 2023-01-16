@@ -6,6 +6,7 @@ group: media
 
 podman:
   image: docker.io/jellyfin/jellyfin:latest
+  network: host
   ports:
     - 8096:8096
   user: 1006:1006
