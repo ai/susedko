@@ -29,6 +29,7 @@ shell:
 	ssh -o "StrictHostKeyChecking=no" -p 2222 ai@localhost
 
 flash: config.ign fedora-coreos.iso
+	rm -f ./flash.iso
 	podman run --privileged --rm -v .:/data -w /data \
 	  quay.io/coreos/coreos-installer:release iso customize \
 		 --dest-ignition config.ign \
