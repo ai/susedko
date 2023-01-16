@@ -1,0 +1,21 @@
+[Unit]
+Description=Set Access Settings in HDD
+Wants=network-online.target
+After=network-online.target
+Before=zincati.service
+ConditionPathExists=!/var/lib/%N.stamp
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=iptables -t nat -A OUTPUT -o lo -p tcp --dport 443 -j REDIRECT --to-port 8443
+ExecStart=iptables -t nat -A OUTPUT -o lo -p tcp --dport 80 -j REDIRECT --to-port 8080
+ExecStart=iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8443
+ExecStart=iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+ExecStart=setfacl -d -m g::rw /var/mnt/vault/ai/New
+ExecStart=setfacl -d -m o::-- /var/mnt/vault/ai/New
+ExecStart=chgrp aivault /var/mnt/vault/ai/New
+ExecStart=/bin/touch /var/lib/%N.stamp
+
+[Install]
+WantedBy=multi-user.target

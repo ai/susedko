@@ -5,6 +5,7 @@ passwd:
       shell: /bin/false
       groups:
         - share
+        - aivault
   groups:
     - name: torrent
 systemd:
