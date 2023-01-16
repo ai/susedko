@@ -13,7 +13,6 @@ systemd:
   units:
     - name: samba.service
       enabled: true
-  units:
     - name: vault-access.service
       enabled: true
 storage:
