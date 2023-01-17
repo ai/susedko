@@ -81,6 +81,9 @@ function generateService(file, input) {
     for (let i of yml.podman.volumes ?? []) {
       run += runLine(`-v ${i}`)
     }
+    for (let i of yml.podman.security ?? []) {
+      run += runLine(`--security-opt ${i}`)
+    }
     for (let opt of ['network', 'pid', 'userns', 'user']) {
       if (yml.podman[opt]) run += runLine(`--${opt} ${yml.podman[opt]}`)
     }
