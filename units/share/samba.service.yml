@@ -12,7 +12,8 @@ podman:
   env:
     AVAHI_DISABLE: 1
     WSDD2_DISABLE: 1
-    SAMBA_GLOBAL_CONFIG_fruit:nfs_aces: "no"
+    SAMBA_GLOBAL_CONFIG_fruit_COLON_nfs_aces: "no"
+    SAMBA_GLOBAL_CONFIG_fruit_COLON_copyfile: "yes"
     SAMBA_VOLUME_CONFIG_shared: "[Shared]; path=/var/mnt/vault/shared; public = yes; guest only = yes; writable = yes; force create mode = 0666; force directory mode = 0777; browseable = yes"
   volumes:
     - /var/mnt/vault/shared:/var/mnt/vault/shared:z
