@@ -17,4 +17,4 @@ podman:
   volumes:
     - /var/mnt/vault/.config/simple-transmission:/config:z
     - /var/mnt/vault/.cache/simple-transmission/incomplete:/downloads/incomplete:z
-    - /shared:/var/mnt/vault/shared
+    - /var/mnt/vault/shared:/shared
