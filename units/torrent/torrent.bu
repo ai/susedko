@@ -12,6 +12,8 @@ systemd:
   units:
     - name: transmission.service
       enabled: true
+    - name: simple-transmission.service
+      enabled: true
 storage:
   directories:
     - path: /var/mnt/vault/.config/transmission
@@ -21,6 +23,18 @@ storage:
       group:
         name: torrent
     - path: /var/mnt/vault/.cache/transmission/incomplete
+      mode: 0o770
+      user:
+        name: torrent
+      group:
+        name: torrent
+    - path: /var/mnt/vault/.config/simple-transmission
+      mode: 0o770
+      user:
+        name: torrent
+      group:
+        name: torrent
+    - path: /var/mnt/vault/.cache/simple-transmission/incomplete
       mode: 0o770
       user:
         name: torrent
