@@ -1,0 +1,15 @@
+[Unit]
+Description=Layer vim with rpm-ostree
+Wants=NetworkManager-wait-online.service
+After=NetworkManager-wait-online.service video-driver.service
+Before=zincati.service
+ConditionPathExists=!/var/lib/%N.stamp
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/rpm-ostree install --apply-live --allow-inactive micro
+ExecStart=/bin/touch /var/lib/%N.stamp
+
+[Install]
+WantedBy=multi-user.target
