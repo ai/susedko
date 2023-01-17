@@ -1,4 +1,5 @@
 desc: Simple Transmission Server
+after: transmission.service
 waitOnline: true
 
 user: torrent
