@@ -15,6 +15,9 @@ systemd:
     - name: simple-transmission.service
       enabled: true
 storage:
+  files:
+    - path: /usr/local/etc/nginx/conf.d/torrents.local.conf
+      mode: 0o444
   directories:
     - path: /var/mnt/vault/.config/transmission
       mode: 0o770
