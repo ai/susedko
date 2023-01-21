@@ -13,8 +13,6 @@ systemd:
   units:
     - name: samba.service
       enabled: true
-    - name: vault-access.service
-      enabled: true
 storage:
   files:
     - path: /etc/avahi/services/samba.service

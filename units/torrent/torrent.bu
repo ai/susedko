@@ -14,6 +14,8 @@ systemd:
       enabled: true
     - name: simple-transmission.service
       enabled: true
+    - name: torrent-access.service
+      enabled: true
 storage:
   files:
     - path: /usr/local/etc/nginx/conf.d/torrents.local.conf

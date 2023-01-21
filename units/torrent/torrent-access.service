@@ -1,0 +1,17 @@
+[Unit]
+Description=Set Default Access in Torrent Files
+Wants=network-online.target
+After=network-online.target
+Before=zincati.service
+ConditionPathExists=!/var/lib/%N.stamp
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=setfacl -d -m g::rw /var/mnt/vault/ai/New
+ExecStart=setfacl -d -m o::-- /var/mnt/vault/ai/New
+ExecStart=chmod g+rwxs /var/mnt/vault/ai/New
+ExecStart=/bin/touch /var/lib/%N.stamp
+
+[Install]
+WantedBy=multi-user.target
