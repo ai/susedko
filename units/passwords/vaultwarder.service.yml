@@ -1,0 +1,16 @@
+desc: VaultWarden Server
+
+user: password
+group: password
+
+podman:
+  image: docker.io/vaultwarden/server:alpine
+  userns: keep-id
+  ports:
+    - 8011:8011
+  volumes:
+    - /var/mnt/vault/warden/:/data/
+  env:
+    SIGNUPS_ALLOWED: true
+    ROCKET_PORT: 8011
+    DOMAIN: passwords.local
