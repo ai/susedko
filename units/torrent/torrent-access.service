@@ -8,9 +8,14 @@ ConditionPathExists=!/var/lib/%N.stamp
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=setfacl -d -m g::rw /var/mnt/vault/ai/New
+ExecStart=setfacl -d -m g:aivault:rwx /var/mnt/vault/ai/New
+ExecStart=setfacl -d -m g::rwx /var/mnt/vault/ai/New
 ExecStart=setfacl -d -m o::-- /var/mnt/vault/ai/New
+ExecStart=setfacl -d -m g:aivault:rwx /var/mnt/vault/.cache/transmission/incomplete
+ExecStart=setfacl -d -m g::rwx /var/mnt/vault/.cache/transmission/incomplete
+ExecStart=setfacl -d -m o::-- /var/mnt/vault/.cache/transmission/incomplete
 ExecStart=chmod g+rwxs /var/mnt/vault/ai/New
+ExecStart=chmod g+rwxs /var/mnt/vault/.cache/transmission/incomplete
 ExecStart=/bin/touch /var/lib/%N.stamp
 
 [Install]

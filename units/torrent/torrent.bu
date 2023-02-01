@@ -32,7 +32,7 @@ storage:
       user:
         name: torrent
       group:
-        name: torrent
+        name: aivault
     - path: /var/mnt/vault/.config/simple-transmission
       mode: 0o770
       user:
