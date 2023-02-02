@@ -42,3 +42,10 @@ It will write image to `/dev/sda`. Change `Makefile` if you need another path.
 
 Then insert drive to machine and boot it. It will automatically install
 system to `/dev/mmcblk1` (change `Makefile` for another drive).
+
+Create backup:
+
+```sh
+borg init --encryption repokey-blake2 ai@susedko.local:/var/mnt/vault/ai/.backup
+~/Dev/environment/bin/backup
+```
