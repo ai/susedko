@@ -1,7 +1,7 @@
 desc: VaultWarden Server
 
-user: password
-group: password
+user: passwords
+group: passwords
 
 podman:
   image: docker.io/vaultwarden/server:alpine
