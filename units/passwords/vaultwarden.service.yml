@@ -5,12 +5,13 @@ group: passwords
 
 podman:
   image: docker.io/vaultwarden/server:alpine
+  user: 1007:1007
   userns: keep-id
   ports:
     - 8011:8011
   volumes:
-    - /var/mnt/vault/warden/:/data/
+    - /var/mnt/vault/warden:/data
   env:
     SIGNUPS_ALLOWED: true
     ROCKET_PORT: 8011
-    DOMAIN: passwords.local
+    DOMAIN: https://passwords.local
