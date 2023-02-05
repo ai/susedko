@@ -1,5 +1,5 @@
 [Unit]
-Description=Layer vim with rpm-ostree
+Description=Borg Installer
 Wants=NetworkManager-wait-online.service
 After=NetworkManager-wait-online.service text-editor.service
 Before=zincati.service

@@ -1,5 +1,5 @@
 [Unit]
-Description=Layer vim with rpm-ostree
+Description=Micro Installer
 Wants=NetworkManager-wait-online.service
 After=NetworkManager-wait-online.service video-driver.service
 Before=zincati.service
