@@ -5,13 +5,28 @@
 [Fedora CoreOS]: https://docs.fedoraproject.org/en-US/fedora-coreos/getting-started/
 
 
-## Development
+## Prepare
 
-To test locally or to install image to server’s SD card you need:
+To test locally or to flash image to USB drive you need:
 
 ```sh
 sudo dnf install make podman qemu-system-x86-core
 ```
+
+Save your Docker.io token to `units/dockerhub/docker-auth.json`:
+
+```json
+{
+  "auths": {
+    "docker.io": {
+      "auth": "YOUR_TOKEN"
+    }
+  }
+}
+```
+
+
+## Development
 
 Run in one terminal:
 
@@ -42,6 +57,11 @@ It will write image to `/dev/sda`. Change `Makefile` if you need another path.
 
 Then insert drive to machine and boot it. It will automatically install
 system to `/dev/mmcblk1` (change `Makefile` for another drive).
+
+
+## Other Setup
+
+After re-installing the server you need to prepare some files on HDD.
 
 Create backup:
 
