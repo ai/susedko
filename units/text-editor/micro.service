@@ -8,7 +8,7 @@ ConditionPathExists=!/var/lib/%N.stamp
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/bin/rpm-ostree install --apply-live --allow-inactive micro
+ExecStart=/usr/bin/rpm-ostree install -y --apply-live --allow-inactive micro
 ExecStart=/bin/touch /var/lib/%N.stamp
 
 [Install]
