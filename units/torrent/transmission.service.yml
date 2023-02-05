@@ -4,6 +4,9 @@ waitOnline: true
 user: torrent
 group: torrent
 
+environmentFiles:
+  - /usr/local/etc/ai.env
+
 podman:
   image: lscr.io/linuxserver/transmission:latest
   ports:
@@ -14,7 +17,7 @@ podman:
     PUID: 0
     PGID: 0
     USER: ai
-    PASS: __AI_PASSWORD__
+    PASS: ${AI_PASSWORD}
   volumes:
     - /var/mnt/vault/.config/transmission:/config:z
     - /var/mnt/vault/.cache/transmission/incomplete:/downloads/incomplete:z

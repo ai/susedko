@@ -17,8 +17,6 @@ jobs:
         run: echo "{}" > units/dockerhub/docker-auth.json
       - name: Fake dhparam.pem
         run: echo "" > units/domains/dhparam.pem
-      - name: Fake ai.password
-        run: echo "secret" > ai.password
       - name: Run tests
         run: make test
       - name: Print Butane config

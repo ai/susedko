@@ -49,7 +49,7 @@ builder/node_modules:
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:18-alpine npm install
 
-config.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.key
+config.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.key units/torrent/ai.env
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:18-alpine node build.js
 
@@ -57,7 +57,7 @@ config.ign: config.bu
 	podman run --rm -i \
 	  quay.io/coreos/butane:release --strict < ./config.bu > ./config.ign
 
-demo.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.key
+demo.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.key units/torrent/ai.env
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  -e DEMO=1 \
 	  docker.io/node:18-alpine node build.js
@@ -103,3 +103,6 @@ units/domains/ssl.key: units/domains/ssl.ext sitniks.key units/domains/dhparam.p
 	  -CA sitniks.crt -CAkey sitniks.key -CAcreateserial \
 	  -extfile units/domains/ssl.ext -out units/domains/ssl.crt
 	rm units/domains/ssl.csr
+
+units/torrent/ai.env:
+	echo "AI_PASSWORD=$$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w $${1:-16} | head -n 1)" > units/torrent/ai.env

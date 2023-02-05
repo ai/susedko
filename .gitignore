@@ -7,5 +7,5 @@ units/dockerhub/docker-auth.json
 *.csr
 *.crt
 !sitniks.crt
-ai.password
+units/torrent/ai.env
 *.iso

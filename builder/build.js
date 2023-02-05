@@ -30,12 +30,6 @@ function read(...parts) {
   return readFileSync(join(...parts)).toString()
 }
 
-const AI_PASSWORD = read(ROOT, 'ai.password').trim()
-
-function replace_envs(template) {
-  return template.replace(/__AI_PASSWORD__/g, AI_PASSWORD)
-}
-
 function runLine(str) {
   return `          ${str} \\\n`
 }
@@ -103,6 +97,9 @@ function generateService(file, input) {
   service += `\n[Service]\n`
   if (yml.user) service += `User=${yml.user}\n`
   if (yml.group) service += `Group=${yml.group}\n`
+  for (let i of yml.environmentFiles ?? []) {
+    service += `EnvironmentFile=${i}\n`
+  }
   for (let i of yml.environment ?? []) {
     service += `Environment=${i}\n`
   }
@@ -147,14 +144,14 @@ function processFile(path) {
       } else {
         service = read(dir, unit.name)
       }
-      unit.contents = replace_envs(service)
+      unit.contents = service
     }
   }
 
   for (let file of parsed.storage?.files ?? []) {
     if (!file.contents && !file.append) {
       file.contents = {
-        inline: replace_envs(read(dir, basename(file.path)))
+        inline: read(dir, basename(file.path))
       }
     }
   }
