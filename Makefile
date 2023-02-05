@@ -105,4 +105,4 @@ units/domains/ssl.key: units/domains/ssl.ext sitniks.key units/domains/dhparam.p
 	rm units/domains/ssl.csr
 
 units/torrent/ai.env:
-	echo "AI_PASSWORD=$$(cat /dev/urandom | tr -dc '[:alpha:]' | fold -w $${1:-16} | head -n 1)" > units/torrent/ai.env
+	echo "AI_PASSWORD=$$(dd bs=512 if=/dev/urandom count=1 2>/dev/null | tr -dc '[:alpha:]' | fold -w $${1:-16} | head -n 1)" > units/torrent/ai.env
