@@ -1,7 +1,7 @@
 [Unit]
 Description=Borg Installer
 Wants=NetworkManager-wait-online.service
-After=NetworkManager-wait-online.service text-editor.service
+After=NetworkManager-wait-online.service micro.service
 Before=zincati.service
 ConditionPathExists=!/var/lib/%N.stamp
 
