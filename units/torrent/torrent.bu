@@ -1,6 +1,7 @@
 passwd:
   users:
     - name: torrent
+      uid: 1009
       primary_group: torrent
       shell: /bin/false
       groups:
@@ -8,6 +9,7 @@ passwd:
         - aivault
   groups:
     - name: torrent
+      gid: 1009
 systemd:
   units:
     - name: transmission.service

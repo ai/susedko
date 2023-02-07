@@ -1,12 +1,14 @@
 passwd:
   users:
     - name: status
+      uid: 1008
       primary_group: status
       shell: /bin/false
       groups:
         - dockerhub
   groups:
     - name: status
+      gid: 1008
 systemd:
   units:
     - name: glances.service

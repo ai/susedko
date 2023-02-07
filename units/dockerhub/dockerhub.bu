@@ -1,6 +1,7 @@
 passwd:
   groups:
     - name: dockerhub
+      guid: 1001
 storage:
   files:
     - path: /usr/local/etc/docker-auth.json
