@@ -96,12 +96,12 @@ sitniks.key:
 units/domains/dhparam.pem:
 	openssl dhparam -out units/domains/dhparam.pem 4096
 
-units/domains/ssl.key: units/domains/ssl.ext sitniks.key units/domains/dhparam.pem
+units/domains/ssl.key: units/domains/ssl.ini sitniks.key units/domains/dhparam.pem
 	openssl req -new -nodes -newkey rsa:2048 \
 	  -keyout units/domains/ssl.key -out units/domains/ssl.csr -subj $(ssl_by)
 	openssl x509 -req -sha256 -days 1461 -in units/domains/ssl.csr \
 	  -CA sitniks.crt -CAkey sitniks.key -CAcreateserial \
-	  -extfile units/domains/ssl.ext -out units/domains/ssl.crt
+	  -extfile units/domains/ssl.ini -out units/domains/ssl.crt
 	rm units/domains/ssl.csr
 
 units/torrent/ai.env:
