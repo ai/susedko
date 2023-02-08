@@ -3,6 +3,8 @@ desc: VaultWarden Server
 user: passwords
 group: passwords
 
+restart: true
+
 podman:
   image: docker.io/vaultwarden/server:alpine
   user: 1007:1007

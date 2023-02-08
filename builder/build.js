@@ -93,6 +93,7 @@ function generateService(file, input) {
   let service = `[Unit]\nDescription=${yml.desc}\n`
   if (yml.wants) service += `Wants=${yml.wants.join(' ')}\n`
   if (yml.after) service += `After=${yml.after.join(' ')}\n`
+  if (yml.restart) service += 'StartLimitBurst=2\nStartLimitInterval=11\n'
 
   service += `\n[Service]\n`
   if (yml.user) service += `User=${yml.user}\n`
@@ -112,6 +113,7 @@ function generateService(file, input) {
   for (let i of yml.execStop ?? []) {
     service += `ExecStop=${i}\n`
   }
+  if (yml.restart) service += 'Restart=on-failure\nRestartSec=3\n'
 
   service += `\n[Install]\nWantedBy=multi-user.target\n`
   return service
