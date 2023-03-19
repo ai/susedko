@@ -13,7 +13,7 @@ podman:
   ports:
     - 8011:8011
   volumes:
-    - /var/mnt/vault/warden:/data
+    - /var/mnt/vault/warden:/data:z
   env:
     SIGNUPS_ALLOWED: false
     ROCKET_PORT: 8011
