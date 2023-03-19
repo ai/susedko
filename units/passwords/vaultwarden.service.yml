@@ -1,4 +1,5 @@
 desc: VaultWarden Server
+waitOnline: true
 
 user: passwords
 group: passwords
