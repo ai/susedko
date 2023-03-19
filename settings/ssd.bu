@@ -1,12 +1,12 @@
 not_demo:
   storage:
     disks:
-      - device: /dev/disk/by-id/scsi-35000c500ed1d1d37
+      - device: /dev/disk/by-id/nvme-Lexar_SSD_NM620_2TB_NB10032001787P1110
         wipe_table: true
         partitions:
-        - label: vault
+        - label: lexar-nm260
     filesystems:
-      - device: /dev/disk/by-partlabel/vault
+      - device: /dev/disk/by-partlabel/lexar-nm260
         path: /var/mnt/vault
         format: btrfs
         with_mount_unit: true
