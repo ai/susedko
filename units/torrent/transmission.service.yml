@@ -18,6 +18,8 @@ podman:
     PGID: 0
     USER: ai
     PASS: ${AI_PASSWORD}
+  security:
+    - label=disable
   volumes:
     - /var/mnt/vault/.config/transmission:/config:z
     - /var/mnt/vault/.cache/transmission/incomplete:/downloads/incomplete:z

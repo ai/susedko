@@ -16,6 +16,8 @@ podman:
     PUID: 0
     PGID: 0
     PEERPORT: 51414
+  security:
+    - label=disable
   volumes:
     - /var/mnt/vault/.config/simple-transmission:/config:z
     - /var/mnt/vault/.cache/simple-transmission/incomplete:/downloads/incomplete:z
