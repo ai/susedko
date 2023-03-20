@@ -1,7 +1,7 @@
 [Unit]
 Description=Micro Installer
 Wants=NetworkManager-wait-online.service
-After=NetworkManager-wait-online.service video-driver.service
+After=NetworkManager-wait-online.service avahi-installer.service
 Before=zincati.service
 ConditionPathExists=!/var/lib/%N.stamp
 
