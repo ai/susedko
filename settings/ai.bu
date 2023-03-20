@@ -14,3 +14,11 @@ passwd:
   groups:
     - name: aivault
       gid: 1000
+storage:
+  directories:
+    - path: /var/mnt/vault/ai
+      mode: 0o444
+      user:
+        name: ai
+      group:
+        name: aivault
