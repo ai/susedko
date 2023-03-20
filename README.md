@@ -69,3 +69,15 @@ Create backup:
 borg init --encryption repokey-blake2 ai@susedko.local:/var/mnt/vault/ai/.backup
 ~/Dev/environment/bin/backup
 ```
+
+Prepare ngrams and copy them to `/var/mnt/vault/.config/ngrams`
+
+```sh
+wget https://languagetool.org/download/ngram-data/ngrams-en-20150817.zip
+wget https://languagetool.org/download/ngram-data/ngrams-es-20150915.zip
+wget https://languagetool.org/download/ngram-data/untested/ngram-ru-20150914.zip
+unzip ngrams-en-20150817.zip
+unzip ngrams-es-20150915.zip
+unzip ngram-ru-20150914.zip
+rm ngram*.zip
+```

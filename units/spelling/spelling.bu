@@ -1,0 +1,26 @@
+passwd:
+  users:
+    - name: spelling
+      uid: 1010
+      primary_group: spelling
+      shell: /bin/false
+      groups:
+        - dockerhub
+  groups:
+    - name: spelling
+      gid: 1010
+systemd:
+  units:
+    - name: languagetool.service
+      enabled: true
+storage:
+  files:
+    - path: /usr/local/etc/nginx/conf.d/spelling.local.conf
+      mode: 0o444
+  directories:
+    - path: /var/mnt/vault/.config/ngrams
+      mode: 0o474
+      user:
+        name: spelling
+      group:
+        name: ai
