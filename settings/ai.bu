@@ -17,7 +17,7 @@ passwd:
 storage:
   directories:
     - path: /var/mnt/vault/ai
-      mode: 0o444
+      mode: 0o755
       user:
         name: ai
       group:
