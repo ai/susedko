@@ -31,7 +31,7 @@ storage:
       mode: 0o770
   directories:
     - path: /var/mnt/vault/ai
-      mode: 0o771
+      mode: 0o444
       user:
         name: ai
       group:
