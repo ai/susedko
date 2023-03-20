@@ -1,0 +1,14 @@
+global:
+  - "fruit:nfs_aces = no"
+  - "fruit:copyfile = yes"
+  - "force create mode = 0666"
+  - "force directory mode = 0777"
+
+share:
+  - name: shared
+    path: /var/mnt/vault/shared
+    public: yes
+    browseable: yes
+    writable: yes
+    veto: no
+    guestok: yes

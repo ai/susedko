@@ -27,6 +27,8 @@ storage:
               <port>445</port>
             </service>
           </service-group>
+    - path: /var/mnt/vault/.config/samba/config.yml
+      mode: 0o770
   directories:
     - path: /var/mnt/vault/ai
       mode: 0o771
@@ -36,6 +38,12 @@ storage:
         name: aivault
     - path: /var/mnt/vault/shared
       mode: 0o777
+      user:
+        name: share
+      group:
+        name: share
+    - path: /var/mnt/vault/.config/samba
+      mode: 0o770
       user:
         name: share
       group:
