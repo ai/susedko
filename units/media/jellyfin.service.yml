@@ -22,5 +22,6 @@ podman:
   volumes:
     - /var/mnt/vault/.cache/jellyfin:/cache:z
     - /var/mnt/vault/.config/jellyfin:/config:z
+    - /var/mnt/vault/ai/Selected:/var/mnt/vault/ai/Selected
     - /var/mnt/vault/ai/New:/var/mnt/vault/ai/New
     - /var/mnt/vault/shared:/var/mnt/vault/shared

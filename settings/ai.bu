@@ -27,4 +27,4 @@ storage:
       user:
         name: ai
       group:
-        name: ai
+        name: aivault
