@@ -67,7 +67,6 @@ Create backup:
 
 ```sh
 borg init --encryption repokey-blake2 ai@susedko.local:/var/mnt/vault/ai/.backup
-~/Dev/environment/bin/backup
 ```
 
 Prepare ngrams and copy them to `/var/mnt/vault/.config/ngrams`
