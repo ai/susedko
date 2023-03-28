@@ -7,4 +7,5 @@ units/dockerhub/docker-auth.json
 *.csr
 *.crt
 !sitniks.crt
+secrets.env
 *.iso
