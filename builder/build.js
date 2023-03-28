@@ -11,6 +11,17 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = join(fileURLToPath(import.meta.url), '..', '..')
 
+let secrets = {}
+
+readFileSync(join(ROOT, 'secrets.env'))
+  .toString()
+  .trim()
+  .split('\n')
+  .map(i => {
+    let [name, ...value] = i.split('=')
+    secrets[name] = value.join('=')
+  })
+
 function merge(base, add, path) {
   for (let key in add) {
     if (!(key in base)) {
@@ -27,7 +38,11 @@ function merge(base, add, path) {
 }
 
 function read(...parts) {
-  return readFileSync(join(...parts)).toString()
+  let content = readFileSync(join(...parts)).toString()
+  for (let name in secrets) {
+    content = content.replaceAll('$' + name, secrets[name])
+  }
+  return content
 }
 
 function runLine(str) {

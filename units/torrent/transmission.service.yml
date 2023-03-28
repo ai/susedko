@@ -5,7 +5,7 @@ user: torrent
 group: torrent
 
 environmentFiles:
-  - /usr/local/etc/ai.env
+  - /usr/local/etc/torrent.env
 
 podman:
   image: lscr.io/linuxserver/transmission:latest
@@ -17,7 +17,7 @@ podman:
     PUID: 0
     PGID: 0
     USER: ai
-    PASS: ${AI_PASSWORD}
+    PASS: ${PASSWORD}
   security:
     - label=disable
   volumes:
