@@ -9,6 +9,6 @@ share:
     path: /var/mnt/vault/shared
     public: yes
     browseable: yes
-    writable: yes
+    readonly: no
     veto: no
     guestok: yes

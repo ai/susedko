@@ -8,6 +8,8 @@ podman:
   image: ghcr.io/crazy-max/samba:latest
   ports:
     - 1445:445
+  security:
+    - label=disable
   volumes:
     - /var/mnt/vault/shared:/var/mnt/vault/shared:z
     - /var/mnt/vault/.config/samba/:/data/:z
