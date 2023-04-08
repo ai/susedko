@@ -89,19 +89,26 @@ $(qemu_image): | $(images)
 units/dockerhub/docker-auth.json:
 	podman login --authfile units/dockerhub/docker-auth.json
 
-sitniks.key:
-	openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 \
-	  -keyout sitniks.key -out sitniks.crt -subj $(ssl_ca)
+sitniks.key: sitniks.ini
+	openssl genpkey -out sitniks.key -algorithm RSA \
+	  -pkeyopt rsa_keygen_bits:4096 -pkeyopt rsa_keygen_pubexp:65537
+	openssl req -new -key sitniks.key -extensions v3_ca -batch -out sitniks.csr \
+	  -utf8 -subj $(ssl_ca)
+	openssl x509 -req -sha256 -days 1461 -in sitniks.csr -signkey sitniks.key \
+	  -extfile sitniks.ini -out sitniks.crt
+	rm sitniks.csr
 
 units/domains/dhparam.pem:
 	openssl dhparam -out units/domains/dhparam.pem 4096
 
 units/domains/ssl.key: units/domains/ssl.ini sitniks.key units/domains/dhparam.pem
-	openssl req -new -nodes -newkey rsa:2048 \
-	  -keyout units/domains/ssl.key -out units/domains/ssl.csr -subj $(ssl_by)
+	openssl genpkey -out units/domains/ssl.key -algorithm RSA \
+	  -pkeyopt rsa_keygen_bits:4096 -pkeyopt rsa_keygen_pubexp:65537
+	openssl req -new -key units/domains/ssl.key -days 1461 -extensions v3_ca \
+	  -batch -out units/domains/ssl.csr -utf8 -subj $(ssl_by)
 	openssl x509 -req -sha256 -days 1461 -in units/domains/ssl.csr \
-	  -CA sitniks.crt -CAkey sitniks.key -CAcreateserial \
-	  -extfile units/domains/ssl.ini -out units/domains/ssl.crt
+	  -CAkey sitniks.key -CA sitniks.crt -out units/domains/ssl.crt \
+	  -extfile units/domains/ssl.ini
 	rm units/domains/ssl.csr
 
 secrets.env:
