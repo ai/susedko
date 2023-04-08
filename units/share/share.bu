@@ -27,8 +27,14 @@ storage:
               <port>445</port>
             </service>
           </service-group>
-    - path: /var/mnt/vault/.config/samba/config.yml
-      mode: 0o660
+    - path: /var/local/etc/samba/config.yml
+      mode: 0o440
+      user:
+        name: share
+      group:
+        name: share
+    - path: /var/local/etc/samba/ai.password
+      mode: 0o440
       user:
         name: share
       group:
@@ -40,7 +46,7 @@ storage:
         name: share
       group:
         name: share
-    - path: /var/mnt/vault/.config/samba
+    - path: /var/local/etc/samba/
       mode: 0o770
       user:
         name: share
