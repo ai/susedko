@@ -46,7 +46,7 @@ storage:
         name: share
       group:
         name: share
-    - path: /var/local/etc/samba/
+    - path: /var/local/etc/samba
       mode: 0o770
       user:
         name: share
