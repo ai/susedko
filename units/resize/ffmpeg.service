@@ -1,0 +1,15 @@
+[Unit]
+Description=FFmpeg Installer
+Wants=NetworkManager-wait-online.service
+After=NetworkManager-wait-online.service avahi-installer.service
+Before=zincati.service
+ConditionPathExists=!/var/lib/%N.stamp
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/rpm-ostree install -y --apply-live --allow-inactive ffmpeg
+ExecStart=/bin/touch /var/lib/%N.stamp
+
+[Install]
+WantedBy=multi-user.target
