@@ -4,13 +4,15 @@ on:
     branches:
       - main
   pull_request:
+permissions:
+  contents: read
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Print Podman versions
         run: podman -v
       - name: Fake Docker Hub auth
