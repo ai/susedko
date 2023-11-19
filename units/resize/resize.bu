@@ -11,4 +11,4 @@ storage:
           #!/bin/bash
           input_video="$1"
           output_video="${input_video%.*} resized.${input_video##*.}"
-          ffmpeg -i "$input_video" -vf "scale=1024:-1" "$output_video"
+          ffmpeg -i "$input_video" -vf "scale=-1:720" "$output_video"
