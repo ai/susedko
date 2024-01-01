@@ -1,0 +1,9 @@
+[Unit]
+Description=Video resize
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/resize.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -2,13 +2,39 @@ systemd:
   units:
     - name: ffmpeg.service
       enabled: true
+    - name: resize.service
+      enabled: true
+    - name: resize.timer
+      enabled: true
+passwd:
+  users:
+    - name: resize
+      uid: 1011
+      primary_group: resize
+      shell: /bin/false
+      groups:
+        - aivault
+  groups:
+    - name: resize
+      gid: 1011
 storage:
   files:
-    - path: /home/ai/bin/resize
-      mode: 0o555
-      contents:
-        inline: |
-          #!/bin/bash
-          input_video="$1"
-          output_video="${input_video%.*} resized.${input_video##*.}"
-          ffmpeg -i "$input_video" -vf "scale=-1:720" "$output_video"
+    - path: /usr/local/bin/resize.sh
+      mode: 0o544
+      user:
+        name: resize
+      group:
+        name: resize
+    - path: /usr/local/bin/biggest.sh
+      mode: 0o544
+      user:
+        name: resize
+      group:
+        name: resize
+  directories:
+    - path: /var/mnt/vault/ai/Resize
+      mode: 0o770
+      user:
+        name: torrent
+      group:
+        name: aivault
