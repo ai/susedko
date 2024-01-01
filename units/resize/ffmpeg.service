@@ -1,6 +1,6 @@
 [Unit]
 Description=FFmpeg Installer
-Wants=NetworkManager-wait-online.service
+Wants=NetworkManager-wait-online.service video-driver.service
 After=NetworkManager-wait-online.service avahi-installer.service video-driver.service
 Before=zincati.service
 ConditionPathExists=!/var/lib/%N.stamp
