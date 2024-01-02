@@ -2,6 +2,7 @@
 
 TASKS_DIR="/var/mnt/vault/ai/Resize"
 OUTPUT_DIR="/var/mnt/vault/ai/New"
+TMP_DIR="/var/mnt/vault/.cache/resize"
 
 if pgrep -u "$(whoami)" ffmpeg > /dev/null 2>&1; then
   echo "ffmpeg is already running under this user. Exiting script."
@@ -10,12 +11,12 @@ fi
 
 FIRST_TASK=$(find "$TASKS_DIR" -type f -print | head -n 1)
 
-echo $FIRST_TASK
-
 if [ -z "$FIRST_TASK" ]; then
   echo "No files found in work dir."
   exit 0
 fi
+
+rm "$TMP_DIR/*"
 
 clean_filename() {
   local filename=$(basename "$1")
@@ -36,5 +37,6 @@ clean_filename() {
 
 CLEANED_NAME=$(clean_filename "$FIRST_TASK")
 
-ffmpeg -y -i "$FIRST_TASK" -vf "scale=-1:720" "$OUTPUT_DIR/$CLEANED_NAME"
+ffmpeg -y -i "$FIRST_TASK" -vf "scale=-1:720" "$TMP_DIR/$CLEANED_NAME"
+mv "$TMP_DIR/$CLEANED_NAME" "$OUTPUT_DIR/$CLEANED_NAME"
 rm "$FIRST_TASK"

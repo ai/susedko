@@ -38,3 +38,9 @@ storage:
         name: torrent
       group:
         name: aivault
+    - path: /var/mnt/vault/.cache/resize
+      mode: 0o770
+      user:
+        name: resize
+      group:
+        name: aivault
