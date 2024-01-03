@@ -26,7 +26,7 @@ storage:
       group:
         name: resize
     - path: /usr/local/bin/biggest.sh
-      mode: 0o544
+      mode: 0o555
       user:
         name: resize
       group:
