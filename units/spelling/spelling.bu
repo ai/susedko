@@ -1,3 +1,4 @@
+disabled: true
 passwd:
   users:
     - name: spelling
