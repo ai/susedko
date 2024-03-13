@@ -37,6 +37,6 @@ clean_filename() {
 
 CLEANED_NAME=$(clean_filename "$FIRST_TASK")
 
-ffmpeg -y -i "$FIRST_TASK" -vf "scale=-1:720" "$TMP_DIR/$CLEANED_NAME"
+ffmpeg -y -i "$FIRST_TASK" -vf "scale=-2:720" "$TMP_DIR/$CLEANED_NAME"
 mv "$TMP_DIR/$CLEANED_NAME" "$OUTPUT_DIR/$CLEANED_NAME"
 rm "$FIRST_TASK"
