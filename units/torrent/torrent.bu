@@ -22,6 +22,8 @@ storage:
   files:
     - path: /usr/local/etc/nginx/conf.d/torrents.local.conf
       mode: 0o444
+    - path: /usr/local/etc/nginx/conf.d/mytorrents.local.conf
+      mode: 0o444
     - path: /usr/local/etc/torrent.env
       mode: 0o400
       user:
