@@ -1,0 +1,9 @@
+passwd:
+  users:
+    - name: full
+      uid: 1002
+      ssh_authorized_keys:
+        - sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKCzm9x3ID/A5j0vjvf7RDUCuRiLphzgr6XXrKBUuu/DAAAABHNzaDo= andrey@sitnik.ru
+      groups:
+        - systemd-journal
+        - sudo
