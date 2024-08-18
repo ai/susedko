@@ -49,7 +49,7 @@ builder/node_modules:
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:22-alpine npm install
 
-config.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.key secrets.env
+config.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.crt secrets.env
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:22-alpine node build.js
 
@@ -57,7 +57,7 @@ config.ign: config.bu
 	podman run --rm -i \
 	  quay.io/coreos/butane:release --strict < ./config.bu > ./config.ign
 
-demo.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.key secrets.env
+demo.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.crt secrets.env
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  -e DEMO=1 \
 	  docker.io/node:22-alpine node build.js
@@ -106,6 +106,8 @@ units/domains/ssl.key: units/domains/ssl.ini sitniks.key units/domains/dhparam.p
 	  -pkeyopt rsa_keygen_bits:4096 -pkeyopt rsa_keygen_pubexp:65537
 	openssl req -new -key units/domains/ssl.key -extensions v3_ca \
 	  -batch -out units/domains/ssl.csr -utf8 -subj $(ssl_by)
+
+units/domains/ssl.crt: units/domains/ssl.key
 	openssl x509 -req -sha256 -days 1461 -in units/domains/ssl.csr \
 	  -CAkey sitniks.key -CA sitniks.crt -out units/domains/ssl.crt \
 	  -extfile units/domains/ssl.ini
