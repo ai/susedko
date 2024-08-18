@@ -47,11 +47,11 @@ flash: config.ign fedora-coreos.iso
 
 builder/node_modules:
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
-	  docker.io/node:18-alpine npm install
+	  docker.io/node:22-alpine npm install
 
 config.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.key secrets.env
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
-	  docker.io/node:18-alpine node build.js
+	  docker.io/node:22-alpine node build.js
 
 config.ign: config.bu
 	podman run --rm -i \
@@ -60,7 +60,7 @@ config.ign: config.bu
 demo.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.key secrets.env
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  -e DEMO=1 \
-	  docker.io/node:18-alpine node build.js
+	  docker.io/node:22-alpine node build.js
 
 demo.ign: demo.bu
 	podman run --rm -i \
