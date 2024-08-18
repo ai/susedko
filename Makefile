@@ -104,7 +104,7 @@ units/domains/dhparam.pem:
 units/domains/ssl.key: units/domains/ssl.ini sitniks.key units/domains/dhparam.pem
 	openssl genpkey -out units/domains/ssl.key -algorithm RSA \
 	  -pkeyopt rsa_keygen_bits:4096 -pkeyopt rsa_keygen_pubexp:65537
-	openssl req -new -key units/domains/ssl.key -days 1461 -extensions v3_ca \
+	openssl req -new -key units/domains/ssl.key -extensions v3_ca \
 	  -batch -out units/domains/ssl.csr -utf8 -subj $(ssl_by)
 	openssl x509 -req -sha256 -days 1461 -in units/domains/ssl.csr \
 	  -CAkey sitniks.key -CA sitniks.crt -out units/domains/ssl.crt \
