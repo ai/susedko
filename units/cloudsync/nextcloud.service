@@ -1,0 +1,18 @@
+desc: Nextcloud Server
+waitOnline: true
+
+user: cloudsync
+group: cloudsync
+
+restart: true
+
+podman:
+  image: docker.io/library/nextcloud:fpm-alpine
+  user: 1012:1012
+  userns: keep-id
+  ports:
+    - 8080:8012
+  volumes:
+    - /var/mnt/vault/nextcloud:/var/www/html:z
+  env:
+    SQLITE_DATABASE: nextcloud.db
