@@ -1,4 +1,4 @@
-cloudsync:
+passwd:
   users:
     - name: cloudsync
       uid: 1012
