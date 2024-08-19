@@ -69,7 +69,7 @@ Create backup:
 borg init --encryption repokey-blake2 ai@susedko.local:/var/mnt/vault/ai/backup
 ```
 
-Prepare ngrams and copy them to `/var/mnt/vault/.config/ngrams`
+Prepare ngrams and copy them to `/var/mnt/vault/.config/ngrams`:
 
 ```sh
 wget https://languagetool.org/download/ngram-data/ngrams-en-20150817.zip
@@ -79,4 +79,11 @@ unzip ngrams-en-20150817.zip
 unzip ngrams-es-20150915.zip
 unzip ngram-ru-20150914.zip
 rm ngram*.zip
+```
+
+Set to Nextcloud config at `/var/mnt/vault/nextcloud/config/config.php`:
+
+```php
+  'overwrite.cli.url' => 'https://nextcloud.local',
+  'overwriteprotocol' => 'https',
 ```

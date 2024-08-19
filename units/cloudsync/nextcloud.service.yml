@@ -7,12 +7,16 @@ group: cloudsync
 restart: true
 
 podman:
-  image: docker.io/library/nextcloud:fpm-alpine
+  image: docker.io/library/nextcloud:stable
   user: 1012:1012
   userns: keep-id
   ports:
-    - 8080:8012
+    - 8012:80
   volumes:
     - /var/mnt/vault/nextcloud:/var/www/html:z
+  sysctls:
+    - net.ipv4.ip_unprivileged_port_start=0
   env:
     SQLITE_DATABASE: nextcloud.db
+    APACHE_RUN_USER: "#1012"
+    APACHE_RUN_GROUP: "#1012"
