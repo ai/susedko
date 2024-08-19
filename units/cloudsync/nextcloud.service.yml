@@ -20,3 +20,4 @@ podman:
     SQLITE_DATABASE: nextcloud.db
     APACHE_RUN_USER: "#1012"
     APACHE_RUN_GROUP: "#1012"
+    APACHE_BODY_LIMIT: "0"
