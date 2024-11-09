@@ -1,0 +1,20 @@
+disabled: true
+passwd:
+  users:
+    - name: speed
+      uid: 1013
+      primary_group: speed
+      shell: /bin/false
+      groups:
+        - dockerhub
+  groups:
+    - name: speed
+      gid: 1013
+systemd:
+  units:
+    - name: openspeedtest.service
+      enabled: true
+storage:
+  files:
+    - path: /usr/local/etc/nginx/conf.d/speed.local.conf
+      mode: 0o444

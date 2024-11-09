@@ -1,0 +1,10 @@
+desc: OpenSpeedTest
+waitOnline: true
+
+user: speed
+group: speed
+
+podman:
+  image: docker.io/openspeedtest/latest:latest
+  ports:
+    - 3000:8633
