@@ -7,4 +7,4 @@ group: speed
 podman:
   image: docker.io/openspeedtest/latest:latest
   ports:
-    - 3000:8633
+    - 8633:3000
