@@ -1,4 +1,3 @@
-disabled: true
 passwd:
   users:
     - name: speed
