@@ -15,6 +15,6 @@ systemd:
       enabled: true
 storage:
   files:
-    - path: /usr/local/etc/nginx/conf.d/susedko.local.conf
+    - path: /usr/local/etc/nginx/conf.d/status.local.conf
       mode: 0o444
 
