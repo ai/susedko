@@ -6,15 +6,12 @@ passwd:
       shell: /bin/false
       groups:
         - dockerhub
-        - aivault
   groups:
     - name: home
       gid: 1014
 systemd:
   units:
     - name: homeassistant.service
-      enabled: true
-    - name: homeassistant-access.service
       enabled: true
 storage:
   files:
@@ -26,4 +23,4 @@ storage:
       user:
         name: home
       group:
-        name: aivault
+        name: home
