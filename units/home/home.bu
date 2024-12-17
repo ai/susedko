@@ -1,0 +1,28 @@
+passwd:
+  users:
+    - name: home
+      uid: 1014
+      primary_group: home
+      shell: /bin/false
+      groups:
+        - dockerhub
+        - aivault
+  groups:
+    - name: home
+      gid: 1014
+systemd:
+  units:
+    - name: homeassistant.service
+      enabled: true
+    - name: homeassistant-access.service
+      enabled: true
+storage:
+  files:
+    - path: /usr/local/etc/nginx/conf.d/susedko.local.conf
+      mode: 0o444
+    - path: /var/mnt/vault/.config/homeassistant
+      mode: 0o771
+      user:
+        name: home
+      group:
+        name: aivault

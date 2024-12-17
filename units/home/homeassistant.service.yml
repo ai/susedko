@@ -1,0 +1,17 @@
+desc: Home Assistant
+waitOnline: true
+
+user: home
+group: home
+
+podman:
+  image: ghcr.io/home-assistant/home-assistant:stable
+  network: host
+  ports:
+    - 8123:8123
+  user: 1014:1014
+  userns: keep-id
+  volumes:
+    - /var/mnt/vault/.config/homeassistant:/config
+    - /run/dbus:/run/dbus:ro
+    - /etc/localtime:/etc/localtime:ro
