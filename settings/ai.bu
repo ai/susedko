@@ -21,9 +21,3 @@ storage:
         name: ai
       group:
         name: aivault
-    - path: /var/mnt/vault/ai/Selected
-      mode: 0o770
-      user:
-        name: ai
-      group:
-        name: aivault
