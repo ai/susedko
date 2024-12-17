@@ -10,7 +10,7 @@ Type=oneshot
 RemainAfterExit=yes
 ExecStart=usermod -aG render media
 ExecStart=usermod -aG video media
-ExecStart=/usr/bin/rpm-ostree install -y --apply-live --allow-inactive https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-40.noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-40.noarch.rpm
+ExecStart=/usr/bin/rpm-ostree install -y --apply-live --allow-inactive https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-41.noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-41.noarch.rpm
 ExecStart=/usr/bin/rpm-ostree install -y --apply-live --allow-inactive intel-media-driver
 ExecStart=/bin/touch /var/lib/%N.stamp
 
