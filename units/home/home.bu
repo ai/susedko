@@ -20,6 +20,7 @@ storage:
   files:
     - path: /usr/local/etc/nginx/conf.d/susedko.local.conf
       mode: 0o444
+  directories:
     - path: /var/mnt/vault/.config/homeassistant
       mode: 0o771
       user:
