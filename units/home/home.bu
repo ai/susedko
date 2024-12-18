@@ -6,6 +6,7 @@ passwd:
       shell: /bin/false
       groups:
         - dockerhub
+        - aivault
   groups:
     - name: home
       gid: 1014
@@ -17,10 +18,16 @@ storage:
   files:
     - path: /usr/local/etc/nginx/conf.d/home.local.conf
       mode: 0o444
-  directories:
-    - path: /var/mnt/vault/.config/homeassistant
-      mode: 0o771
+    - path: /var/cat /var/mnt/vault/.config/homeassistant/configuration.yaml
+      mode: 0o750
       user:
         name: home
       group:
+        name: aivault
+  directories:
+    - path: /var/mnt/vault/.config/homeassistant
+      mode: 0o755
+      user:
         name: home
+      group:
+        name: aivault
