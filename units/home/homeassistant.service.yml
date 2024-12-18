@@ -12,6 +12,6 @@ podman:
   user: 1014:1014
   userns: keep-id
   volumes:
-    - /var/mnt/vault/.config/homeassistant:/config
+    - /var/mnt/vault/.config/homeassistant:/config:z
     - /run/dbus:/run/dbus:ro
     - /etc/localtime:/etc/localtime:ro
