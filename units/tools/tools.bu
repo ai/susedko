@@ -1,0 +1,4 @@
+storage:
+  files:
+    - path: /usr/local/bin/inpod.sh
+      mode: 0o555
