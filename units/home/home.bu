@@ -18,7 +18,7 @@ storage:
   files:
     - path: /usr/local/etc/nginx/conf.d/home.local.conf
       mode: 0o444
-    - path: /var/cat /var/mnt/vault/.config/homeassistant/configuration.yaml
+    - path: /var/mnt/vault/.config/homeassistant/configuration.yaml
       mode: 0o750
       user:
         name: home
