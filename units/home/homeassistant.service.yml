@@ -9,9 +9,13 @@ podman:
   network: host
   ports:
     - 8123:8123
-  user: 1014:1014
   userns: keep-id
+  user: root
+  env:
+    PUID: 1014
+    PGID: 1014
   volumes:
     - /var/mnt/vault/.config/homeassistant:/config:z
-    - /run/dbus:/run/dbus:ro
+    - /usr/local/share/homeassistant-run.sh:/etc/services.d/home-assistant/run:ro
     - /etc/localtime:/etc/localtime:ro
+    - /etc/localtime:/.dockerenv:ro
