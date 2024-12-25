@@ -10,10 +10,7 @@ podman:
   ports:
     - 8123:8123
   userns: keep-id
-  user: root
-  env:
-    PUID: 1014
-    PGID: 1014
+  user: 1014:1014
   volumes:
     - /var/mnt/vault/.config/homeassistant:/config:z
     - /usr/local/share/homeassistant-run.sh:/etc/services.d/home-assistant/run:ro
