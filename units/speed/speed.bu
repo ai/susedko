@@ -17,6 +17,8 @@ systemd:
 storage:
   files:
     - path: /var/lib/systemd/linger/speed
-      mode: 0644
+      mode: 0o444
+      contents:
+        inline: ''
     - path: /usr/local/etc/nginx/conf.d/speed.local.conf
       mode: 0o444

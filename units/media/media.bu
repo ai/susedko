@@ -19,7 +19,9 @@ systemd:
 storage:
   files:
     - path: /var/lib/systemd/linger/media
-      mode: 0644
+      mode: 0o444
+      contents:
+        inline: ''
     - path: /usr/local/etc/nginx/conf.d/media.local.conf
       mode: 0o444
   directories:

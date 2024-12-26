@@ -17,7 +17,9 @@ systemd:
 storage:
   files:
     - path: /var/lib/systemd/linger/share
-      mode: 0644
+      mode: 0o444
+      contents:
+        inline: ''
     - path: /etc/avahi/services/samba.service
       contents:
         inline: |

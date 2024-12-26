@@ -17,6 +17,8 @@ systemd:
 storage:
   files:
     - path: /var/lib/systemd/linger/status
-      mode: 0644
+      mode: 0o444
+      contents:
+        inline: ''
     - path: /usr/local/etc/nginx/conf.d/susedko.local.conf
       mode: 0o444
