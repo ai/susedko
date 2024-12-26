@@ -18,6 +18,8 @@ systemd:
       enabled: true
 storage:
   files:
+    - path: /var/lib/systemd/linger/media
+      mode: 0644
     - path: /usr/local/etc/nginx/conf.d/media.local.conf
       mode: 0o444
   directories:

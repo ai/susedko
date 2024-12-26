@@ -16,5 +16,7 @@ systemd:
       enabled: true
 storage:
   files:
+    - path: /var/lib/systemd/linger/speed
+      mode: 0644
     - path: /usr/local/etc/nginx/conf.d/speed.local.conf
       mode: 0o444

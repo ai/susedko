@@ -22,6 +22,8 @@ passwd:
       gid: 1005
 storage:
   files:
+    - path: /var/lib/systemd/linger/domains
+      mode: 0644
     - path: /etc/avahi/avahi-daemon.conf
     - path: /usr/local/bin/avahi-publisher.sh
       mode: 0o544
