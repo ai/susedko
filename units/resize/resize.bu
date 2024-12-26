@@ -11,6 +11,7 @@ passwd:
     - name: resize
       uid: 1011
       primary_group: resize
+      no_create_home: true
       shell: /bin/false
       groups:
         - aivault

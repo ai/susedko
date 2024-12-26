@@ -3,6 +3,7 @@ passwd:
     - name: share
       uid: 1004
       primary_group: share
+      no_create_home: true
       shell: /bin/false
       groups:
         - dockerhub

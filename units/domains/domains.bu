@@ -13,6 +13,7 @@ passwd:
     - name: domains
       uid: 1005
       primary_group: domains
+      no_create_home: true
       shell: /bin/false
       groups:
         - dockerhub
