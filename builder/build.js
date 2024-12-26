@@ -69,6 +69,7 @@ function generateService(file, input) {
       `/bin/podman pull ${yml.podman.image}`
     ])
     let run = `/bin/podman run \\\n`
+    run += runLine('--tz=timezone')
     if (yml.podman.readonly) run += runLine(`--read-only`)
     for (let i of yml.podman.ports ?? []) {
       run += runLine(`-p ${i}`)
