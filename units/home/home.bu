@@ -15,6 +15,10 @@ systemd:
   units:
     - name: homeassistant.service
       enabled: true
+    - name: bluez.service
+      enabled: true
+    - name: container-dbus.service
+      enable: true
 storage:
   files:
     - path: /var/lib/systemd/linger/home
@@ -25,6 +29,8 @@ storage:
       mode: 0o444
     - path: /usr/local/share/homeassistant-run.sh
       mode: 0o555
+    - path: /usr/local/share/container-dbus.pp
+      mode: 0o444
     - path: /var/mnt/vault/.config/homeassistant/configuration.yaml
       mode: 0o750
       user:

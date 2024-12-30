@@ -1,0 +1,15 @@
+[Unit]
+Description=SELinux D-Bus Enabler
+Wants=NetworkManager-wait-online.service
+After=NetworkManager-wait-online.service
+Before=zincati.service
+ConditionPathExists=!/var/lib/%N.stamp
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=semodule -i /usr/local/share/container-dbus.pp
+ExecStart=/bin/touch /var/lib/%N.stamp
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,20 @@
+module container-dbus 1.1;
+
+require {
+  type bluetooth_t;
+  type container_t;
+  type system_dbusd_t;
+  type system_dbusd_var_run_t;
+  class dbus send_msg;
+  class unix_stream_socket connectto;
+  class sock_file { write read open getattr };
+}
+
+#============= bluetooth_t ==============
+allow bluetooth_t container_t:dbus send_msg;
+
+#============= container_t ==============
+allow container_t bluetooth_t:dbus send_msg;
+allow container_t system_dbusd_t:dbus send_msg;
+allow container_t system_dbusd_t:unix_stream_socket connectto;
+allow container_t system_dbusd_var_run_t:sock_file { write read open getattr };

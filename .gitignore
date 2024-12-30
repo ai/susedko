@@ -9,3 +9,5 @@ units/dockerhub/docker-auth.json
 !sitniks.crt
 secrets.env
 *.iso
+units/home/container-dbus.mod
+units/home/container-dbus.pp

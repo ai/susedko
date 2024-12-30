@@ -1,0 +1,15 @@
+[Unit]
+Description=BlueZ Installer
+Wants=NetworkManager-wait-online.service
+After=NetworkManager-wait-online.service ffmpegc.service
+Before=zincati.service
+ConditionPathExists=!/var/lib/%N.stamp
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/rpm-ostree install -y --apply-live --allow-inactive bluez
+ExecStart=/bin/touch /var/lib/%N.stamp
+
+[Install]
+WantedBy=multi-user.target
