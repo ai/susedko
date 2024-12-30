@@ -48,3 +48,9 @@ storage:
         name: home
       group:
         name: aivault
+    - path: /var/mnt/vault/.config/zigbee2mqtt
+      mode: 0o755
+      user:
+        name: home
+      group:
+        name: aivault
