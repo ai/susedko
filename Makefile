@@ -27,7 +27,7 @@ demo: demo.ign $(qemu_image)
 	  -nic user,model=virtio,hostfwd=tcp::2222-:22,hostfwd=tcp::8443-:443,hostfwd=tcp::9091-:9091,hostfwd=tcp::9092-:9092,hostfwd=tcp::8096-:8096
 
 shell:
-	ssh -o "StrictHostKeyChecking=no" -p 2222 ai@localhost
+	ssh -o "StrictHostKeyChecking=no" -p 2222 admin@localhost
 
 flash: config.ign fedora-coreos.iso
 	rm -f ./flash.iso
