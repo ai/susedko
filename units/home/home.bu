@@ -53,4 +53,4 @@ storage:
       user:
         name: home
       group:
-        name: aivault
+        name: home
