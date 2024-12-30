@@ -1,0 +1,16 @@
+desc: Zigbee2MQTT
+waitOnline: true
+
+user: home
+group: home
+
+podman:
+  image: ghcr.io/koenkk/zigbee2mqtt:stable
+  network: host
+  ports:
+    - 8124:8080
+  userns: keep-id
+  user: 1014:1014
+  volumes:
+    - /var/mnt/vault/.config/zigbee2mqtt:/app/data:z
+    - /run/udev:/run/udev:ro

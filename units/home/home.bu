@@ -19,6 +19,8 @@ systemd:
       enabled: true
     - name: container-dbus.service
       enable: true
+    - name: zigbee2mqtt.service
+      enable: true
 storage:
   files:
     - path: /var/lib/systemd/linger/home
@@ -26,6 +28,8 @@ storage:
       contents:
         inline: ''
     - path: /usr/local/etc/nginx/conf.d/home.local.conf
+      mode: 0o444
+    - path: /usr/local/etc/nginx/conf.d/zigbee.local.conf
       mode: 0o444
     - path: /usr/local/share/homeassistant-run.sh
       mode: 0o555
