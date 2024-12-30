@@ -5,7 +5,7 @@ user: home
 group: home
 
 podman:
-  image: ghcr.io/koenkk/zigbee2mqtt:stable
+  image: docker.io/koenkk/zigbee2mqtt:stable
   network: host
   ports:
     - 8124:8080
