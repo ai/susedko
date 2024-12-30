@@ -18,9 +18,9 @@ systemd:
     - name: bluez.service
       enabled: true
     - name: container-dbus.service
-      enable: true
+      enabled: true
     - name: zigbee2mqtt.service
-      enable: true
+      enabled: true
 storage:
   files:
     - path: /var/lib/systemd/linger/home
