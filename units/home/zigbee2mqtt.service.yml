@@ -6,7 +6,6 @@ group: home
 
 podman:
   image: docker.io/koenkk/zigbee2mqtt:stable
-  network: host
   ports:
     - 8124:8080
   userns: keep-id

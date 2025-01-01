@@ -1,0 +1,16 @@
+desc: Mosquitto
+waitOnline: true
+
+user: home
+group: home
+
+podman:
+  image: docker.io/koenkk/zigbee2mqtt:latest
+  ports:
+    - 1883:1883
+    - 9001:9001
+  userns: keep-id
+  user: 1014:1014
+  volumes:
+    - /var/mnt/vault/.config/mosquitto:/mosquitto:z
+  command: mosquitto -c /mosquitto-no-auth.conf

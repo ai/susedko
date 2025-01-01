@@ -1,0 +1,26 @@
+[Unit]
+Description=Load Balancer Server
+
+[Container]
+Image=docker.io/nginxinc/nginx-unprivileged:1-alpine
+ContainerName=balancer
+Environment="REGISTRY_AUTH_FILE=/usr/local/etc/docker-auth.json"
+UserNS=keep-id
+User=1005
+Group=1005
+Network=host
+ReadOnly=true
+Label="io.containers.autoupdate=registry"
+TZ=local
+PublishPort=8080:8080
+PublishPort=8443:8443
+Volume=/usr/local/etc/ssl:/usr/local/etc/ssl
+Volume=/usr/local/etc/nginx:/usr/local/etc/nginx
+Volume=/usr/local/etc/nginx/conf.d:/etc/nginx/conf.d
+
+[Service]
+User=domains
+Group=domains
+
+[Install]
+WantedBy=multi-user.target
