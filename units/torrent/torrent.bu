@@ -3,7 +3,6 @@ passwd:
     - name: torrent
       uid: 1009
       primary_group: torrent
-      no_create_home: true
       shell: /bin/false
       groups:
         - share

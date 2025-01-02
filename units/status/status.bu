@@ -3,7 +3,6 @@ passwd:
     - name: status
       uid: 1008
       primary_group: status
-      no_create_home: true
       shell: /bin/false
       groups:
         - dockerhub

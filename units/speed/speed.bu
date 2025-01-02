@@ -3,7 +3,6 @@ passwd:
     - name: speed
       uid: 1013
       primary_group: speed
-      no_create_home: true
       shell: /bin/false
       groups:
         - dockerhub

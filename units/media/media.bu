@@ -3,7 +3,6 @@ passwd:
     - name: media
       uid: 1006
       primary_group: media
-      no_create_home: true
       shell: /bin/false
       groups:
         - dockerhub

@@ -3,7 +3,6 @@ passwd:
     - name: home
       uid: 1014
       primary_group: home
-      no_create_home: true
       shell: /bin/false
       groups:
         - dockerhub
