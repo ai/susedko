@@ -39,12 +39,14 @@ storage:
       mode: 0o444
     - path: /var/mnt/vault/.config/homeassistant/configuration.yaml
       mode: 0o750
+      overwrite: true
       user:
         name: home
       group:
         name: aivault
     - path: /var/mnt/vault/.config/mosquitto/config/mosquitto.conf
-      mode: 0o750
+      mode: 0o555
+      overwrite: true
       user:
         name: home
       group:
