@@ -1,0 +1,19 @@
+desc: Load Balancer Server
+waitOnline: true
+
+user: domains
+group: domains
+
+podman:
+  image: docker.io/nginxinc/nginx-unprivileged:1-alpine
+  readonly: true
+  userns: keep-id
+  user: 1005:1005
+  network: host
+  ports:
+    - 8080:8080
+    - 8443:8443
+  volumes:
+    - /usr/local/etc/ssl:/usr/local/etc/ssl
+    - /usr/local/etc/nginx:/usr/local/etc/nginx
+    - /usr/local/etc/nginx/conf.d:/etc/nginx/conf.d

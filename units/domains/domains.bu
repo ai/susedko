@@ -4,6 +4,8 @@ systemd:
       enabled: true
     - name: avahi-publisher.service
       enabled: true
+    - name: balancer.service
+      enabled: true
     - name: ports.service
       enabled: true
 passwd:
@@ -19,8 +21,6 @@ passwd:
       gid: 1005
 storage:
   files:
-    - path: /etc/containers/systemd/balancer.container
-      mode: 0o444
     - path: /var/lib/systemd/linger/domains
       mode: 0o444
       contents:
