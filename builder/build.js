@@ -5,7 +5,7 @@ import {
   existsSync,
   rmSync
 } from 'node:fs'
-import { join, relative, basename } from 'node:path'
+import { join, relative, basename, extname } from 'node:path'
 import { parse, stringify } from 'yaml'
 import { fileURLToPath } from 'node:url'
 
@@ -171,8 +171,15 @@ function processFile(path) {
 
   for (let file of parsed.storage?.files ?? []) {
     if (!file.contents && !file.append) {
-      file.contents = {
-        inline: read(dir, basename(file.path))
+      if (extname(file.path) === '.pp') {
+        let data = readFileSync(join(dir, basename(file.path)))
+        file.contents = {
+          source: `data:;base64,${data.toString('base64')}`
+        }
+      } else {
+        file.contents = {
+          inline: read(dir, basename(file.path))
+        }
       }
     }
   }
