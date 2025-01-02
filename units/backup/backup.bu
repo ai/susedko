@@ -1,7 +1,3 @@
-systemd:
-  units:
-    - name: borg.service
-      enabled: true
 storage:
   directories:
     - path: /var/mnt/vault/ai/backup

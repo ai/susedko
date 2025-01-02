@@ -2,7 +2,3 @@ not_demo:
   kernel_arguments:
     should_exist:
       - i915.enable_guc=2
-  systemd:
-    units:
-      - name: video-driver.service
-        enabled: true

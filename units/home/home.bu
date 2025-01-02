@@ -14,8 +14,6 @@ systemd:
   units:
     - name: homeassistant.service
       enabled: true
-    - name: bluez.service
-      enabled: true
     - name: container-dbus.service
       enabled: true
     - name: zigbee2mqtt.service

@@ -1,17 +1,16 @@
 [Unit]
-Description=Video Driver Installer
+Description=Tools Installer
 Wants=NetworkManager-wait-online.service
-After=NetworkManager-wait-online.service borg.service
+After=NetworkManager-wait-online.service micro.service
 Before=zincati.service
 ConditionPathExists=!/var/lib/%N.stamp
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=usermod -aG render media
-ExecStart=usermod -aG video media
 ExecStart=/usr/bin/rpm-ostree install -y --apply-live --allow-inactive https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-41.noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-41.noarch.rpm
-ExecStart=/usr/bin/rpm-ostree install -y --apply-live --allow-inactive intel-media-driver
+ExecStart=/usr/bin/rpm-ostree install -y --apply-live --allow-inactive avahi avahi-tools bluez borgbackup ffmpeg micro intel-media-driver intel-media-driver
+ExecStart=systemctl start avahi-daemon
 ExecStart=/bin/touch /var/lib/%N.stamp
 
 [Install]

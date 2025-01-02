@@ -1,7 +1,5 @@
 systemd:
   units:
-    - name: ffmpeg.service
-      enabled: true
     - name: resize.service
       enabled: true
     - name: resize.timer

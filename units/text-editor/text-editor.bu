@@ -1,7 +1,3 @@
-systemd:
-  units:
-    - name: micro.service
-      enabled: true
 storage:
   files:
     - path: /etc/profile.d/zz-default-editor.sh

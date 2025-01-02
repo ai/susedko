@@ -1,7 +1,5 @@
 systemd:
   units:
-    - name: avahi-installer.service
-      enabled: true
     - name: avahi-publisher.service
       enabled: true
     - name: balancer.service
