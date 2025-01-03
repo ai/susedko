@@ -8,8 +8,6 @@ passwd:
         - dockerhub
         - share
         - aivault
-        - render
-        - video
   groups:
     - name: media
       gid: 1006
