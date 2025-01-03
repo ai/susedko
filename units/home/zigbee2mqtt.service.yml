@@ -1,6 +1,8 @@
 desc: Zigbee2MQTT
-waits: zigbee-pod
-after: zigbee-pod
+waits:
+  - zigbee-pod
+after:
+  - zigbee-pod
 
 user: home
 group: home
