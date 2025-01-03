@@ -73,7 +73,7 @@ validate_config: config.ign
 
 fedora-coreos.iso:
 	podman run --security-opt label=disable --rm -v .:/data -w /data \
-    quay.io/coreos/coreos-installer:release download -s stable -p metal -f iso
+    quay.io/coreos/coreos-installer:release download -s testing -p metal -f iso
 	rm ./fedora-coreos-*.iso.*
 	mv ./fedora-coreos-*.iso ./fedora-coreos.iso
 

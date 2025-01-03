@@ -71,6 +71,7 @@ function generateService(file, input) {
     let run = `/bin/podman run \\\n`
     run += runLine('--tz=local')
     if (yml.podman.readonly) run += runLine(`--read-only`)
+    if (yml.podman.pod) run += runLine(`--pod ${yml.podman.pod}`)
     for (let i of yml.podman.ports ?? []) {
       run += runLine(`-p ${i}`)
     }
@@ -170,15 +171,20 @@ function processFile(path) {
   }
 
   for (let file of parsed.storage?.files ?? []) {
-    if (!file.contents && !file.append) {
+    if (!file.contents && !file.append && !file.file) {
+      file.file = basename(file.path)
+    }
+    if (file.file) {
+      let name = file.file
+      delete file.file
       if (extname(file.path) === '.pp') {
-        let data = readFileSync(join(dir, basename(file.path)))
+        let data = readFileSync(join(dir, name))
         file.contents = {
           source: `data:;base64,${data.toString('base64')}`
         }
       } else {
         file.contents = {
-          inline: read(dir, basename(file.path))
+          inline: read(dir, name)
         }
       }
     }

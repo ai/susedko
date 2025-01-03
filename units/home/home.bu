@@ -16,6 +16,8 @@ systemd:
       enabled: true
     - name: container-dbus.service
       enabled: true
+    - name: zigbee-pod.service
+      enabled: true
     - name: zigbee2mqtt.service
       enabled: true
     - name: mosquitto.service
@@ -37,6 +39,7 @@ storage:
     - path: /var/mnt/vault/.config/homeassistant/configuration.yaml
       mode: 0o750
       overwrite: true
+      file: homeassistant-configuration.yaml
       user:
         name: home
       group:
@@ -44,6 +47,14 @@ storage:
     - path: /var/mnt/vault/.config/mosquitto/config/mosquitto.conf
       mode: 0o555
       overwrite: true
+      user:
+        name: home
+      group:
+        name: home
+    - path: /var/mnt/vault/.config/zigbee2mqtt/configuration.yaml
+      mode: 0o750
+      overwrite: true
+      file: zigbee2mqtt-configuration.yaml
       user:
         name: home
       group:
@@ -61,7 +72,19 @@ storage:
         name: home
       group:
         name: home
-    - path: /var/mnt/vault/.config/mosquitto
+    - path: /var/mnt/vault/.config/mosquitto/config
+      mode: 0o755
+      user:
+        name: home
+      group:
+        name: home
+    - path: /var/mnt/vault/.config/mosquitto/log
+      mode: 0o755
+      user:
+        name: home
+      group:
+        name: home
+    - path: /var/mnt/vault/.config/mosquitto/data
       mode: 0o755
       user:
         name: home

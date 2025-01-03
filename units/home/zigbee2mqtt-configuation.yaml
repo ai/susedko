@@ -1,0 +1,18 @@
+frontend: true
+
+mqtt:
+  base_topic: zigbee2mqtt
+  server: "mqtt://localhost:1883"
+
+serial:
+  port: "tcp://192.168.50.27:6638"
+  baudrate: 115200
+  adapter: ember
+  rtscts: false
+
+permit_join: true
+
+advanced:
+  channel: 23
+
+homeassistant: true

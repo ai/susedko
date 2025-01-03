@@ -1,14 +1,15 @@
 desc: Zigbee2MQTT
-waitOnline: true
+waits: zigbee-pod
+after: zigbee-pod
 
 user: home
 group: home
 
 podman:
-  image: docker.io/koenkk/zigbee2mqtt:stable
+  image: docker.io/koenkk/zigbee2mqtt:latest
+  pod: zigbee-pod
   ports:
     - 8124:8080
-  userns: keep-id
   user: 1014:1014
   volumes:
     - /var/mnt/vault/.config/zigbee2mqtt:/app/data:z
