@@ -1,7 +1,7 @@
 [Unit]
 Description=Avahi Aliases Publisher
 After=avahi-installer.service avahi-daemon.service
-Requires=avahi-installer.service
+Requires=installer.service
 
 [Service]
 User=domains

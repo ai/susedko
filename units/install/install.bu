@@ -1,4 +1,4 @@
 systemd:
   units:
-    - name: install.service
+    - name: installer.service
       enabled: true
