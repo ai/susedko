@@ -14,5 +14,4 @@ podman:
   volumes:
     - /var/mnt/vault/.config/homeassistant:/config:z
     - /usr/local/share/homeassistant-run.sh:/etc/services.d/home-assistant/run:ro
-    - /etc/localtime:/.dockerenv:ro
     - /var/run/dbus/:/var/run/dbus/:ro
