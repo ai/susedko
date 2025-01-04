@@ -1,5 +1,9 @@
 desc: Home Assistant
 waitOnline: true
+wants:
+  - installer
+after:
+  - installer
 
 user: home
 group: home
