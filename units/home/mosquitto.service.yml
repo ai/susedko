@@ -1,5 +1,5 @@
 desc: Mosquitto
-waits:
+wants:
   - zigbee-pod
 after:
   - zigbee-pod

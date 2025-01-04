@@ -1,5 +1,5 @@
 desc: Zigbee2MQTT
-waits:
+wants:
   - zigbee-pod
 after:
   - zigbee-pod
