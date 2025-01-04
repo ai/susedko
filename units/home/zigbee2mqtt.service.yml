@@ -1,4 +1,5 @@
 desc: Zigbee2MQTT
+waitOnline: true
 wants:
   - zigbee-pod
 after:

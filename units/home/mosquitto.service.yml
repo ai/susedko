@@ -1,4 +1,5 @@
 desc: Mosquitto
+waitOnline: true
 wants:
   - zigbee-pod
 after:
