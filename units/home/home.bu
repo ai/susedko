@@ -22,6 +22,8 @@ systemd:
       enabled: true
     - name: mosquitto.service
       enabled: true
+    - name: mosquitto-passwords.service
+      enabled: true
 storage:
   files:
     - path: /var/lib/systemd/linger/home
@@ -55,6 +57,12 @@ storage:
       mode: 0o750
       overwrite: true
       file: zigbee2mqtt-configuration.yaml
+      user:
+        name: home
+      group:
+        name: home
+    - path: /usr/local/etc/home.env
+      mode: 0o400
       user:
         name: home
       group:

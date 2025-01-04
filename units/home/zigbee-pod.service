@@ -10,6 +10,7 @@ Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/bin/podman pod create --name zigbee-pod \
   -p 8124:8080 \
+  -p 1883:1883 \
   --userns=keep-id
 ExecStop=/usr/bin/podman pod stop zigbee-pod
 ExecStopPost=/usr/bin/podman pod rm zigbee-pod

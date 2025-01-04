@@ -115,7 +115,7 @@ units/domains/ssl.crt: units/domains/ssl.key
 	rm units/domains/ssl.csr
 
 secrets.env:
-	echo "AI_PASSWORD=$$(dd bs=512 if=/dev/urandom count=1 2>/dev/null | tr -dc '[:alpha:]' | fold -w $${1:-16} | head -n 1)" > secrets.env
+	echo "AI_PASSWORD=$$(dd bs=512 if=/dev/urandom count=1 2>/dev/null | tr -dc '[:alpha:]' | fold -w $${1:-16} | head -n 1)\nHOME_PASSWORD=$$(dd bs=512 if=/dev/urandom count=1 2>/dev/null | tr -dc '[:alpha:]' | fold -w $${1:-16} | head -n 1)" > secrets.env
 
 units/home/container-dbus.pp: units/home/container-dbus.te
 	checkmodule -M -m -o units/home/container-dbus.mod units/home/container-dbus.te

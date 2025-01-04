@@ -2,8 +2,10 @@ desc: Mosquitto
 waitOnline: true
 wants:
   - zigbee-pod.service
+  - mosquitto-passwords.service
 after:
   - zigbee-pod.service
+  - mosquitto-passwords.service
 
 user: home
 group: home
