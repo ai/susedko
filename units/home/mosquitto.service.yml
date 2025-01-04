@@ -1,9 +1,9 @@
 desc: Mosquitto
 waitOnline: true
 wants:
-  - zigbee-pod
+  - zigbee-pod.service
 after:
-  - zigbee-pod
+  - zigbee-pod.service
 
 user: home
 group: home
