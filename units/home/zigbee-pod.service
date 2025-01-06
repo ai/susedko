@@ -4,15 +4,18 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
+Type=oneshot
+RemainAfterExit=yes
 User=home
 Group=home
-ExecStartPre=-/usr/bin/podman pod rm -f zigbee-pod
-ExecStart=/usr/bin/podman pod create --name zigbee-pod \
+ExecStartPre=/usr/bin/podman pod rm -f zigbee-pod
+ExecStartPre=/usr/bin/podman pod create --name zigbee-pod --replace \
   -p 8124:8080 \
   -p 1883:1883 \
   --userns=keep-id
-ExecStop=/usr/bin/podman pod stop zigbee-pod
-ExecStopPost=/usr/bin/podman pod rm zigbee-pod
+ExecStart=/usr/bin/podman pod start zigbee-pod
+ExecStop=/usr/bin/podman pod stop --ignore zigbee-pod
+ExecStopPost=/usr/bin/podman pod rm -f --ignore zigbee-pod
 
 [Install]
 WantedBy=multi-user.target
