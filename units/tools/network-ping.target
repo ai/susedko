@@ -1,8 +1,7 @@
 [Unit]
 Description=Internet Ping Test
 DefaultDependencies=no
-After=nss-lookup.target
-Before=network-online.target
+After=network-online.target
 
 [Service]
 Type=oneshot
@@ -10,4 +9,4 @@ RemainAfterExit=yes
 ExecStart=sh -c 'until ping -c 1 google.com; do sleep 1; done'
 
 [Install]
-WantedBy=network-online.target
+WantedBy=multi-user.target

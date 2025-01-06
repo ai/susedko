@@ -1,7 +1,5 @@
 [Unit]
 Description=SELinux D-Bus Enabler
-Wants=NetworkManager-wait-online.service
-After=NetworkManager-wait-online.service
 Before=zincati.service
 ConditionPathExists=!/var/lib/%N.stamp
 

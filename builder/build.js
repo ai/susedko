@@ -54,8 +54,8 @@ function generateService(file, input) {
   let yml = parse(input)
 
   if (yml.waitOnline) {
-    yml.wants = (yml.wants ?? []).concat(['NetworkManager-wait-online.service'])
-    yml.after = (yml.after ?? []).concat(['NetworkManager-wait-online.service'])
+    yml.wants = (yml.wants ?? []).concat(['network-ping.target'])
+    yml.after = (yml.after ?? []).concat(['network-ping.target'])
   }
   if (yml.podman) {
     if (yml.podman.image.startsWith('docker.io/')) {
