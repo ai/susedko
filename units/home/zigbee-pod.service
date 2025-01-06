@@ -6,8 +6,7 @@ After=network-online.target
 [Service]
 User=home
 Group=home
-Type=oneshot
-RemainAfterExit=yes
+ExecStartPre=-/usr/bin/podman pod rm -f zigbee-pod
 ExecStart=/usr/bin/podman pod create --name zigbee-pod \
   -p 8124:8080 \
   -p 1883:1883 \
