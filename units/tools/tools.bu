@@ -1,3 +1,7 @@
+systemd:
+  units:
+    - name: network-ping.target
+      enabled: true
 storage:
   files:
     - path: /usr/local/bin/inpod.sh
