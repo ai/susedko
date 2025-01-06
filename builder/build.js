@@ -133,7 +133,10 @@ function generateService(file, input) {
   for (let i of yml.execStop ?? []) {
     service += `ExecStop=${i}\n`
   }
-  if (yml.restart) service += 'Restart=on-failure\nRestartSec=3\n'
+  if (yml.restart) {
+    let restartType = yml.restart === true ? 'on-failure' : yml.restart
+    service += `Restart=${restartType}\nRestartSec=3\n`
+  }
 
   service += `\n[Install]\nWantedBy=multi-user.target\n`
   return service
