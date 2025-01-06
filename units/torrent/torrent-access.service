@@ -1,7 +1,5 @@
 [Unit]
 Description=Set Default Access in Torrent Files
-Wants=network-online.target
-After=network-online.target
 Before=zincati.service
 ConditionPathExists=!/var/lib/%N.stamp
 
