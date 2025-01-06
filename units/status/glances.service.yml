@@ -4,6 +4,8 @@ waitOnline: true
 user: status
 group: status
 
+restart: true
+
 podman:
   image: docker.io/nicolargo/glances:alpine-latest-full
   readonly: true

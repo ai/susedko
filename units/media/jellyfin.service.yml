@@ -6,6 +6,8 @@ waitOnline: true
 user: media
 group: media
 
+restart: true
+
 podman:
   image: docker.io/jellyfin/jellyfin:latest
   network: host

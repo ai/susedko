@@ -4,6 +4,8 @@ waitOnline: true
 user: speed
 group: speed
 
+restart: true
+
 podman:
   image: docker.io/openspeedtest/latest:latest
   ports:

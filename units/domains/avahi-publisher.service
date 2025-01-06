@@ -6,7 +6,7 @@ Requires=installer.service
 [Service]
 User=domains
 Group=domains
-; Restart=on-failure
+Restart=on-failure
 ExecStart=/usr/local/bin/avahi-publisher.sh
 
 [Install]

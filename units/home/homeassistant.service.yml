@@ -5,6 +5,8 @@ wants:
 after:
   - installer
 
+restart: true
+
 user: home
 group: home
 

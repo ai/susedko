@@ -4,6 +4,8 @@ waitOnline: true
 user: share
 group: share
 
+restart: true
+
 podman:
   image: ghcr.io/crazy-max/samba:latest
   ports:

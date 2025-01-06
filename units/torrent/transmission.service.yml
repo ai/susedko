@@ -4,6 +4,8 @@ waitOnline: true
 user: torrent
 group: torrent
 
+restart: true
+
 environmentFiles:
   - /usr/local/etc/torrent.env
 

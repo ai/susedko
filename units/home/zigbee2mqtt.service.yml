@@ -7,6 +7,8 @@ after:
   - zigbee-pod.service
   - mosquitto.service
 
+restart: true
+
 user: home
 group: home
 

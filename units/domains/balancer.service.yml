@@ -1,6 +1,8 @@
 desc: Load Balancer Server
 waitOnline: true
 
+restart: true
+
 user: domains
 group: domains
 
