@@ -1,10 +1,8 @@
 desc: Mosquitto
 waitOnline: true
 wants:
-  - zigbee-pod.service
   - mosquitto-passwords.service
 after:
-  - zigbee-pod.service
   - mosquitto-passwords.service
 
 restart: true
@@ -14,8 +12,10 @@ group: home
 
 podman:
   image: docker.io/eclipse-mosquitto:latest
-  pod: zigbee-pod
+  ports:
+    - 1883:1883
   user: 1014:1014
+  userns: keep-id
   volumes:
     - /var/mnt/vault/.config/mosquitto/config:/mosquitto/config:Z
     - /var/mnt/vault/.config/mosquitto/data:/mosquitto/data:Z

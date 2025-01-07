@@ -16,8 +16,6 @@ systemd:
       enabled: true
     - name: container-dbus.service
       enabled: true
-    - name: zigbee-pod.service
-      enabled: true
     - name: zigbee2mqtt.service
       enabled: true
     - name: mosquitto.service

@@ -1,10 +1,8 @@
 desc: Zigbee2MQTT
 waitOnline: true
 wants:
-  - zigbee-pod.service
   - mosquitto.service
 after:
-  - zigbee-pod.service
   - mosquitto.service
 
 restart: "always"
@@ -14,8 +12,10 @@ group: home
 
 podman:
   image: docker.io/koenkk/zigbee2mqtt:latest
-  pod: zigbee-pod
+  ports:
+    - 1883:1883
   user: 1014:1014
+  userns: keep-id
   volumes:
     - /var/mnt/vault/.config/zigbee2mqtt:/app/data:z
     - /run/udev:/run/udev:ro
