@@ -58,7 +58,7 @@ storage:
       user:
         name: home
       group:
-        name: home
+        name: aivault
     - path: /usr/local/etc/home.env
       mode: 0o400
       user:

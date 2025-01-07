@@ -1,15 +1,20 @@
-frontend: true
+frontend:
+  enabled: true
 mqtt:
   base_topic: zigbee2mqtt
-  server: "mqtt://localhost:1883"
+  server: mqtt://192.168.50.27:1883
   user: home
   password: $HOME_PASSWORD
 serial:
-  port: "tcp://192.168.50.27:6638"
+  port: tcp://192.168.50.27:6638
   baudrate: 115200
   adapter: ember
   rtscts: false
-permit_join: true
 advanced:
-  channel: 23
-homeassistant: true
+  channel: 25
+homeassistant:
+  enabled: true
+version: 4
+devices:
+  "0xec1bbdfffed34bcd":
+    friendly_name: light.andrey_room.top
