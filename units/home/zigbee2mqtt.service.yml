@@ -7,6 +7,9 @@ after:
 
 restart: "always"
 
+environmentFiles:
+  - /usr/local/etc/home.env
+
 user: home
 group: home
 
@@ -16,6 +19,8 @@ podman:
     - 1883:1883
   user: 1014:1014
   userns: keep-id
+  env:
+    ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ${PASSWORD}
   volumes:
     - /var/mnt/vault/.config/zigbee2mqtt:/app/data:z
     - /run/udev:/run/udev:ro
