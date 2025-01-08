@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /
+
 # Check if a service name is provided
 if [ -z "$1" ]; then
     echo "Usage: $0 <service-name>"
@@ -18,4 +20,4 @@ if [ -z "$SERVICE_USER" ]; then
 fi
 
 # Run a command inside the container using Podman
-sudo -u "$SERVICE_USER" podman exec -i "$SERVICE_NAME" bash
+sudo -u "$SERVICE_USER" podman exec -i "$SERVICE_NAME" sh
