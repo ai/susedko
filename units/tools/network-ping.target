@@ -1,7 +1,7 @@
 [Unit]
 Description=Internet Ping Test
 DefaultDependencies=no
-After=network-online.target
+After=NetworkManager-wait-online.service
 
 [Service]
 Type=oneshot
