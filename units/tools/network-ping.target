@@ -7,7 +7,7 @@ Wants=NetworkManager-wait-online.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=sh -c 'until ping -c 1 google.com; do sleep 1; done'
+ExecStartPre=sh -c 'until ping -c 1 google.com; do sleep 1; done'
 
 [Install]
 WantedBy=multi-user.target
