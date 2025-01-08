@@ -2,6 +2,8 @@
 Description=Avahi Aliases Publisher
 After=installer.service avahi-daemon.service NetworkManager-wait-online.service
 Requires=installer.service
+StartLimitBurst=2
+StartLimitInterval=11
 
 [Service]
 User=domains
