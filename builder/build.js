@@ -70,6 +70,7 @@ function generateService(file, input) {
     ])
     let run = `/bin/podman run \\\n`
     run += runLine('--tz=local')
+    run += runLine('--replace')
     if (yml.podman.readonly) run += runLine(`--read-only`)
     if (yml.podman.pod) run += runLine(`--pod ${yml.podman.pod}`)
     for (let i of yml.podman.ports ?? []) {
