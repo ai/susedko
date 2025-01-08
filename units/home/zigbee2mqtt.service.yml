@@ -16,7 +16,8 @@ group: home
 podman:
   image: docker.io/koenkk/zigbee2mqtt:latest
   ports:
-    - 8124:8080
+    - 8124:8124
+  network: host
   user: 1014:1014
   userns: keep-id
   env:
