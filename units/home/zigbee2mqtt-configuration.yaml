@@ -11,6 +11,8 @@ serial:
   rtscts: false
 advanced:
   channel: 25
+  log_output:
+    - console
 homeassistant:
   enabled: true
 version: 4
