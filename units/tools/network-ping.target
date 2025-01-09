@@ -1,6 +1,5 @@
 [Unit]
 Description=Internet Ping Test
-DefaultDependencies=no
 After=NetworkManager-wait-online.service
 Wants=NetworkManager-wait-online.service
 
