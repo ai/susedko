@@ -1,6 +1,6 @@
 systemd:
   units:
-    - name: network-ping.target
+    - name: network-ping.service
       enabled: true
 storage:
   files:
