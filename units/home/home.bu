@@ -20,8 +20,6 @@ systemd:
       enabled: true
     - name: mosquitto.service
       enabled: true
-    - name: mosquitto-passwords.service
-      enabled: true
 storage:
   files:
     - path: /var/lib/systemd/linger/home
@@ -44,6 +42,13 @@ storage:
         name: home
       group:
         name: aivault
+    - path: /var/mnt/vault/.config/mosquitto/config/mosquitto-passwords
+      mode: 0o400
+      overwrite: true
+      user:
+        name: home
+      group:
+        name: home
     - path: /var/mnt/vault/.config/mosquitto/config/mosquitto.conf
       mode: 0o555
       overwrite: true

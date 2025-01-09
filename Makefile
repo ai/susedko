@@ -17,6 +17,7 @@ clean:
 	rm -Rf *.ign *.bu *.iso builder/node_modules
 	rm -Rf units/domains/*.{crt,key,pem,csr}
 	rm -f units/home/container-dbus.mod units/home/container-dbus.pp
+	rm -f units/home/mosquitto-passwords
 	rm -Rf $(images)
 	podman rmi --all --force
 
@@ -50,7 +51,7 @@ builder/node_modules:
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:22-alpine npm install
 
-config.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.crt secrets.env units/home/container-dbus.pp
+config.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.crt secrets.env units/home/container-dbus.pp units/home/mosquitto-passwords
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:22-alpine node build.js
 
@@ -58,7 +59,7 @@ config.ign: config.bu
 	podman run --rm -i \
 	  quay.io/coreos/butane:release --strict < ./config.bu > ./config.ign
 
-demo.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.crt secrets.env units/home/container-dbus.pp
+demo.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.crt secrets.env units/home/container-dbus.pp units/home/mosquitto-passwords
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  -e DEMO=1 \
 	  docker.io/node:22-alpine node build.js
@@ -121,3 +122,8 @@ units/home/container-dbus.pp: units/home/container-dbus.te
 	checkmodule -M -m -o units/home/container-dbus.mod units/home/container-dbus.te
 	semodule_package -o units/home/container-dbus.pp -m units/home/container-dbus.mod
 	rm units/home/container-dbus.mod
+
+units/home/mosquitto-passwords: secrets.env
+	podman run -v ./units/home:/units/home:Z docker.io/eclipse-mosquitto:latest \
+	  mosquitto_passwd -c -b /units/home/mosquitto-passwords home \
+		$$(grep '^HOME_PASSWORD=' secrets.env | cut -d '=' -f 2)

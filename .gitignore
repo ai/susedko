@@ -11,3 +11,4 @@ secrets.env
 *.iso
 units/home/container-dbus.mod
 units/home/container-dbus.pp
+units/home/mosquitto-passwords
