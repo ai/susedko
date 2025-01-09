@@ -1,9 +1,9 @@
 desc: Home Assistant
 waitOnline: true
 wants:
-  - installer
+  - installer.service
 after:
-  - installer
+  - installer.service
 
 restart: true
 
