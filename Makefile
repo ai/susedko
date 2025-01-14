@@ -45,10 +45,7 @@ flash: config.ign fedora-coreos.iso
 	rm ./flash.iso
 	sudo umount $(flash_drive)1
 
-ha:
-	podman run -it -v ./units/home:/config:Z \
-	  ghcr.io/home-assistant/home-assistant:stable \
-	  python3 -m homeassistant --script check_config --config /config
+ha: secrets.env
 	scp ./units/home/configuration.yaml \
 	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
 	scp ./units/home/scripts.yaml \
@@ -57,10 +54,15 @@ ha:
 	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
 	scp ./units/home/automations.yaml \
 	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
-	echo "Restarting Home Assistant via HTTP API…"
-	curl -v -X POST -H "Content-Type: application/json" \
-	  -H "Authorization: Bearer $$(grep '^HA_TOKEN=' secrets.env | cut -d '=' -f 2)" \
-	  https://home.local/api/services/homeassistant/restart
+	@HA_TOKEN=$$(grep '^HA_TOKEN=' secrets.env | cut -d '=' -f 2) && \
+	  curl -X POST -H "Authorization: Bearer $$HA_TOKEN" \
+	    https://home.local/api/config/core/check_config && \
+		if [ $$? -eq 0 ]; then \
+	    curl -X POST -H "Authorization: Bearer $$HA_TOKEN" \
+	      https://home.local/api/services/homeassistant/restart; \
+			else \
+		    echo "Configuration check failed. Skipping restart."; \
+		  fi
 
 ha_backup:
 	scp ai@susedko.local:/var/mnt/vault/.config/homeassistant/configuration.yaml \
