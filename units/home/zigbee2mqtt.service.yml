@@ -21,7 +21,8 @@ podman:
   user: 1014:1014
   userns: keep-id
   env:
-    ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ${PASSWORD}
+    ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ${HOME_PASSWORD}
+    ZIGBEE2MQTT_CONFIG_FRONTEND_AUTH_TOKEN: ${AI_PASSWORD}
   volumes:
     - /var/mnt/vault/.config/zigbee2mqtt:/app/data:z
     - /run/udev:/run/udev:ro
