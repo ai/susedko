@@ -5,6 +5,7 @@ mqtt:
   base_topic: zigbee2mqtt
   server: mqtt://localhost:1883
   user: home
+  password: UV1JrPfzZb35nn4s6vu9K
 serial:
   port: tcp://192.168.50.27:6638
   baudrate: 115200
@@ -16,5 +17,40 @@ homeassistant:
   enabled: true
 version: 4
 devices:
-  "0xec1bbdfffed34bcd":
-    friendly_name: light.andrey_room.top
+  '0xec1bbdfffed34bcd':
+    friendly_name: Light / Ikea E27 RGB / Kitchen 1
+  '0x680ae2fffe1a89e8':
+    friendly_name: Light / Ikea E27 RGB / Bedroom
+  '0xec1bbdfffe6a495a':
+    friendly_name: Light / Ikea E27 RGB / Lounge
+  '0x403059fffe81d106':
+    friendly_name: Light / Ikea Ceiling / Hall 2
+  '0x44e2f8fffe4cca2f':
+    friendly_name: Light / Ikea Ceiling / Hall 1
+  '0x8c65a3fffec7a1ef':
+    friendly_name: Light / GU10 / Bathroom 1
+  '0x94b216fffebab247':
+    friendly_name: Light / GU10 / Bathroom 2
+  '0x8c65a3fffee4bf78':
+    friendly_name: Light / GU10 / Toilet
+  '0x84fd27fffeab86b6':
+    friendly_name: Light / Ikea E27 / Kitchen 2
+  '0xec1bbdfffece5c65':
+    friendly_name: Light / Ikea E27 RGB / Kate
+  '0xb4e3f9fffe21589b':
+    friendly_name: Light / Ikea E27 RGB / Children
+  '0x94b216fffec4d411':
+    friendly_name: Light / Ikea E14 RGB / Desk
+  '0xb4e3f9fffef344d4':
+    friendly_name: Light / Ikea E14 / Round
+  '0x2c1165fffe168d53':
+    friendly_name: Light / Ikea E14 RGB / Square 1
+  '0x50325ffffe5d981f':
+    friendly_name: Light / Ikea E14 RGB / Square 2
+groups:
+  '1':
+    friendly_name: Light / Group / Bathroom
+  '2':
+    friendly_name: Light / Group / Kitchen
+  '3':
+    friendly_name: Light / Group / Hall
