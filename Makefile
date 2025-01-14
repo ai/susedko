@@ -9,7 +9,7 @@ ssl_by = "/C=ES/ST=Barcelona/L=Barcelona/O=Sitniks/CN=susedko.local"
 
 # Main
 
-.PHONY: clean demo shell test flash demo.bu config.bu
+.PHONY: clean demo shell test flash demo.bu config.bu ha ha_backup
 
 test: validate_config
 
@@ -44,6 +44,35 @@ flash: config.ign fedora-coreos.iso
 	sudo dd if=./flash.iso of=$(flash_drive) bs=1M status=progress
 	rm ./flash.iso
 	sudo umount $(flash_drive)1
+
+ha:
+	podman run -it -v ./units/home:/config:Z \
+	  ghcr.io/home-assistant/home-assistant:stable \
+	  python3 -m homeassistant --script check_config --config /config
+	scp ./units/home/configuration.yaml \
+	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
+	scp ./units/home/scripts.yaml \
+	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
+	scp ./units/home/scenes.yaml \
+	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
+	scp ./units/home/automations.yaml \
+	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
+	echo "Restarting Home Assistant via HTTP API…"
+	curl -v -X POST -H "Content-Type: application/json" \
+	  -H "Authorization: Bearer $$(grep '^HA_TOKEN=' secrets.env | cut -d '=' -f 2)" \
+	  https://home.local/api/services/homeassistant/restart
+
+ha_backup:
+	scp ai@susedko.local:/var/mnt/vault/.config/homeassistant/configuration.yaml \
+	  ./units/home/configuration.yaml
+	scp ai@susedko.local:/var/mnt/vault/.config/homeassistant/scenes.yaml \
+		./units/home/scenes.yaml
+	scp ai@susedko.local:/var/mnt/vault/.config/homeassistant/scripts.yaml \
+	  ./units/home/scripts.yaml
+	scp ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations.yaml \
+		./units/home/automations.yaml
+	scp ai@susedko.local:/var/mnt/vault/.config/zigbee2mqtt/configuration.yaml \
+	  ./units/home/zigbee2mqtt-configuration.yaml
 
 # Utils
 
@@ -116,7 +145,7 @@ units/domains/ssl.crt: units/domains/ssl.key
 	rm units/domains/ssl.csr
 
 secrets.env:
-	echo "AI_PASSWORD=$$(dd bs=512 if=/dev/urandom count=1 2>/dev/null | tr -dc '[:alpha:]' | fold -w $${1:-16} | head -n 1)\nHOME_PASSWORD=$$(dd bs=512 if=/dev/urandom count=1 2>/dev/null | tr -dc '[:alpha:]' | fold -w $${1:-16} | head -n 1)" > secrets.env
+	echo "AI_PASSWORD=$$(dd bs=512 if=/dev/urandom count=1 2>/dev/null | tr -dc '[:alpha:]' | fold -w $${1:-16} | head -n 1)\nHOME_PASSWORD=$$(dd bs=512 if=/dev/urandom count=1 2>/dev/null | tr -dc '[:alpha:]' | fold -w $${1:-16} | head -n 1)\nHA_TOKEN=\n" > secrets.env
 
 units/home/container-dbus.pp: units/home/container-dbus.te
 	checkmodule -M -m -o units/home/container-dbus.mod units/home/container-dbus.te
