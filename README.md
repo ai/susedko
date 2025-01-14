@@ -96,7 +96,7 @@ Install [`./sitniks.crt`](./sitniks.crt) CA certificate to your system.
 For MacOS:
 
 ```sh
-sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain ./sitniks.crt
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ./sitniks.crt
 ```
 
 For Linux CLI:
