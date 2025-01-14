@@ -35,9 +35,8 @@ storage:
     - path: /usr/local/share/container-dbus.pp
       mode: 0o444
     - path: /var/mnt/vault/.config/homeassistant/configuration.yaml
-      mode: 0o750
+      mode: 0o770
       overwrite: true
-      file: homeassistant-configuration.yaml
       user:
         name: home
       group:
