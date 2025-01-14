@@ -41,6 +41,27 @@ storage:
         name: home
       group:
         name: aivault
+    - path: /var/mnt/vault/.config/homeassistant/automations.yaml
+      mode: 0o770
+      overwrite: true
+      user:
+        name: home
+      group:
+        name: aivault
+    - path: /var/mnt/vault/.config/homeassistant/scripts.yaml
+      mode: 0o770
+      overwrite: true
+      user:
+        name: home
+      group:
+        name: aivault
+    - path: /var/mnt/vault/.config/homeassistant/scenes.yaml
+      mode: 0o770
+      overwrite: true
+      user:
+        name: home
+      group:
+        name: aivault
     - path: /var/mnt/vault/.config/mosquitto/config/mosquitto-passwords
       mode: 0o400
       overwrite: true
