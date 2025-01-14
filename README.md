@@ -87,3 +87,27 @@ Set to Nextcloud config at `/var/mnt/vault/nextcloud/config/config.php`:
   'overwrite.cli.url' => 'https://nextcloud.local',
   'overwriteprotocol' => 'https',
 ```
+
+
+## Prepare Clients for Local Domains
+
+Install [`./sitniks.crt`](./sitniks.crt) CA certificate to your system.
+
+For MacOS:
+
+```sh
+sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain ./sitniks.crt
+```
+
+For Linux CLI:
+
+```sh
+sudo dnf install nss-tools
+certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n sitnik -i ~/Dev/susedko/sitniks.crt
+sudo cp ~/Dev/susedko/sitniks.crt /etc/pki/ca-trust/source/anchors/sitniks.pem
+sudo update-ca-trust
+```
+
+For Firefox on Linux: go to `about:preferences#privacy`, click on `View Certificates`, and import `sitniks.crt`.
+
+For Chrome on Linux: go to `chrome://settings/certificates`, click on `Authorities`, and add `sitniks.crt`.
