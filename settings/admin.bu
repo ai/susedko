@@ -3,7 +3,7 @@ passwd:
     - name: admin
       uid: 1002
       ssh_authorized_keys:
-        - sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIEgx6uUvFq9oc3aLIFP4lXwD2pC2j1jjGyIq4XBEyxVgAAAABHNzaDo= andrey@sitnik.ru
+        - sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAICdU+eT8ehMEMpILicrcF1Uxv2Sj7MSIuwhTaJfRvcOpAAAABHNzaDo= andrey@sitnik.ru
       groups:
         - systemd-journal
         - sudo
