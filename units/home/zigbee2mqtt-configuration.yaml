@@ -51,6 +51,8 @@ devices:
     friendly_name: Light / IKEA E27 1055 / Kitchen 2
   '0x0015bc001b100b14':
     friendly_name: Meter / Frient Electricity LED 2
+  '0x90395efffe09f14f':
+    friendly_name: Blind / IKEA / Bedroom
 groups:
   '1':
     friendly_name: Light / Group / Bathroom
