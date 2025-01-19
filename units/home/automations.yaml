@@ -66,3 +66,18 @@
     - service: script.turn_on
       target:
         entity_id: script.turn_off_everything
+
+- alias: Уведомить о завершении уборки
+  trigger:
+    - platform: state
+      entity_id: vacuum.vacuum_roborock_q7
+      from: "cleaning"
+      to: "docked"
+  condition:
+    - condition: state
+      entity_id: input_boolean.notifications
+      state: "on"
+  action:
+    - service: notify.all
+      data:
+        message: "Робот-пылесос закончил уборку"
