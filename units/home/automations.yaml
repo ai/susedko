@@ -33,3 +33,39 @@
     - service: cover.close_cover
       target:
         entity_id: cover.blind_ikea_bedroom
+
+- id: start_eddie_sleep
+  alias: Укладываем Эди спать по расписанию
+  mode: single
+  trigger:
+    - platform: time
+      at: "20:00:00"
+  condition:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.eddie_sleep
+
+    - service: media_player.turn_on
+      target:
+        entity_id: media_player.tv_google
+
+    - delay: "00:00:05"
+
+    - service: media_player.volume_set
+      target:
+        entity_id: media_player.tv_google
+      data:
+        volume_level: 0.3
+
+    - service: media_player.play_media
+      data:
+        entity_id: media_player.tv_google
+        media_content_id: "https://www.youtube.com/watch?v=Uq7kyf1T_lk"
+        media_content_type: "video/youtube"
