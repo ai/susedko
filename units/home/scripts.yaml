@@ -6,7 +6,7 @@ turn_off_everything:
         entity_id: all
     - service: media_player.turn_off
       target:
-        entity_id: media_player.tv_google
+        entity_id: media_player.tv_remote
 
 prepare_eddie_for_sleep:
   alias: "Включить укладывание Эди спать"
@@ -16,18 +16,18 @@ prepare_eddie_for_sleep:
         entity_id: scene.eddie_sleep
     - service: media_player.turn_on
       target:
-        entity_id: media_player.tv_google
+        entity_id: media_player.tv_remote
     - delay: "00:00:05"
     - service: media_player.volume_set
       target:
-        entity_id: media_player.tv_google
+        entity_id: media_player.tv_remote
       data:
         volume_level: 0.3
     - service: media_player.play_media
       data:
         entity_id: media_player.tv_google
-        media_content_id: "https://www.youtube.com/watch?v=Uq7kyf1T_lk"
-        media_content_type: "video/youtube"
+        media_content_id: '{ "app_name": "youtube", "media_id": "Uq7kyf1T_lk"}'
+        media_content_type: cast
 
 alert:
   alias: Срочное предупреждение всем
