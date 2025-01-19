@@ -28,3 +28,21 @@ prepare_eddie_for_sleep:
         entity_id: media_player.tv_google
         media_content_id: "https://www.youtube.com/watch?v=Uq7kyf1T_lk"
         media_content_type: "video/youtube"
+
+alert:
+  alias: Срочное предупреждение всем
+  sequence:
+    - service: light.turn_on
+      data:
+        entity_id:
+          - light.elgato_light_air_kate
+          - light.elgato_light_air_andrey
+    - repeat:
+        count: 60
+        sequence:
+          - service: light.toggle
+            data:
+              entity_id:
+                - light.elgato_light_air_kate
+                - light.elgato_light_air_andrey
+          - delay: "1"

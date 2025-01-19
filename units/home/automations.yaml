@@ -101,3 +101,35 @@
       data:
         title: Дверь
         message: Открыта
+
+- id: water_leak_bathroom
+  alias: Уведомить о протечке воды в ванной
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.water_ikea_bathroom_water_leak
+      from: "off"
+      to: "on"
+  action:
+    - service: script.turn_on
+      target:
+        entity_id: script.alert
+    - service: notify.notify
+      data:
+        title: Ванная
+        message: Протечка воды
+
+- id: water_leak_washing_machine
+  alias: Уведомить о протечке воды от стиральной машины
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.water_ikea_washing_machine_water_leak
+      from: "off"
+      to: "on"
+  action:
+    - service: script.turn_on
+      target:
+        entity_id: script.alert
+    - service: notify.notify
+      data:
+        title: Ванная
+        message: Протечка воды
