@@ -19,9 +19,8 @@ prepare_eddie_for_sleep:
         entity_id: media_player.tv_remote
     - delay: "00:00:05"
     - service: media_player.volume_set
-      target:
-        entity_id: media_player.tv_remote
       data:
+        entity_id: media_player.tv_google
         volume_level: 0.3
     - service: media_player.play_media
       data:
