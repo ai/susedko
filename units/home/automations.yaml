@@ -50,7 +50,8 @@
   action:
     action: script.prepare_eddie_for_sleep
 
-- alias: Выключить всё, когда все ушли
+- id: turn_off_on_leaving
+  alias: Выключить всё, когда все ушли
   trigger:
     - platform: template
       value_template: >
@@ -67,7 +68,8 @@
       target:
         entity_id: script.turn_off_everything
 
-- alias: Уведомить о завершении уборки
+- id: notify_cleaning_finished
+  alias: Уведомить о завершении уборки
   trigger:
     - platform: state
       entity_id: vacuum.vacuum_roborock_q7
@@ -78,6 +80,24 @@
       entity_id: input_boolean.notifications
       state: "on"
   action:
-    - service: notify.all
+    - service: notify.notify
       data:
-        message: "Робот-пылесос закончил уборку"
+        title: Робот-пылесос
+        message: "Закончил уборку"
+
+- id: notify_door_opened
+  alias: Уведомить об открытии двери
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.door_ikea_main_contact
+      from: "off"
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: input_boolean.notifications
+      state: "on"
+  action:
+    - service: notify.notify
+      data:
+        title: Дверь
+        message: Открыта
