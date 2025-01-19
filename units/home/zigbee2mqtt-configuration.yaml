@@ -53,6 +53,12 @@ devices:
     friendly_name: Meter / Frient Electricity LED 2
   '0x90395efffe09f14f':
     friendly_name: Blind / IKEA / Bedroom
+  '0x0c2a6ffffe2c3bb0':
+    friendly_name: Door / IKEA / Main
+  '0x8c65a3fffe7015dc':
+    friendly_name: Water / IKEA / Washing Machine
+  '0xecf64cfffe27d62e':
+    friendly_name: Water / IKEA / Bathroom
 groups:
   '1':
     friendly_name: Light / Group / Bathroom
