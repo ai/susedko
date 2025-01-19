@@ -131,5 +131,5 @@
         entity_id: script.alert
     - service: notify.notify
       data:
-        title: Ванная
+        title: Стиральная машина
         message: Протечка воды
