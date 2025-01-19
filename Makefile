@@ -75,6 +75,7 @@ ha_backup:
 		./units/home/automations.yaml
 	scp ai@susedko.local:/var/mnt/vault/.config/zigbee2mqtt/configuration.yaml \
 	  ./units/home/zigbee2mqtt-configuration.yaml
+	sed -i '/auth_token:/d' units/home/zigbee2mqtt-configuration.yaml
 
 # Utils
 
