@@ -7,6 +7,7 @@ turn_off_everything:
     - service: media_player.turn_off
       target:
         entity_id: media_player.tv_google
+
 prepare_eddie_for_sleep:
   alias: "Включить укладывание Эди спать"
   sequence:
