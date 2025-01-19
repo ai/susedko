@@ -1,1 +1,35 @@
-[]
+- id: open_blind_at_dawn
+  alias: "Открыть штору на рассвете"
+  mode: single
+  trigger:
+    - platform: time
+      at: sensor.weather_sun_next_dawn
+  condition:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+  action:
+    - service: cover.open_cover
+      target:
+        entity_id: cover.blind_ikea_bedroom
+
+- id: close_blind_at_10
+  alias: "Закрыть штору в 10:00"
+  mode: single
+  trigger:
+    - platform: time
+      at: "10:00:00"
+  condition:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+  action:
+    - service: cover.close_cover
+      target:
+        entity_id: cover.blind_ikea_bedroom
