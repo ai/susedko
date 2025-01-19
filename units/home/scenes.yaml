@@ -13,5 +13,4 @@
       state: "off"
     light.light_ikea_e27_rgb_lounge:
       color_temp_kelvin: 2293
-      color_temp: 436
       state: "on"
