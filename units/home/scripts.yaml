@@ -37,6 +37,8 @@ alert:
         entity_id:
           - light.elgato_light_air_kate
           - light.elgato_light_air_andrey
+          - light.light_group_bathroom
+          - light.light_group_kitchen
     - repeat:
         count: 60
         sequence:
@@ -45,4 +47,6 @@ alert:
               entity_id:
                 - light.elgato_light_air_kate
                 - light.elgato_light_air_andrey
+                - light.light_group_bathroom
+                - light.light_group_kitchen
           - delay: "1"
