@@ -100,10 +100,26 @@
       entity_id: input_boolean.notifications
       state: "on"
   action:
-    - service: notify.notify
-      data:
-        title: Дверь
-        message: Открыта
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: person.andrey_sitnik
+              state: "not_home"
+          sequence:
+            - service: notify.mobile_app_atocha
+              data:
+                title: "Дверь"
+                message: "Открыта"
+        - conditions:
+            - condition: state
+              entity_id: person.ekaterina_sitnik
+              state: "not_home"
+          sequence:
+            - service: notify.mobile_app_pixel_7a
+              data:
+                title: "Дверь"
+                message: "Открыта"
+      default: []
 
 - id: water_leak_bathroom
   alias: Уведомить о протечке воды в ванной
