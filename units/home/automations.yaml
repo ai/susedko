@@ -16,12 +16,33 @@
       target:
         entity_id: cover.blind_ikea_bedroom
 
-- id: close_blind_at_10
-  alias: "Закрыть штору в 10:00"
+- id: close_blind_morning
+  alias: "Закрыть штору утром"
   mode: single
   trigger:
     - platform: time
       at: "10:00:00"
+  condition:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+    - condition: numeric_state
+      entity_id: sensor.weather_waqi_temperature
+      below: 15
+  action:
+    - service: cover.close_cover
+      target:
+        entity_id: cover.blind_ikea_bedroom
+
+- id: close_blind_evening
+  alias: "Закрыть штору вечером"
+  mode: single
+  trigger:
+    - platform: time
+      at: "20:00:00"
   condition:
     - condition: state
       entity_id: input_boolean.stop
