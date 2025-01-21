@@ -59,6 +59,16 @@ devices:
     friendly_name: Water / IKEA / Washing Machine
   '0xecf64cfffe27d62e':
     friendly_name: Water / IKEA / Bathroom
+  '0xa4c13895ecdde75d':
+    friendly_name: Temperature / Tuya / Andrey
+  '0xa4c138c75a35df06':
+    friendly_name: Temperature / Tuya / Lounge
+  '0xa4c1386f1508f97d':
+    friendly_name: Temperature / Tuya / Kate
+  '0xa4c138fbdd629c0c':
+    friendly_name: Temperature / Tuya / Children
+  '0xa4c13860dc937739':
+    friendly_name: Temperature / Tuya / Bedroom
 groups:
   '1':
     friendly_name: Light / Group / Bathroom
