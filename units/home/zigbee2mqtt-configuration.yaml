@@ -69,6 +69,8 @@ devices:
     friendly_name: Temperature / Tuya / Children
   '0xa4c13860dc937739':
     friendly_name: Temperature / Tuya / Bedroom
+  '0xa4c13838c42fa3a1':
+    friendly_name: Presence / Tuya / Kitchen
 groups:
   '1':
     friendly_name: Light / Group / Bathroom
