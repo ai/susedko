@@ -50,8 +50,6 @@ ha: secrets.env
 	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
 	scp ./units/home/scripts.yaml \
 	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
-	scp ./units/home/scenes.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
 	scp ./units/home/automations.yaml \
 	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
 	@HA_TOKEN=$$(grep '^HA_TOKEN=' secrets.env | cut -d '=' -f 2) && \
@@ -67,8 +65,6 @@ ha: secrets.env
 ha_backup:
 	scp ai@susedko.local:/var/mnt/vault/.config/homeassistant/configuration.yaml \
 	  ./units/home/configuration.yaml
-	scp ai@susedko.local:/var/mnt/vault/.config/homeassistant/scenes.yaml \
-		./units/home/scenes.yaml
 	scp ai@susedko.local:/var/mnt/vault/.config/homeassistant/scripts.yaml \
 	  ./units/home/scripts.yaml
 	scp ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations.yaml \
