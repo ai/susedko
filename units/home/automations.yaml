@@ -231,14 +231,6 @@
     - condition: state
       entity_id: input_boolean.cat_alone
       state: "off"
-    - condition: or
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.presence_tuya_kitchen_illuminance
-          below: 100
-        - condition: time
-          after: "sensor.weather_sun_next_rising"
-          before: "sensor.weather_sun_next_rising"
   action:
     - service: light.turn_on
       target:
