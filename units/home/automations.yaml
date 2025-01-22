@@ -97,7 +97,6 @@
   trigger:
     - platform: state
       entity_id: vacuum.vacuum_roborock_q7_max
-      from: "cleaning"
       to: "docked"
   condition:
     - condition: state
