@@ -215,7 +215,7 @@
   action:
     - service: vacuum.start
       target:
-        entity_id: vacuum.vacuum_roborock_q7
+        entity_id: vacuum.vacuum_roborock_q7_max
 
 - id: kitchen_light_on_motion
   alias: Включить свет на кухне при движении
