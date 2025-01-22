@@ -92,22 +92,6 @@
       target:
         entity_id: script.turn_off_everything
 
-- id: notify_cleaning_finished
-  alias: Уведомить о завершении уборки
-  trigger:
-    - platform: state
-      entity_id: vacuum.vacuum_roborock_q7_max
-      to: "docked"
-  condition:
-    - condition: state
-      entity_id: input_boolean.notifications
-      state: "on"
-  action:
-    - service: notify.notify
-      data:
-        title: Робот-пылесос
-        message: "Закончил уборку"
-
 - id: notify_door_opened
   alias: Уведомить об открытии двери
   trigger:
@@ -172,6 +156,22 @@
       data:
         title: Стиральная машина
         message: Протечка воды
+
+- id: notify_cleaning_finished
+  alias: Уведомить о завершении уборки
+  trigger:
+    - platform: state
+      entity_id: vacuum.vacuum_roborock_q7_max
+      to: "docked"
+  condition:
+    - condition: state
+      entity_id: input_boolean.notifications
+      state: "on"
+  action:
+    - service: notify.notify
+      data:
+        title: Робот-пылесос
+        message: "Закончил уборку"
 
 - id: mark_vacuum_started_today
   alias: Отметить, что пылесос был запущен сегодня
