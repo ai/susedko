@@ -96,7 +96,7 @@
   alias: Уведомить о завершении уборки
   trigger:
     - platform: state
-      entity_id: vacuum.vacuum_roborock_q7
+      entity_id: vacuum.vacuum_roborock_q7_max
       from: "cleaning"
       to: "docked"
   condition:
@@ -178,7 +178,7 @@
   alias: Отметить, что пылесос был запущен сегодня
   trigger:
     - platform: state
-      entity_id: vacuum.vacuum_roborock_q7
+      entity_id: vacuum.vacuum_roborock_q7_max
       from: "docked"
       to: "cleaning"
   action:
