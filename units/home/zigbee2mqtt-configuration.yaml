@@ -71,6 +71,12 @@ devices:
     friendly_name: Temperature / Tuya / Bedroom
   '0xa4c13838c42fa3a1':
     friendly_name: Presence / Tuya / Kitchen
+  '0xacbac0fffebbd757':
+    friendly_name: Wall Switch / Yandex / Lounge
+  '0xacbac0fffebe4a11':
+    friendly_name: Wall Switch / Yandex / Bathroom
+  '0xacbac0fffebbd0f1':
+    friendly_name: Wall Switch / Yandex / Kitchen
 groups:
   '1':
     friendly_name: Light / Group / Bathroom
