@@ -164,7 +164,7 @@
       entity_id: vacuum.vacuum_roborock_q7_max
       from:
         - "cleaning"
-        - "returning_home"
+        - "returning"
         - "emptying_the_bin"
       to: "docked"
   condition:
