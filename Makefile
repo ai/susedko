@@ -52,6 +52,8 @@ ha: secrets.env
 	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
 	scp ./units/home/automations.yaml \
 	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
+			scp ./units/home/wall-switch.yaml \
+	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/blueprints/automation/
 	@HA_TOKEN=$$(grep '^HA_TOKEN=' secrets.env | cut -d '=' -f 2) && \
 	  curl -X POST -H "Authorization: Bearer $$HA_TOKEN" \
 	    https://home.local/api/config/core/check_config && \

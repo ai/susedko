@@ -77,6 +77,13 @@ storage:
         name: home
       group:
         name: aivault
+    - path: /var/mnt/vault/.config/homeassistant/blueprints/automation/wall-switch.yaml
+      mode: 0o750
+      overwrite: true
+      user:
+        name: home
+      group:
+        name: aivault
     - path: /usr/local/etc/home.env
       mode: 0o400
       user:
@@ -86,6 +93,12 @@ storage:
   directories:
     - path: /var/mnt/vault/.config/homeassistant
       mode: 0o755
+      user:
+        name: home
+      group:
+        name: aivault
+    - path: /var/mnt/vault/.config/homeassistant/blueprints/automation
+      mode: 0o775
       user:
         name: home
       group:

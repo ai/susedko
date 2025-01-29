@@ -13,8 +13,11 @@ serial:
   rtscts: false
 advanced:
   channel: 25
+  log_level: info
 homeassistant:
   enabled: true
+  experimental_event_entities: false
+  legacy_action_sensor: false
 version: 4
 devices:
   '0xec1bbdfffed34bcd':
@@ -71,12 +74,15 @@ devices:
     friendly_name: Temperature / Tuya / Bedroom
   '0xa4c13838c42fa3a1':
     friendly_name: Presence / Tuya / Kitchen
-  '0xacbac0fffebbd757':
-    friendly_name: Wall Switch / Yandex / Lounge
   '0xacbac0fffebe4a11':
     friendly_name: Wall Switch / Yandex / Bathroom
+    state_action: true
+  '0xacbac0fffebbd757':
+    friendly_name: Wall Switch / Yandex / Lounge
+    state_action: true
   '0xacbac0fffebbd0f1':
     friendly_name: Wall Switch / Yandex / Kitchen
+    state_action: true
 groups:
   '1':
     friendly_name: Light / Group / Bathroom

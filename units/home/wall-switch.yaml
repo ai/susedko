@@ -1,0 +1,114 @@
+blueprint:
+  name: Выключатель
+  description: Логика работы настенных выключателей с 4 кнопками
+  domain: automation
+  input:
+    wallswitch:
+      name: ID устройства
+      selector:
+        device:
+          integration: mqtt
+          manufacturer: Yandex
+    light:
+      name: Лампа для управления
+      selector:
+        entity:
+          filter:
+            domain: light
+    extra_on:
+      name: Дополнительное действие при включении
+      selector:
+        action: {}
+      default: []
+    extra_off:
+      name: Дополнительное действие при включении
+      selector:
+        action: {}
+      default: []
+
+mode: queued
+
+triggers:
+  - platform: device
+    device_id: !input wallswitch
+    domain: mqtt
+    type: action
+    subtype: toggle_b1_up
+    id: turn_on
+  - platform: device
+    device_id: !input wallswitch
+    domain: mqtt
+    type: action
+    subtype: toggle_b1_down
+    id: turn_off
+  - platform: device
+    device_id: !input wallswitch
+    domain: mqtt
+    type: action
+    subtype: toggle_b2_up
+    id: brighter
+  - platform: device
+    device_id: !input wallswitch
+    domain: mqtt
+    type: action
+    subtype: toggle_b2_down
+    id: darker
+
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: turn_on
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: !input light
+          - sequence: !input extra_on
+
+      - conditions:
+          - condition: trigger
+            id: turn_off
+        sequence:
+          - service: light.turn_off
+            target:
+              entity_id: !input light
+          - sequence: !input extra_off
+
+      - conditions:
+          - condition: trigger
+            id: brighter
+        sequence:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: !input light
+                    state: "on"
+                sequence:
+                  - action: light.turn_on
+                    target:
+                      entity_id: !input light
+                    data:
+                      brightness_step_pct: 10
+              - conditions:
+                  - condition: state
+                    entity_id: !input light
+                    state: "off"
+                sequence:
+                  - service: light.turn_on
+                    target:
+                      entity_id: !input light
+
+      - conditions:
+          - condition: trigger
+            id: darker
+          - condition: state
+            entity_id: !input light
+            state: "on"
+        sequence:
+          - action: light.turn_on
+            target:
+              entity_id: !input light
+            data:
+              brightness_step_pct: -10
+
+    default: []
