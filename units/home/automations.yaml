@@ -244,5 +244,6 @@
         from: "on"
         to: "off"
     - action: light.turn_off
-      target:
+      data:
         entity_id: light.light_group_kitchen
+        transition: 16
