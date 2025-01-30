@@ -280,3 +280,21 @@
         - action: switch.turn_off
           target:
             entity_id: switch.wall_switch_yandex_bathroom_1
+
+- id: bathroom_light_on_motion
+  alias: Включить свет в ванной при движении
+  use_blueprint:
+    path: presence.yaml
+    input:
+      presence_sensor: binary_sensor.presence_tuya_bathroom_presence
+      light:
+        entity_id: light.light_group_bathroom
+
+- id: toilet_light_on_motion
+  alias: Включить свет в туалете при движении
+  use_blueprint:
+    path: presence.yaml
+    input:
+      presence_sensor: binary_sensor.presence_tuya_toilet_presence
+      light:
+        entity_id: light.light_ikea_gu10_toilet

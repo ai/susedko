@@ -83,6 +83,10 @@ devices:
   '0xacbac0fffebbd0f1':
     friendly_name: Wall Switch / Yandex / Kitchen
     state_action: true
+  '0xa4c13885a3be18a7':
+    friendly_name: Presence / Tuya / Toilet
+  '0xa4c138749b6c3720':
+    friendly_name: Presence / Tuya / Bathroom
 groups:
   '1':
     friendly_name: Light / Group / Bathroom
