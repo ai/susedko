@@ -3,7 +3,7 @@ blueprint:
   description: Логика работы настенных выключателей с 4 кнопками
   domain: automation
   input:
-    wallswitch:
+    wall_switch:
       name: ID устройства
       selector:
         device:
@@ -30,49 +30,49 @@ mode: queued
 
 triggers:
   - platform: device
-    device_id: !input wallswitch
+    device_id: !input wall_switch
     domain: mqtt
     type: action
     subtype: toggle_b1_up
     id: turn_on
   - platform: device
-    device_id: !input wallswitch
+    device_id: !input wall_switch
     domain: mqtt
     type: action
     subtype: toggle_b1_down
     id: turn_off
   - platform: device
-    device_id: !input wallswitch
+    device_id: !input wall_switch
     domain: mqtt
     type: action
     subtype: toggle_b2_up
     id: brighter
   - platform: device
-    device_id: !input wallswitch
+    device_id: !input wall_switch
     domain: mqtt
     type: action
     subtype: toggle_b2_down
     id: darker
   - platform: device
-    device_id: !input wallswitch
+    device_id: !input wall_switch
     domain: mqtt
     type: action
     subtype: on_b2_up
     id: fast_brighter
   - platform: device
-    device_id: !input wallswitch
+    device_id: !input wall_switch
     domain: mqtt
     type: action
     subtype: on_b2_down
     id: fast_darker
   - platform: device
-    device_id: !input wallswitch
+    device_id: !input wall_switch
     domain: mqtt
     type: action
     subtype: off_b2_up
     id: full_brighter
   - platform: device
-    device_id: !input wallswitch
+    device_id: !input wall_switch
     domain: mqtt
     type: action
     subtype: off_b2_down

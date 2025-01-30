@@ -254,7 +254,7 @@
   use_blueprint:
     path: wall-switch.yaml
     input:
-      wallswitch: 4b07057170cdb07b760d2f31a4e0e5a5
+      wall_switch: 4b07057170cdb07b760d2f31a4e0e5a5
       light: light.light_group_kitchen
 
 - id: lounge_wall_switch_buttons
@@ -262,7 +262,7 @@
   use_blueprint:
     path: wall-switch.yaml
     input:
-      wallswitch: 3f13b7a4f814bac7b7f94f4a68a4aee1
+      wall_switch: 3f13b7a4f814bac7b7f94f4a68a4aee1
       light: light.light_ikea_e27_rgb_lounge
 
 - id: bathroom_wall_switch_buttons
@@ -270,7 +270,7 @@
   use_blueprint:
     path: wall-switch.yaml
     input:
-      wallswitch: e0f9d156e55b2a79a46d334c2522d795
+      wall_switch: e0f9d156e55b2a79a46d334c2522d795
       light: light.light_group_bathroom
       extra_on:
         - action: switch.turn_on
