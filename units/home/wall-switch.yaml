@@ -65,6 +65,18 @@ triggers:
     type: action
     subtype: on_b2_down
     id: fast_darker
+  - platform: device
+    device_id: !input wallswitch
+    domain: mqtt
+    type: action
+    subtype: off_b2_up
+    id: full_brighter
+  - platform: device
+    device_id: !input wallswitch
+    domain: mqtt
+    type: action
+    subtype: off_b2_down
+    id: full_darker
 
 actions:
   - choose:
@@ -115,13 +127,26 @@ actions:
             id: fast_brighter
           - condition: state
             entity_id: !input light
-            state: "off"
+            state: "on"
         sequence:
           - action: light.turn_on
             target:
               entity_id: !input light
             data:
               brightness_step_pct: 20
+
+      - conditions:
+          - condition: trigger
+            id: full_brighter
+          - condition: state
+            entity_id: !input light
+            state: "on"
+        sequence:
+          - action: light.turn_on
+            target:
+              entity_id: !input light
+            data:
+              brightness_pct: 100
 
       - conditions:
           - condition: trigger
@@ -148,5 +173,18 @@ actions:
               entity_id: !input light
             data:
               brightness_step_pct: -20
+
+      - conditions:
+          - condition: trigger
+            id: full_darker
+          - condition: state
+            entity_id: !input light
+            state: "on"
+        sequence:
+          - action: light.turn_on
+            target:
+              entity_id: !input light
+            data:
+              brightness_pct: 1
 
     default: []
