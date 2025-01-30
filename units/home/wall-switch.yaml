@@ -97,7 +97,7 @@ actions:
               - conditions:
                   - condition: state
                     entity_id: !input light
-                    state: "off"
+                    state: "on"
                 sequence:
                   - action: light.turn_off
                     target:
@@ -105,7 +105,7 @@ actions:
               - conditions:
                   - condition: state
                     entity_id: !input light
-                    state: "on"
+                    state: "off"
                 sequence:
                   - action: light.turn_on
                     target:
