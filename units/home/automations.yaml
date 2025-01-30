@@ -215,6 +215,9 @@
     - condition: state
       entity_id: input_boolean.cat_alone
       state: "off"
+    - condition: time
+      after: "08:40:00"
+      before: "22:00:00"
   action:
     - service: vacuum.start
       target:
