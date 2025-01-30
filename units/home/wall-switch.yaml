@@ -84,7 +84,7 @@ actions:
           - condition: trigger
             id: turn_on
         sequence:
-          - service: light.turn_on
+          - action: light.turn_on
             target:
               entity_id: !input light
           - sequence: !input extra_on
@@ -93,10 +93,25 @@ actions:
           - condition: trigger
             id: turn_off
         sequence:
-          - service: light.turn_off
-            target:
-              entity_id: !input light
-          - sequence: !input extra_off
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: !input light
+                    state: "off"
+                sequence:
+                  - action: light.turn_off
+                    target:
+                      entity_id: !input light
+              - conditions:
+                  - condition: state
+                    entity_id: !input light
+                    state: "on"
+                sequence:
+                  - action: light.turn_on
+                    target:
+                      entity_id: !input light
+                    data:
+                      brightness_pct: 1
 
       - conditions:
           - condition: trigger
@@ -118,7 +133,7 @@ actions:
                     entity_id: !input light
                     state: "off"
                 sequence:
-                  - service: light.turn_on
+                  - action: light.turn_on
                     target:
                       entity_id: !input light
 
@@ -171,7 +186,7 @@ actions:
                     entity_id: !input light
                     state: "off"
                 sequence:
-                  - service: light.turn_on
+                  - action: light.turn_on
                     target:
                       entity_id: !input light
                     data:
