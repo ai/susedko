@@ -12,6 +12,8 @@ blueprint:
               domain: binary_sensor
             - device_class: motion
               domain: binary_sensor
+            - device_class: presence
+              domain: binary_sensor
     light:
       name: Лампа
       selector:
