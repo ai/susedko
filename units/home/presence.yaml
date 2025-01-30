@@ -20,6 +20,11 @@ blueprint:
         target:
           entity:
             domain: light
+    extra_off:
+      name: Дополнительное действие при включении
+      selector:
+        action: {}
+      default: []
 
 mode: queued
 
@@ -49,3 +54,5 @@ actions:
     target: !input light
     data:
       transition: 16
+  - delay: "00:00:16"
+  - sequence: !input extra_off
