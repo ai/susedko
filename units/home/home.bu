@@ -78,7 +78,14 @@ storage:
       group:
         name: aivault
     - path: /var/mnt/vault/.config/homeassistant/blueprints/automation/wall-switch.yaml
-      mode: 0o750
+      mode: 0o770
+      overwrite: true
+      user:
+        name: home
+      group:
+        name: aivault
+    - path: /var/mnt/vault/.config/homeassistant/blueprints/automation/presence.yaml
+      mode: 0o770
       overwrite: true
       user:
         name: home

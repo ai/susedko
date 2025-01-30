@@ -1,0 +1,49 @@
+blueprint:
+  name: Свет по датчику присутствия
+  description: Включает свет когда кто-то находится в комнате
+  domain: automation
+  input:
+    presence_sensor:
+      name: Датчик присутствия
+      selector:
+        entity:
+          filter:
+            - device_class: occupancy
+              domain: binary_sensor
+            - device_class: motion
+              domain: binary_sensor
+    light:
+      name: Лампа
+      selector:
+        target:
+          entity:
+            domain: light
+
+mode: queued
+
+triggers:
+  - platform: state
+    entity_id: !input presence_sensor
+    from: "off"
+    to: "on"
+
+conditions:
+  - condition: state
+    entity_id: input_boolean.stop
+    state: "off"
+  - condition: state
+    entity_id: input_boolean.cat_alone
+    state: "off"
+
+actions:
+  - action: light.turn_on
+    target: !input light
+  - wait_for_trigger:
+      trigger: state
+      entity_id: !input presence_sensor
+      from: "on"
+      to: "off"
+  - action: light.turn_off
+    target: !input light
+    data:
+      transition: 16

@@ -242,31 +242,12 @@
 
 - id: kitchen_light_on_motion
   alias: Включить свет на кухне при движении
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.presence_tuya_kitchen_presence
-      from: "off"
-      to: "on"
-  condition:
-    - condition: state
-      entity_id: input_boolean.stop
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.cat_alone
-      state: "off"
-  action:
-    - service: light.turn_on
-      target:
+  use_blueprint:
+    path: presence.yaml
+    input:
+      presence_sensor: binary_sensor.presence_tuya_kitchen_presence
+      light:
         entity_id: light.light_group_kitchen
-    - wait_for_trigger:
-        trigger: state
-        entity_id: binary_sensor.presence_tuya_kitchen_presence
-        from: "on"
-        to: "off"
-    - action: light.turn_off
-      data:
-        entity_id: light.light_group_kitchen
-        transition: 16
 
 - id: kitchen_wall_switch_buttons
   alias: Управление светом на кухне с помощью выключателя
