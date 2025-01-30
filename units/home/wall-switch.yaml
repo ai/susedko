@@ -155,11 +155,27 @@ actions:
             entity_id: !input light
             state: "on"
         sequence:
-          - action: light.turn_on
-            target:
-              entity_id: !input light
-            data:
-              brightness_step_pct: -10
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: !input light
+                    state: "on"
+                sequence:
+                  - action: light.turn_on
+                    target:
+                      entity_id: !input light
+                    data:
+                      brightness_step_pct: -10
+              - conditions:
+                  - condition: state
+                    entity_id: !input light
+                    state: "off"
+                sequence:
+                  - service: light.turn_on
+                    target:
+                      entity_id: !input light
+                    data:
+                      brightness_pct: 1
 
       - conditions:
           - condition: trigger
