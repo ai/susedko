@@ -157,6 +157,22 @@
         title: Стиральная машина
         message: Протечка воды
 
+- id: notify_cleaning_started
+  alias: Уведомить о начале уборки
+  trigger:
+    - platform: state
+      entity_id: vacuum.vacuum_roborock_q7_max
+      to: "cleaning"
+  condition:
+    - condition: state
+      entity_id: input_boolean.notifications
+      state: "on"
+  action:
+    - service: notify.notify
+      data:
+        title: Робот-пылесос
+        message: "Начал уборку"
+
 - id: notify_cleaning_finished
   alias: Уведомить о завершении уборки
   trigger:
