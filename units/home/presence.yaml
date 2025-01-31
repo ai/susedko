@@ -45,6 +45,8 @@ conditions:
 actions:
   - action: light.turn_on
     target: !input light
+    data:
+      transition: 1
   - wait_for_trigger:
       trigger: state
       entity_id: !input presence_sensor
