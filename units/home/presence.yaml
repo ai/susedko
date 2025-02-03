@@ -45,8 +45,6 @@ conditions:
 actions:
   - action: light.turn_on
     target: !input light
-    data:
-      transition: 1
   - wait_for_trigger:
       trigger: state
       entity_id: !input presence_sensor
@@ -54,7 +52,5 @@ actions:
       to: "off"
   - action: light.turn_off
     target: !input light
-    data:
-      transition: 16
   - delay: "00:00:16"
   - sequence: !input extra_off
