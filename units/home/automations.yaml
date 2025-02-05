@@ -302,3 +302,27 @@
       presence_sensor: binary_sensor.presence_tuya_toilet_presence
       light:
         entity_id: light.light_ikea_gu10_toilet
+
+- id: adaptive_lights_sync
+  alias: Управление сменой цвета ламп при переключении автоматизации
+  trigger:
+    - platform: state
+      entity_id: input_boolean.stop
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.stop
+              state: "on"
+          sequence:
+            - service: script.turn_on
+              target:
+                entity_id: switch.adaptive_lighting_integration_adaptive_lights
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.stop
+              state: "off"
+          sequence:
+            - service: script.turn_off
+              target:
+                entity_id: switch.adaptive_lighting_integration_adaptive_lights
