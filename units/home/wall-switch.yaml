@@ -21,7 +21,7 @@ blueprint:
         action: {}
       default: []
     extra_off:
-      name: Дополнительное действие при включении
+      name: Дополнительное действие при выключении
       selector:
         action: {}
       default: []
