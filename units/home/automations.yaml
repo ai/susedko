@@ -332,3 +332,25 @@
             - service: script.turn_off
               target:
                 entity_id: switch.adaptive_lighting_integration_adaptive_lights
+
+- id: night_mode_enable
+  alias: Включить ночной режим
+  mode: single
+  trigger:
+    - platform: time
+      at: "00:00:00"
+  action:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.adaptive_lighting_sleep_mode_integration_adaptive_lights
+
+- id: night_mode_disable
+  alias: Выключить ночной режим
+  mode: single
+  trigger:
+    - platform: time
+      at: "07:00:00"
+  action:
+    - service: switch.turn_off
+      target:
+        entity_id: switch.adaptive_lighting_sleep_mode_integration_adaptive_lights
