@@ -29,6 +29,11 @@ blueprint:
       name: Код комнаты
       selector:
         text:
+    scene_helper:
+      name: "Индекс сцены"
+      selector:
+        entity:
+          domain: input_number
 
 mode: queued
 
@@ -84,6 +89,21 @@ triggers:
 
 variables:
   current_room: !input room
+  current_scene_helper: !input scene_helper
+  matched_scenes: >
+    {{ states.scene
+      | selectattr('entity_id','match','^scene\\.' ~ current_room)
+      | map(attribute='entity_id')
+      | sort
+      | list }}
+  current_scene_index: "{{ states[current_scene_helper].state | int }}"
+  next_scene_index: >
+    {% set length = matched_scenes | length %}
+    {% if length == 0 %}
+      -1
+    {% else %}
+      {{ (current_scene_index + 1) % length }}
+    {% endif %}
 
 actions:
   - choose:
@@ -91,10 +111,38 @@ actions:
           - condition: trigger
             id: turn_on
         sequence:
-          - action: light.turn_on
-            target:
-              entity_id: !input light
-          - sequence: !input extra_on
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: !input light
+                    state: "on"
+                sequence:
+                  - choose:
+                      - conditions: "{{ next_scene_index == -1 }}"
+                        sequence:
+                          - service: notify.mobile_app_atocha
+                            data:
+                              title: "Отладка"
+                              message: >
+                                No scenes found for room {{ current_room }}
+                      - conditions: "{{ next_scene_index != -1 }}"
+                        sequence:
+                          - service: input_number.set_value
+                            data:
+                              entity_id: !input scene_helper
+                              value: "{{ next_scene_index }}"
+                          - service: scene.turn_on
+                            data:
+                              entity_id: "{{ matched_scenes[next_scene_index] }}"
+              - conditions:
+                  - condition: state
+                    entity_id: !input light
+                    state: "off"
+                sequence:
+                  - action: light.turn_on
+                    target:
+                      entity_id: !input light
+                  - sequence: !input extra_on
 
       - conditions:
           - condition: trigger
