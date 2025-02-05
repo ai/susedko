@@ -137,6 +137,7 @@ actions:
                   - action: light.turn_on
                     target:
                       entity_id: !input light
+                  - sequence: !input extra_on
 
       - conditions:
           - condition: trigger
