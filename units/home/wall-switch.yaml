@@ -25,6 +25,10 @@ blueprint:
       selector:
         action: {}
       default: []
+    room:
+      name: Код комнаты
+      selector:
+        text:
 
 mode: queued
 
@@ -78,6 +82,9 @@ triggers:
     subtype: off_b2_down
     id: full_darker
 
+variables:
+  current_room: !input room
+
 actions:
   - choose:
       - conditions:
@@ -108,11 +115,10 @@ actions:
                     entity_id: !input light
                     state: "off"
                 sequence:
-                  - action: light.turn_on
-                    target:
-                      entity_id: !input light
+                  - service: scene.turn_on
                     data:
-                      brightness_pct: 1
+                      entity_id: >
+                        {{ 'scene.' ~ current_room ~ '_night' }}
 
       - conditions:
           - condition: trigger
@@ -188,11 +194,10 @@ actions:
                     entity_id: !input light
                     state: "off"
                 sequence:
-                  - action: light.turn_on
-                    target:
-                      entity_id: !input light
+                  - service: scene.turn_on
                     data:
-                      brightness_pct: 1
+                      entity_id: >
+                        {{ 'scene.' ~ current_room ~ '_night' }}
 
       - conditions:
           - condition: trigger
