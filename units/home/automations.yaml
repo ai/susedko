@@ -358,7 +358,7 @@
 - id: low_battery_notify
   alias: Уведомить о разряде батареи
   variables:
-    threshold: 50
+    threshold: 30
     sensors: >-
       {% set result = namespace(sensors=[]) %}
       {% for state in states.sensor | selectattr('attributes.device_class', '==', 'battery') %}
