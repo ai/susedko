@@ -120,18 +120,18 @@ actions:
                   - choose:
                       - conditions: "{{ next_scene_index == -1 }}"
                         sequence:
-                          - service: notify.mobile_app_atocha
+                          - action: notify.mobile_app_atocha
                             data:
                               title: "Отладка"
                               message: >
                                 No scenes found for room {{ current_room }}
                       - conditions: "{{ next_scene_index != -1 }}"
                         sequence:
-                          - service: input_number.set_value
+                          - action: input_number.set_value
                             data:
                               entity_id: !input scene_helper
                               value: "{{ next_scene_index }}"
-                          - service: scene.turn_on
+                          - action: scene.turn_on
                             data:
                               entity_id: "{{ matched_scenes[next_scene_index] }}"
               - conditions:
@@ -163,7 +163,7 @@ actions:
                     entity_id: !input light
                     state: "off"
                 sequence:
-                  - service: scene.turn_on
+                  - action: scene.turn_on
                     data:
                       entity_id: >
                         {{ 'scene.' ~ current_room ~ '_night' }}
@@ -242,7 +242,7 @@ actions:
                     entity_id: !input light
                     state: "off"
                 sequence:
-                  - service: scene.turn_on
+                  - action: scene.turn_on
                     data:
                       entity_id: >
                         {{ 'scene.' ~ current_room ~ '_night' }}

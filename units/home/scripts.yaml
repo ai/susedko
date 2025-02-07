@@ -1,24 +1,24 @@
 turn_off_everything:
   alias: "Выключить всё"
   sequence:
-    - service: light.turn_off
+    - action: light.turn_off
       target:
         entity_id: all
-    - service: media_player.turn_off
+    - action: media_player.turn_off
       target:
         entity_id: media_player.tv_remote
 
 prepare_eddie_for_sleep:
   alias: "Включить укладывание Эди спать"
   sequence:
-    - service: scene.turn_on
+    - action: scene.turn_on
       target:
         entity_id: scene.eddie_sleep
-    - service: media_player.turn_on
+    - action: media_player.turn_on
       target:
         entity_id: media_player.tv_remote
     - delay: "00:00:05"
-    - service: media_player.volume_set
+    - action: media_player.volume_set
       data:
         entity_id: media_player.tv_google
         volume_level: 0.4
@@ -31,7 +31,7 @@ prepare_eddie_for_sleep:
 alert:
   alias: Срочное предупреждение всем
   sequence:
-    - service: light.turn_on
+    - action: light.turn_on
       data:
         entity_id:
           - light.elgato_light_air_kate
@@ -41,7 +41,7 @@ alert:
     - repeat:
         count: 60
         sequence:
-          - service: light.toggle
+          - action: light.toggle
             data:
               entity_id:
                 - light.elgato_light_air_kate

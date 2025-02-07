@@ -12,7 +12,7 @@
       entity_id: input_boolean.cat_alone
       state: "off"
   action:
-    - service: cover.open_cover
+    - action: cover.open_cover
       target:
         entity_id: cover.blind_ikea_bedroom
 
@@ -33,7 +33,7 @@
       entity_id: sensor.weather_waqi_temperature
       below: 15
   action:
-    - service: cover.close_cover
+    - action: cover.close_cover
       target:
         entity_id: cover.blind_ikea_bedroom
 
@@ -54,7 +54,7 @@
       entity_id: sensor.weather_waqi_temperature
       below: 15
   action:
-    - service: cover.close_cover
+    - action: cover.close_cover
       target:
         entity_id: cover.blind_ikea_bedroom
 
@@ -88,7 +88,7 @@
       entity_id: input_boolean.guests
       state: "off"
   action:
-    - service: script.turn_on
+    - action: script.turn_on
       target:
         entity_id: script.turn_off_everything
 
@@ -115,7 +115,7 @@
               entity_id: person.andrey_sitnik
               state: "not_home"
           then:
-            - service: notify.mobile_app_atocha
+            - action: notify.mobile_app_atocha
               data:
                 title: "Дверь"
                 message: "Открыта"
@@ -143,7 +143,7 @@
               entity_id: person.ekaterina_sitnik
               state: "not_home"
           then:
-            - service: notify.mobile_app_pixel_7a
+            - action: notify.mobile_app_pixel_7a
               data:
                 title: "Дверь"
                 message: "Открыта"
@@ -156,10 +156,10 @@
       from: "off"
       to: "on"
   action:
-    - service: script.turn_on
+    - action: script.turn_on
       target:
         entity_id: script.alert
-    - service: notify.notify
+    - action: notify.notify
       data:
         title: Ванная
         message: Протечка воды
@@ -172,10 +172,10 @@
       from: "off"
       to: "on"
   action:
-    - service: script.turn_on
+    - action: script.turn_on
       target:
         entity_id: script.alert
-    - service: notify.notify
+    - action: notify.notify
       data:
         title: Стиральная машина
         message: Протечка воды
@@ -191,7 +191,7 @@
       entity_id: input_boolean.notifications
       state: "on"
   action:
-    - service: notify.notify
+    - action: notify.notify
       data:
         title: Робот-пылесос
         message: "Начал уборку"
@@ -211,7 +211,7 @@
       entity_id: input_boolean.notifications
       state: "on"
   action:
-    - service: notify.notify
+    - action: notify.notify
       data:
         title: Робот-пылесос
         message: "Закончил уборку"
@@ -224,7 +224,7 @@
       from: "docked"
       to: "cleaning"
   action:
-    - service: input_boolean.turn_on
+    - action: input_boolean.turn_on
       data:
         entity_id: input_boolean.vacuum_was_run_today
 
@@ -234,7 +234,7 @@
     - platform: time
       at: "04:00:00"
   action:
-    - service: input_boolean.turn_off
+    - action: input_boolean.turn_off
       data:
         entity_id: input_boolean.vacuum_was_run_today
 
@@ -258,7 +258,7 @@
       after: "08:40:00"
       before: "22:00:00"
   action:
-    - service: vacuum.start
+    - action: vacuum.start
       target:
         entity_id: vacuum.vacuum_roborock_q7_max
 
@@ -343,7 +343,7 @@
               entity_id: input_boolean.stop
               state: "on"
           sequence:
-            - service: script.turn_on
+            - action: script.turn_on
               target:
                 entity_id: switch.adaptive_lighting_integration_adaptive_lights
         - conditions:
@@ -351,7 +351,7 @@
               entity_id: input_boolean.stop
               state: "off"
           sequence:
-            - service: script.turn_off
+            - action: script.turn_off
               target:
                 entity_id: switch.adaptive_lighting_integration_adaptive_lights
 
@@ -362,7 +362,7 @@
     - platform: time
       at: "00:00:00"
   action:
-    - service: switch.turn_on
+    - action: switch.turn_on
       target:
         entity_id: switch.adaptive_lighting_sleep_mode_integration_adaptive_lights
 
@@ -373,7 +373,7 @@
     - platform: time
       at: "07:00:00"
   action:
-    - service: switch.turn_off
+    - action: switch.turn_off
       target:
         entity_id: switch.adaptive_lighting_sleep_mode_integration_adaptive_lights
 
@@ -396,7 +396,7 @@
   condition:
     - "{{ sensors != '' }}"
   action:
-    - service: notify.mobile_app_atocha
+    - action: notify.mobile_app_atocha
       data:
         title: "Дом"
         message: "Садиться батарея: {{ sensors }}"
