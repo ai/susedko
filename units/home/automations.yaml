@@ -400,3 +400,43 @@
       data:
         title: "Дом"
         message: "Садиться батарея: {{ sensors }}"
+
+- id: disable_fast_presence
+  title: Экономить батарею датчиков присутствия
+  trigger:
+    - platform: template
+      value_template: >
+        {{ states.person | selectattr('state', 'eq', 'home') | list | count == 0 }}
+    - platform: time
+      at: "00:00:00"
+  action:
+    - action: select.select_option
+      target:
+        entity_id:
+          - select.presence_tuya_bathroom_motion_detection_mode
+          - select.presence_tuya_kitchen_motion_detection_mode
+          - select.presence_tuya_toilet_motion_detection_mode
+      data:
+        option: "only_pir"
+
+- id: enable_fast_presence
+  title: Ускорить обнаружение в датчиках присутствия
+  trigger:
+    - platform: template
+      value_template: >
+        {{ states.person | selectattr('state', 'eq', 'home') | list | count > 0 }}
+    - platform: time
+      at: "06:30:00"
+  condition:
+    - platform: template
+      value_template: >
+        {{ states.person | selectattr('state', 'eq', 'home') | list | count > 0 }}
+  action:
+    - action: select.select_option
+      target:
+        entity_id:
+          - select.presence_tuya_bathroom_motion_detection_mode
+          - select.presence_tuya_kitchen_motion_detection_mode
+          - select.presence_tuya_toilet_motion_detection_mode
+      data:
+        option: "pir_and_radar"
