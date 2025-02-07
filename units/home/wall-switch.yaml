@@ -35,7 +35,7 @@ blueprint:
         entity:
           domain: input_number
 
-mode: queued
+mode: restart
 
 triggers:
   - platform: device

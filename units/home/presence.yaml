@@ -26,7 +26,7 @@ blueprint:
         action: {}
       default: []
 
-mode: queued
+mode: restart
 
 triggers:
   - platform: state
