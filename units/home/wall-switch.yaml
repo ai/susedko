@@ -34,8 +34,16 @@ blueprint:
       selector:
         entity:
           domain: input_number
+    reverse:
+      name: Поменять местами левую и правую кнопки
+      default: false
+      selector:
+        boolean: {}
 
 mode: restart
+
+trigger_variables:
+  current_reverse: !input reverse
 
 triggers:
   - platform: device
@@ -43,48 +51,119 @@ triggers:
     domain: mqtt
     type: action
     subtype: toggle_b1_up
+    enabled: "{{ not current_reverse }}"
     id: turn_on
   - platform: device
     device_id: !input wall_switch
     domain: mqtt
     type: action
+    subtype: toggle_b2_up
+    enabled: "{{ current_reverse }}"
+    id: turn_on
+
+  - platform: device
+    device_id: !input wall_switch
+    domain: mqtt
+    type: action
     subtype: toggle_b1_down
+    enabled: "{{ not current_reverse }}"
     id: turn_off
   - platform: device
     device_id: !input wall_switch
     domain: mqtt
     type: action
+    subtype: toggle_b2_down
+    enabled: "{{ current_reverse }}"
+    id: turn_off
+
+  - platform: device
+    device_id: !input wall_switch
+    domain: mqtt
+    type: action
     subtype: toggle_b2_up
+    enabled: "{{ not current_reverse }}"
     id: brighter
   - platform: device
     device_id: !input wall_switch
     domain: mqtt
     type: action
+    subtype: toggle_b1_up
+    enabled: "{{ current_reverse }}"
+    id: brighter
+
+  - platform: device
+    device_id: !input wall_switch
+    domain: mqtt
+    type: action
     subtype: toggle_b2_down
+    enabled: "{{ not current_reverse }}"
     id: darker
   - platform: device
     device_id: !input wall_switch
     domain: mqtt
     type: action
+    subtype: toggle_b1_down
+    enabled: "{{ current_reverse }}"
+    id: darker
+
+  - platform: device
+    device_id: !input wall_switch
+    domain: mqtt
+    type: action
     subtype: on_b2_up
+    enabled: "{{ not current_reverse }}"
     id: fast_brighter
   - platform: device
     device_id: !input wall_switch
     domain: mqtt
     type: action
+    subtype: on_b1_up
+    enabled: "{{ current_reverse }}"
+    id: fast_brighter
+
+  - platform: device
+    device_id: !input wall_switch
+    domain: mqtt
+    type: action
     subtype: on_b2_down
+    enabled: "{{ not current_reverse }}"
     id: fast_darker
   - platform: device
     device_id: !input wall_switch
     domain: mqtt
     type: action
+    subtype: on_b1_down
+    enabled: "{{ current_reverse }}"
+    id: fast_darker
+
+  - platform: device
+    device_id: !input wall_switch
+    domain: mqtt
+    type: action
     subtype: off_b2_up
+    enabled: "{{ not current_reverse }}"
     id: full_brighter
   - platform: device
     device_id: !input wall_switch
     domain: mqtt
     type: action
+    subtype: off_b1_up
+    enabled: "{{ current_reverse }}"
+    id: full_brighter
+
+  - platform: device
+    device_id: !input wall_switch
+    domain: mqtt
+    type: action
     subtype: off_b2_down
+    enabled: "{{ not current_reverse }}"
+    id: full_darker
+  - platform: device
+    device_id: !input wall_switch
+    domain: mqtt
+    type: action
+    subtype: off_b1_down
+    enabled: "{{ current_reverse }}"
     id: full_darker
 
 variables:
