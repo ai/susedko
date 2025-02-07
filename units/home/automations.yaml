@@ -402,7 +402,7 @@
         message: "Садиться батарея: {{ sensors }}"
 
 - id: disable_fast_presence
-  title: Экономить батарею датчиков присутствия
+  alias: Экономить батарею датчиков присутствия
   trigger:
     - platform: template
       value_template: >
@@ -420,7 +420,7 @@
         option: "only_pir"
 
 - id: enable_fast_presence
-  title: Ускорить обнаружение в датчиках присутствия
+  alias: Ускорить обнаружение в датчиках присутствия
   trigger:
     - platform: template
       value_template: >
