@@ -109,16 +109,10 @@
           entity_id: person.andrey_sitnik
           state: "not_home"
       then:
-        - delay: "00:02:00"
-        - if:
-            - condition: state
-              entity_id: person.andrey_sitnik
-              state: "not_home"
-          then:
-            - action: notify.mobile_app_atocha
-              data:
-                title: "Дверь"
-                message: "Открыта"
+        - action: notify.mobile_app_atocha
+          data:
+            title: "Дверь"
+            message: "Открыта"
 
 - id: notify_door_opened_kate
   alias: Уведомить Катю об открытии двери
@@ -134,19 +128,13 @@
   action:
     - if:
         - condition: state
-          entity_id: person.andrey_sitnik
+          entity_id: person.ekaterina_sitnik
           state: "not_home"
       then:
-        - delay: "00:02:00"
-        - if:
-            - condition: state
-              entity_id: person.ekaterina_sitnik
-              state: "not_home"
-          then:
-            - action: notify.mobile_app_pixel_7a
-              data:
-                title: "Дверь"
-                message: "Открыта"
+        - action: notify.mobile_app_pixel_7a
+          data:
+            title: "Дверь"
+            message: "Открыта"
 
 - id: water_leak_bathroom
   alias: Уведомить о протечке воды в ванной
