@@ -28,12 +28,6 @@ devices:
     friendly_name: Light / IKEA Ceiling / Hall 2
   '0x44e2f8fffe4cca2f':
     friendly_name: Light / IKEA Ceiling / Hall 1
-  '0x8c65a3fffec7a1ef':
-    friendly_name: Light / IKEA GU10 / Bathroom 1
-  '0x94b216fffebab247':
-    friendly_name: Light / IKEA GU10 / Bathroom 2
-  '0x8c65a3fffee4bf78':
-    friendly_name: Light / IKEA GU10 / Toilet
   '0xec1bbdfffece5c65':
     friendly_name: Light / IKEA E27 RGB / Kate
   '0xb4e3f9fffe21589b':
@@ -87,6 +81,12 @@ devices:
     friendly_name: Presence / Tuya / Bathroom
   '0x54ef4410010fcfc5':
     friendly_name: Light / Aqara T2 E27 RGB / Lounge
+  '0x94b216fffec9a04c':
+    friendly_name: Light / IKEA GU10 / Toilet
+  '0x8c65a3fffedf8149':
+    friendly_name: Light / IKEA GU10 RGB / Bathroom 1
+  '0x403059fffef3346f':
+    friendly_name: Light / IKEA GU10 RGB / Bathroom 2
 groups:
   '1':
     friendly_name: Light / Group / Bathroom
