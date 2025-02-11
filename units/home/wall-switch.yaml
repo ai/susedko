@@ -233,10 +233,10 @@ actions:
                     entity_id: !input light
                     state: "on"
                 sequence:
+                  - sequence: !input extra_off
                   - action: light.turn_off
                     target:
                       entity_id: !input light
-                  - sequence: !input extra_off
               - conditions:
                   - condition: state
                     entity_id: !input light
