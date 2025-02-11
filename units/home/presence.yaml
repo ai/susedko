@@ -71,7 +71,6 @@ actions:
           entity_id: !input presence_sensor
           from: "on"
           to: "off"
+      - sequence: !input extra_off
       - action: light.turn_off
         target: !input light
-      - delay: "00:00:20"
-      - sequence: !input extra_off
