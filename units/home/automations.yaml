@@ -147,6 +147,9 @@
     - action: script.turn_on
       target:
         entity_id: script.alert
+    - action: scene.turn_on
+      target:
+        entity_id: scene.bathroom_full_no_mirror
     - action: notify.notify
       data:
         title: Ванная
@@ -163,6 +166,9 @@
     - action: script.turn_on
       target:
         entity_id: script.alert
+    - action: scene.turn_on
+      target:
+        entity_id: scene.kitchen_full
     - action: notify.notify
       data:
         title: Стиральная машина
