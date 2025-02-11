@@ -83,10 +83,10 @@ devices:
     friendly_name: Light / Aqara T2 E27 RGB / Lounge
   '0x94b216fffec9a04c':
     friendly_name: Light / IKEA GU10 / Toilet
-  '0x8c65a3fffedf8149':
-    friendly_name: Light / IKEA GU10 RGB / Bathroom 1
-  '0x403059fffef3346f':
-    friendly_name: Light / IKEA GU10 RGB / Bathroom 2
+  '0x0c2a6ffffe2688a0':
+    friendly_name: Light / IKEA GU10 / Bathroom 1
+  '0x0c2a6ffffe2688b2':
+    friendly_name: Light / IKEA GU10 / Bathroom 2
 groups:
   '1':
     friendly_name: Light / Group / Bathroom
