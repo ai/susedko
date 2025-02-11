@@ -256,6 +256,7 @@
     path: presence.yaml
     input:
       presence_sensor: binary_sensor.presence_tuya_kitchen_presence
+      night_scene: scene.kitchen_night
       light:
         entity_id: light.light_group_kitchen
 
@@ -304,6 +305,7 @@
     path: presence.yaml
     input:
       presence_sensor: binary_sensor.presence_tuya_bathroom_presence
+      night_scene: scene.bathroom_night
       light:
         entity_id: light.light_group_bathroom
       extra_off:
@@ -317,6 +319,7 @@
     path: presence.yaml
     input:
       presence_sensor: binary_sensor.presence_tuya_toilet_presence
+      night_scene: scene.toilet_night
       light:
         entity_id: light.light_ikea_gu10_toilet
 
@@ -353,7 +356,7 @@
   action:
     - action: switch.turn_on
       target:
-        entity_id: switch.adaptive_lighting_sleep_mode_integration_adaptive_lights
+        entity_id: input_boolean.everyone_sleep
 
 - id: night_mode_disable
   alias: Выключить ночной режим
@@ -364,7 +367,7 @@
   action:
     - action: switch.turn_off
       target:
-        entity_id: switch.adaptive_lighting_sleep_mode_integration_adaptive_lights
+        entity_id: input_boolean.everyone_sleep
 
 - id: low_battery_notify
   alias: Уведомить о разряде батареи

@@ -25,6 +25,11 @@ blueprint:
       selector:
         action: {}
       default: []
+    night_scene:
+      name: Ночной режим
+      selector:
+        entity:
+          domain: scene
 
 mode: restart
 
@@ -43,14 +48,24 @@ conditions:
     state: "off"
 
 actions:
-  - action: light.turn_on
-    target: !input light
-  - wait_for_trigger:
-      trigger: state
-      entity_id: !input presence_sensor
-      from: "on"
-      to: "off"
-  - action: light.turn_off
-    target: !input light
-  - delay: "00:00:16"
-  - sequence: !input extra_off
+  - if:
+      - condition: state
+        entity_id: input_boolean.everyone_sleep
+        state: "on"
+    then:
+      if: !input night_scene
+      then:
+        - action: scene.turn_on
+          target: !input night_scene
+    else:
+      - action: light.turn_on
+        target: !input light
+      - wait_for_trigger:
+          trigger: state
+          entity_id: !input presence_sensor
+          from: "on"
+          to: "off"
+      - action: light.turn_off
+        target: !input light
+      - delay: "00:00:20"
+      - sequence: !input extra_off
