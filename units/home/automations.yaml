@@ -455,13 +455,11 @@
         - condition: numeric_state
           entity_id: sensor.presence_apollo_msr_2_co2
           above: 1000
+    - condition: state
+      entity_id: person.andrey_sitnik
+      state: "home"
   action:
-    - if:
-        - condition: state
-          entity_id: person.andrey_sitnik
-          state: "home"
-      then:
-        - action: notify.mobile_app_atocha
-          data:
-            title: "CO²"
-            message: "Высокий уровень: {{ states('sensor.presence_apollo_msr_2_co2') }}"
+    - action: notify.mobile_app_atocha
+      data:
+        title: "CO²"
+        message: "Высокий уровень: {{ states('sensor.presence_apollo_msr_2_co2') }}"
