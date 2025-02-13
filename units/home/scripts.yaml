@@ -4,6 +4,11 @@ turn_off_everything:
     - action: light.turn_off
       target:
         entity_id: all
+    - action: switch.turn_off
+      target:
+        entity_id:
+          - switch.sonoff_10024c5ffe
+          - switch.wall_switch_yandex_bathroom_1
     - action: media_player.turn_off
       target:
         entity_id: media_player.tv_remote
