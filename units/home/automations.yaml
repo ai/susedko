@@ -484,6 +484,11 @@
     - action: switch.turn_on
       target:
         entity_id: switch.heater_micraplus_25_main_away_mode
+    - action: water_heater.set_operation_mode
+      target:
+        entity_id: water_heater.home_domestic_hot_water_0
+      data:
+        operation_mode: "OFF"
 
 - id: turn_on_heating_on_leaving
   alias: Включить отопление, когда все ушли
@@ -505,3 +510,8 @@
     - action: switch.turn_off
       target:
         entity_id: switch.heater_micraplus_25_main_away_mode
+    - action: water_heater.set_operation_mode
+      target:
+        entity_id: water_heater.home_domestic_hot_water_0
+      data:
+        operation_mode: "TIME_CONTROLLED"
