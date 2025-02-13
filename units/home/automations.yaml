@@ -486,7 +486,8 @@
         - action: number.set_value
           target:
             entity_id: sensor.heater_micraplus_25_zone_1_desired_heating_temperature
-          value: 18
+          data:
+            value: 18
       else:
         - action: switch.turn_on
           target:
@@ -497,8 +498,8 @@
       data:
         operation_mode: "OFF"
 
-- id: turn_on_heating_on_leaving
-  alias: Включить отопление, когда все ушли
+- id: turn_on_heating_on_coming
+  alias: Включить отопление, когда пришли
   trigger:
     - platform: template
       value_template: >
@@ -539,7 +540,7 @@
       data:
         value: >
           {% if states('input_boolean.everyone_sleep') == 'on' %}
-            15
+            18
           {% else %}
             22
           {% endif %}
