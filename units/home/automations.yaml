@@ -519,3 +519,27 @@
         entity_id: water_heater.home_domestic_hot_water_0
       data:
         operation_mode: "TIME_CONTROLLED"
+
+- id: night_heating_mode
+  alias: Выключать отопление ночью
+  trigger:
+    - platform: state
+      entity_id: input_boolean.everyone_sleep
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+  actions:
+    - action: number.set_value
+      target:
+        entity_id: sensor.heater_micraplus_25_zone_1_desired_heating_temperature
+      data:
+        value: >
+          {% if states('input_boolean.everyone_sleep') == 'on' %}
+            15
+          {% else %}
+            22
+          {% endif %}
