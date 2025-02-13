@@ -463,3 +463,45 @@
       data:
         title: "CO²"
         message: "Высокий уровень: {{ states('sensor.presence_apollo_msr_2_co2') }}"
+
+- id: turn_off_heating_on_leaving
+  alias: Выключить отопление, когда все ушли
+  trigger:
+    - platform: template
+      value_template: >
+        {{ states.person | selectattr('state', 'eq', 'home') | list | count == 0 }}
+  condition:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.guests
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+  action:
+    - action: switch.turn_on
+      target:
+        entity_id: switch.heater_micraplus_25_main_away_mode
+
+- id: turn_on_heating_on_leaving
+  alias: Включить отопление, когда все ушли
+  trigger:
+    - platform: template
+      value_template: >
+        {{ states.person | selectattr('state', 'eq', 'home') | list | count > 0 }}
+  condition:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.guests
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+  action:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.heater_micraplus_25_main_away_mode
