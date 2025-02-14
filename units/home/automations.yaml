@@ -486,11 +486,11 @@
           entity_id: input_boolean.cat_alone
           state: "on"
       then:
-        - action: number.set_value
+        - action: climate.set_temperature
           target:
-            entity_id: sensor.heater_micraplus_25_zone_1_desired_heating_temperature
+            entity_id: climate.heater_micraplus_25_zone_1_climate
           data:
-            value: 18
+            temperature: 18
       else:
         - action: switch.turn_on
           target:
@@ -537,11 +537,11 @@
       entity_id: input_boolean.cat_alone
       state: "off"
   actions:
-    - action: number.set_value
+    - action: climate.set_temperature
       target:
-        entity_id: sensor.heater_micraplus_25_zone_1_desired_heating_temperature
+        entity_id: climate.heater_micraplus_25_zone_1_climate
       data:
-        value: >
+        temperature: >
           {% if states('input_boolean.everyone_sleep') == 'on' %}
             18
           {% else %}
