@@ -63,6 +63,14 @@ actions:
           - action: scene.turn_on
             target:
               entity_id: !input night_scene
+          - wait_for_trigger:
+              trigger: state
+              entity_id: !input presence_sensor
+              from: "on"
+              to: "off"
+          - sequence: !input extra_off
+          - action: light.turn_off
+            target: !input light
     else:
       - action: light.turn_on
         target: !input light
