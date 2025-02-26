@@ -490,7 +490,7 @@
           target:
             entity_id: climate.heater_micraplus_25_zone_1_climate
           data:
-            temperature: 18
+            temperature: 16
       else:
         - action: switch.turn_on
           target:
@@ -543,7 +543,7 @@
       data:
         temperature: >
           {% if states('input_boolean.everyone_sleep') == 'on' %}
-            18
+            16
           {% else %}
-            22
+            21
           {% endif %}
