@@ -523,6 +523,11 @@
         entity_id: water_heater.home_domestic_hot_water_0
       data:
         operation_mode: "TIME_CONTROLLED"
+    - action: climate.set_temperature
+      target:
+        entity_id: climate.heater_micraplus_25_zone_1_climate
+      data:
+        temperature: 22
 
 - id: night_heating_mode
   alias: Выключать отопление ночью
@@ -545,5 +550,5 @@
           {% if states('input_boolean.everyone_sleep') == 'on' %}
             16
           {% else %}
-            21
+            22
           {% endif %}
