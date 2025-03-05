@@ -89,6 +89,10 @@ devices:
     friendly_name: Light / IKEA GU10 / Bathroom 2
   '0xb0c7defffe63b9a7':
     friendly_name: Water / IKEA / Dishwasher
+  '0x94ec32fffe29af67':
+    friendly_name: Plug / IKEA / Bathroom 1
+  '0x1cc089fffe4dd035':
+    friendly_name: Plug / IKEA / Bathroom 2
 groups:
   '1':
     friendly_name: Light / Group / Bathroom
