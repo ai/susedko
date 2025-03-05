@@ -669,3 +669,19 @@
                 - action: switch.turn_off
                   target:
                     entity_id: switch.plug_ikea_andrey_screen
+
+- id: pause_tv_doorbell
+  alias: Пауза телевизора при звонке двери
+  mode: restart
+  trigger:
+    - trigger: state
+      entity_id:
+        - event.front_door_ding
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+  action:
+    - actioni: media_player.media_pause
+      target:
+        entity_id: media_player.tv_remote
