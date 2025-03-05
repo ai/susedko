@@ -1,3 +1,21 @@
+- id: home_empty_tracker
+  alias: Отслеживание когда все ушли из дома
+  trigger:
+    - platform: state
+      entity_id: person.*
+    - platform: state
+      entity_id: input_boolean.guests
+  action:
+    - service: >
+        {% if states.person | selectattr('state', 'eq', 'home') | list | count == 0 and
+           states('input_boolean.guests') == 'off' %}
+          input_boolean.turn_on
+        {% else %}
+          input_boolean.turn_off
+        {% endif %}
+      target:
+        entity_id: input_boolean.everyone_left_house
+
 - id: open_blind_dawn
   alias: "Открыть штору на рассвете"
   mode: single
@@ -77,15 +95,12 @@
 - id: turn_off_on_leaving
   alias: Выключить всё, когда все ушли
   trigger:
-    - platform: template
-      value_template: >
-        {{ states.person | selectattr('state', 'eq', 'home') | list | count == 0 }}
+    - platform: state
+      entity_id: input_boolean.home_empty
+      to: "on"
   condition:
     - condition: state
       entity_id: input_boolean.stop
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.guests
       state: "off"
   action:
     - action: script.turn_on
@@ -269,9 +284,9 @@
 - id: daily_vacuum_on_leaving
   alias: Ежедневная уборка пылесосом когда все ушли
   trigger:
-    - platform: template
-      value_template: >
-        {{ states.person | selectattr('state','eq','home') | list | count == 0 }}
+    - platform: state
+      entity_id: input_boolean.home_empty
+      to: "on"
   condition:
     - condition: state
       entity_id: input_boolean.vacuum_was_run_today
@@ -436,9 +451,9 @@
 - id: disable_fast_presence
   alias: Экономить батарею датчиков присутствия
   trigger:
-    - platform: template
-      value_template: >
-        {{ states.person | selectattr('state', 'eq', 'home') | list | count == 0 }}
+    - platform: state
+      entity_id: input_boolean.home_empty
+      to: "on"
     - platform: time
       at: "00:00:00"
   action:
@@ -453,15 +468,15 @@
 - id: enable_fast_presence
   alias: Ускорить обнаружение в датчиках присутствия
   trigger:
-    - platform: template
-      value_template: >
-        {{ states.person | selectattr('state', 'eq', 'home') | list | count > 0 }}
+    - platform: state
+      entity_id: input_boolean.home_empty
+      to: "off"
     - platform: time
       at: "06:30:00"
   conditions:
-    - condition: template
-      value_template: >
-        {{ states.person | selectattr('state', 'eq', 'home') | list | count > 0 }}
+    - condition: state
+      entity_id: input_boolean.home_empty
+      state: "off"
   action:
     - action: select.select_option
       target:
@@ -504,15 +519,12 @@
 - id: turn_off_heating_on_leaving
   alias: Выключить отопление, когда все ушли
   trigger:
-    - platform: template
-      value_template: >
-        {{ states.person | selectattr('state', 'eq', 'home') | list | count == 0 }}
+    - platform: state
+      entity_id: input_boolean.home_empty
+      to: "on"
   condition:
     - condition: state
       entity_id: input_boolean.stop
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.guests
       state: "off"
   action:
     - if:
@@ -538,15 +550,12 @@
 - id: turn_on_heating_on_coming
   alias: Включить отопление, когда пришли
   trigger:
-    - platform: template
-      value_template: >
-        {{ states.person | selectattr('state', 'eq', 'home') | list | count > 0 }}
+    - platform: state
+      entity_id: input_boolean.home_empty
+      to: "off"
   condition:
     - condition: state
       entity_id: input_boolean.stop
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.guests
       state: "off"
   action:
     - action: switch.turn_off
