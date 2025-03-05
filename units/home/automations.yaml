@@ -628,3 +628,24 @@
                 entity_id:
                   - switch.plug_ikea_bathroom_1
                   - switch.plug_ikea_bathroom_2
+
+- id: auto_off_bedroom_heating
+  alias: Автовыключение обогревателя ног через час
+  trigger:
+    - platform: state
+      entity_id: switch.plug_ikea_bedroom_heating
+      from: "off"
+      to: "on"
+      for:
+        hours: 1
+  condition:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: switch.plug_ikea_bedroom_heating
+      state: "on"
+  action:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.plug_ikea_bedroom_heating

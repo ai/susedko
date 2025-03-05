@@ -93,6 +93,12 @@ devices:
     friendly_name: Plug / IKEA / Bathroom 1
   '0x1cc089fffe4dd035':
     friendly_name: Plug / IKEA / Bathroom 2
+  '0x1cc089fffe4dc8a7':
+    friendly_name: Plug / IKEA / Andrey Back
+  '0x1cc089fffe4df3bb':
+    friendly_name: Plug / IKEA / Andrey Screen
+  '0x1cc089fffe4db08a':
+    friendly_name: Plug / IKEA / Bedroom Heating
 groups:
   '1':
     friendly_name: Light / Group / Bathroom
