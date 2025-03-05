@@ -123,6 +123,34 @@
             title: "Дверь"
             message: "Открыта"
 
+- id: notify_door_open_too_long
+  alias: Уведомить о двери открытой слишком долго
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.door_ikea_main_contact
+      from: "off"
+      to: "on"
+      for:
+        minutes: 10
+  condition:
+    - condition: state
+      entity_id: input_boolean.notifications
+      state: "on"
+  action:
+    - action: notify.mobile_app_atocha
+      data:
+        title: "Дверь"
+        message: "Открыта более 10 минут"
+    - if:
+        - condition: state
+          entity_id: person.ekaterina_sitnik
+          state: "home"
+      then:
+        - action: notify.mobile_app_pixel_7a
+          data:
+            title: "Дверь"
+            message: "Открыта более 10 минут"
+
 - id: water_leak_bathroom
   alias: Уведомить о протечке воды в ванной
   trigger:
