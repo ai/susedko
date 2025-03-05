@@ -110,6 +110,21 @@ triggers:
     device_id: !input wall_switch
     domain: mqtt
     type: action
+    subtype: on_b1_up
+    enabled: "{{ not current_reverse }}"
+    id: fast_turn_on
+  - platform: device
+    device_id: !input wall_switch
+    domain: mqtt
+    type: action
+    subtype: on_b2_up
+    enabled: "{{ current_reverse }}"
+    id: fast_turn_on
+
+  - platform: device
+    device_id: !input wall_switch
+    domain: mqtt
+    type: action
     subtype: on_b2_up
     enabled: "{{ not current_reverse }}"
     id: fast_brighter
@@ -183,6 +198,13 @@ variables:
     {% else %}
       {{ (current_scene_index + 1) % length }}
     {% endif %}
+  next_next_scene_index: >
+    {% set length = matched_scenes | length %}
+    {% if length == 0 %}
+      -1
+    {% else %}
+      {{ (current_scene_index + 2) % length }}
+    {% endif %}
 
 actions:
   - choose:
@@ -196,23 +218,13 @@ actions:
                     entity_id: !input light
                     state: "on"
                 sequence:
-                  - choose:
-                      - conditions: "{{ next_scene_index == -1 }}"
-                        sequence:
-                          - action: notify.mobile_app_atocha
-                            data:
-                              title: "Отладка"
-                              message: >
-                                No scenes found for room {{ current_room }}
-                      - conditions: "{{ next_scene_index != -1 }}"
-                        sequence:
-                          - action: input_number.set_value
-                            data:
-                              entity_id: !input scene_helper
-                              value: "{{ next_scene_index }}"
-                          - action: scene.turn_on
-                            data:
-                              entity_id: "{{ matched_scenes[next_scene_index] }}"
+                  - action: input_number.set_value
+                    data:
+                      entity_id: !input scene_helper
+                      value: "{{ next_scene_index }}"
+                  - action: scene.turn_on
+                    data:
+                      entity_id: "{{ matched_scenes[next_scene_index] }}"
               - conditions:
                   - condition: state
                     entity_id: !input light
@@ -269,6 +281,24 @@ actions:
               entity_id: !input light
             data:
               brightness_step_pct: 20
+
+      - conditions:
+          - condition: trigger
+            id: fast_turn_on
+        sequence:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: !input light
+                    state: "on"
+                sequence:
+                  - action: input_number.set_value
+                    data:
+                      entity_id: !input scene_helper
+                      value: "{{ next_next_scene_index }}"
+                  - action: scene.turn_on
+                    data:
+                      entity_id: "{{ matched_scenes[next_next_scene_index] }}"
 
       - conditions:
           - condition: trigger
