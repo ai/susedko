@@ -680,7 +680,7 @@
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
-  action:
-    - actioni: media_player.media_pause
+  actions:
+    - action: media_player.media_pause
       target:
         entity_id: media_player.tv_remote
