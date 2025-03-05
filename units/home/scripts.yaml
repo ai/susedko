@@ -65,6 +65,7 @@ heat_bedroom:
         - condition: numeric_state
           entity_id: sensor.weather_waqi_temperature
           below: 18
-    - action: switch.turn_on
-      target:
-        entity_id: switch.plug_ikea_bedroom_heating
+      then:
+        - action: switch.turn_on
+          target:
+            entity_id: switch.plug_ikea_bedroom_heating
