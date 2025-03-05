@@ -92,8 +92,8 @@
       target:
         entity_id: script.turn_off_everything
 
-- id: notify_door_opened_andrey
-  alias: Уведомить Андрея об открытии двери
+- id: notify_door_opened
+  alias: Уведомить об открытии двери
   trigger:
     - platform: state
       entity_id: binary_sensor.door_ikea_main_contact
@@ -113,19 +113,6 @@
           data:
             title: "Дверь"
             message: "Открыта"
-
-- id: notify_door_opened_kate
-  alias: Уведомить Катю об открытии двери
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.door_ikea_main_contact
-      from: "off"
-      to: "on"
-  condition:
-    - condition: state
-      entity_id: input_boolean.notifications
-      state: "on"
-  action:
     - if:
         - condition: state
           entity_id: person.ekaterina_sitnik
