@@ -227,25 +227,10 @@ actions:
           - condition: trigger
             id: turn_off
         sequence:
-          - choose:
-              - conditions:
-                  - condition: state
-                    entity_id: !input light
-                    state: "on"
-                sequence:
-                  - sequence: !input extra_off
-                  - action: light.turn_off
-                    target:
-                      entity_id: !input light
-              - conditions:
-                  - condition: state
-                    entity_id: !input light
-                    state: "off"
-                sequence:
-                  - action: scene.turn_on
-                    data:
-                      entity_id: >
-                        {{ 'scene.' ~ current_room ~ '_night' }}
+          - sequence: !input extra_off
+          - action: light.turn_off
+            target:
+              entity_id: !input light
 
       - conditions:
           - condition: trigger
