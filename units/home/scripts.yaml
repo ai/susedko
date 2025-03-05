@@ -57,3 +57,14 @@ alert:
                 - light.light_group_bathroom
                 - light.light_group_kitchen
           - delay: "1"
+
+heat_bedroom:
+  alias: "Включить отопление в спальне"
+  sequence:
+    - if:
+        - condition: numeric_state
+          entity_id: sensor.weather_waqi_temperature
+          below: 18
+    - action: switch.turn_on
+      target:
+        entity_id: switch.plug_ikea_bedroom_heating
