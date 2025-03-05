@@ -598,36 +598,21 @@
           {% endif %}
 
 - id: bathroom_plugs_control
-  alias: Управление розетками в ванной при уходе и возвращении
+  alias: Включать розетки в ванной при возвращении
   trigger:
     - platform: state
       entity_id: input_boolean.everyone_left_house
+      to: "off"
   condition:
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
   action:
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: input_boolean.everyone_left_house
-              state: "on"
-          sequence:
-            - action: switch.turn_off
-              target:
-                entity_id:
-                  - switch.plug_ikea_bathroom_1
-                  - switch.plug_ikea_bathroom_2
-        - conditions:
-            - condition: state
-              entity_id: input_boolean.everyone_left_house
-              state: "off"
-          sequence:
-            - action: switch.turn_on
-              target:
-                entity_id:
-                  - switch.plug_ikea_bathroom_1
-                  - switch.plug_ikea_bathroom_2
+    - action: switch.turn_on
+      target:
+        entity_id:
+          - switch.plug_ikea_bathroom_1
+          - switch.plug_ikea_bathroom_2
 
 - id: auto_off_bedroom_heating
   alias: Автовыключение обогревателя ног через час
