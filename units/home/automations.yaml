@@ -655,6 +655,11 @@
             - service: switch.turn_on
               target:
                 entity_id: switch.plug_ikea_andrey_screen
+            - action: mqtt.publish
+              data:
+                payload: "WAKE"
+                topic: "ai_laptop"
+                retain: true
         - conditions:
             - condition: state
               entity_id: binary_sensor.presence_apollo_msr_2_radar_zone_1_occupancy
@@ -666,6 +671,11 @@
                   entity_id: binary_sensor.presence_apollo_msr_2_radar_zone_1_occupancy
                   state: "off"
               then:
+                - action: mqtt.publish
+                  data:
+                    payload: "LOCK"
+                    topic: "ai_laptop"
+                    retain: true
                 - action: switch.turn_off
                   target:
                     entity_id: switch.plug_ikea_andrey_screen
