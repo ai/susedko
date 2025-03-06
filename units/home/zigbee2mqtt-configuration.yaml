@@ -106,3 +106,5 @@ groups:
     friendly_name: Light / Group / Kitchen
   '3':
     friendly_name: Light / Group / Hall
+  '4':
+    friendly_name: Light / Group / Andrey
