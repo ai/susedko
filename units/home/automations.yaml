@@ -655,6 +655,7 @@
             - service: switch.turn_on
               target:
                 entity_id: switch.plug_ikea_andrey_screen
+            - delay: "00:00:05"
             - action: mqtt.publish
               data:
                 payload: "WAKE"
