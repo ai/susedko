@@ -578,7 +578,7 @@
   trigger:
     - platform: state
       entity_id: input_boolean.everyone_sleep
-  conditionss:
+  conditions:
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
@@ -689,12 +689,12 @@
   alias: Пауза телевизора при звонке на телефон
   mode: restart
   trigger:
-    - trigger: state
+    - platform: state
       entity_id: sensor.phone_atocha_phone_state
-      state: "ringing"
-    - trigger: state
+      to: "ringing"
+    - platform: state
       entity_id: sensor.phone_pixel_7a_phone_state
-      state: "ringing"
+      to: "ringing"
   conditions:
     - condition: state
       entity_id: input_boolean.stop
