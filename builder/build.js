@@ -69,6 +69,7 @@ function generateService(file, input, uids) {
       `/bin/rm -f /run/user/${uid}/%n.ctr-id`
     ])
     let run = `/bin/podman run \\\n`
+    run += runLine('--pull=missing')
     run += runLine(`--cidfile=/run/user/${uid}/%n.ctr-id`)
     run += runLine('--cgroups=no-conmon')
     run += runLine('--rm')
