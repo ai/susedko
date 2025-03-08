@@ -64,11 +64,13 @@ function generateService(file, input) {
       ])
     }
     yml.execStartPre = (yml.execStartPre ?? []).concat([
-      `-/bin/podman kill ${name}`,
-      `-/bin/podman rm ${name}`,
-      `/bin/podman pull ${yml.podman.image}`
+      `/bin/rm -f %t/%n.ctr-id`
     ])
     let run = `/bin/podman run \\\n`
+    run += runLine('--cidfile=%t/%n.ctr-id')
+    run += runLine('--sdnotify=conmon')
+    run += runLine('--cgroups=no-conmon')
+    run += runLine('--rm')
     run += runLine('--tz=local')
     run += runLine('--replace')
     if (yml.podman.readonly) run += runLine(`--read-only`)
@@ -107,7 +109,10 @@ function generateService(file, input) {
     run += `          ${yml.podman.image}`
     yml.execStart = (yml.execStart ?? []).concat([run])
     yml.execStop = (yml.execStop ?? []).concat([
-      `/bin/podman stop -t 10 ${name}`
+      '/bin/podman stop --ignore --cidfile=%t/%n.ctr-id'
+    ])
+    yml.execStopPost = (yml.execStopPost ?? []).concat([
+      '/bin/podman rm -f --ignore --cidfile=%t/%n.ctr-id'
     ])
   }
 
@@ -133,6 +138,9 @@ function generateService(file, input) {
   }
   for (let i of yml.execStop ?? []) {
     service += `ExecStop=${i}\n`
+  }
+  for (let i of yml.execStopPost ?? []) {
+    service += `ExecStopPost=${i}\n`
   }
   if (yml.restart) {
     let restartType = yml.restart === true ? 'on-failure' : yml.restart
