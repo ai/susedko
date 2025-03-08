@@ -49,7 +49,7 @@ function runLine(str) {
   return `          ${str} \\\n`
 }
 
-function generateService(file, input) {
+function generateService(file, input, uids) {
   let name = basename(file, '.service')
   let yml = parse(input)
 
@@ -58,16 +58,18 @@ function generateService(file, input) {
     yml.after = (yml.after ?? []).concat(['network-ping.service'])
   }
   if (yml.podman) {
+    let uid = yml.user ? uids[yml.user] : '0'
+    if (!uid) throw new Error('User with uid not found')
     if (yml.podman.image.startsWith('docker.io/')) {
       yml.environment = (yml.environment ?? []).concat([
         'REGISTRY_AUTH_FILE="/usr/local/etc/docker-auth.json"'
       ])
     }
     yml.execStartPre = (yml.execStartPre ?? []).concat([
-      `/bin/rm -f %t/%n.ctr-id`
+      `/bin/rm -f /run/user/${uid}/%n.ctr-id`
     ])
     let run = `/bin/podman run \\\n`
-    run += runLine('--cidfile=%t/%n.ctr-id')
+    run += runLine(`--cidfile=/run/user/${uid}/%n.ctr-id`)
     run += runLine('--sdnotify=conmon')
     run += runLine('--cgroups=no-conmon')
     run += runLine('--rm')
@@ -109,10 +111,10 @@ function generateService(file, input) {
     run += `          ${yml.podman.image}`
     yml.execStart = (yml.execStart ?? []).concat([run])
     yml.execStop = (yml.execStop ?? []).concat([
-      '/bin/podman stop --ignore --cidfile=%t/%n.ctr-id'
+      `/bin/podman stop --ignore --cidfile=/run/user/${uid}/%n.ctr-id`
     ])
     yml.execStopPost = (yml.execStopPost ?? []).concat([
-      '/bin/podman rm -f --ignore --cidfile=%t/%n.ctr-id'
+      `/bin/podman rm -f --ignore --cidfile=/run/user/${uid}//%n.ctr-id`
     ])
   }
 
@@ -170,11 +172,20 @@ function processFile(path) {
     delete parsed.demo
   }
 
+  let uids = {}
+  for (let user of parsed.passwd?.users ?? []) {
+    uids[user.name] = user.uid
+  }
+
   for (let unit of parsed.systemd?.units ?? []) {
     if (!unit.contents) {
       let service
       if (existsSync(join(dir, unit.name + '.yml'))) {
-        service = generateService(unit.name, read(dir, unit.name + '.yml'))
+        service = generateService(
+          unit.name,
+          read(dir, unit.name + '.yml'),
+          uids
+        )
       } else {
         service = read(dir, unit.name)
       }
