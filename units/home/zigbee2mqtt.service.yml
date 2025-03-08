@@ -14,7 +14,7 @@ user: home
 group: home
 
 podman:
-  image: docker.io/koenkk/zigbee2mqtt:latest
+  image: ghcr.io/koenkk/zigbee2mqtt:latest
   ports:
     - 8124:8124
   network: host

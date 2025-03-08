@@ -9,7 +9,7 @@ group: media
 restart: true
 
 podman:
-  image: docker.io/jellyfin/jellyfin:latest
+  image: ghcr.io/jellyfin/jellyfin:latest
   network: host
   ports:
     - 8096:8096

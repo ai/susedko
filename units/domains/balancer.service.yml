@@ -7,7 +7,7 @@ user: domains
 group: domains
 
 podman:
-  image: docker.io/nginxinc/nginx-unprivileged:1-alpine
+  image: ghcr.io/nginxinc/nginx-unprivileged:alpine
   readonly: true
   userns: keep-id
   user: 1005:1005
