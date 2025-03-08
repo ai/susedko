@@ -70,7 +70,6 @@ function generateService(file, input, uids) {
     ])
     let run = `/bin/podman run \\\n`
     run += runLine(`--cidfile=/run/user/${uid}/%n.ctr-id`)
-    run += runLine('--sdnotify=conmon')
     run += runLine('--cgroups=no-conmon')
     run += runLine('--rm')
     run += runLine('--tz=local')
