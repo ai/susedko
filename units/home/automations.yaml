@@ -666,7 +666,7 @@
               entity_id: binary_sensor.presence_apollo_msr_2_radar_zone_1_occupancy
               state: "off"
           sequence:
-            - delay: "00:00:30"
+            - delay: "00:05:00"
             - if:
                 - condition: state
                   entity_id: binary_sensor.presence_apollo_msr_2_radar_zone_1_occupancy
