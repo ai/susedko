@@ -32,8 +32,6 @@ devices:
     friendly_name: Light / IKEA E27 RGB / Kate
   '0xb4e3f9fffe21589b':
     friendly_name: Light / IKEA E27 RGB / Children
-  '0x94b216fffec4d411':
-    friendly_name: Light / IKEA E14 RGB / Desk
   '0xb4e3f9fffef344d4':
     friendly_name: Light / IKEA E14 / Round
   '0x2c1165fffe168d53':
@@ -99,6 +97,8 @@ devices:
     friendly_name: Plug / IKEA / Andrey Screen
   '0x1cc089fffe4db08a':
     friendly_name: Plug / IKEA / Bedroom Heating
+  '0x94b216fffec4d411':
+    friendly_name: Light / IKEA E14 RGB / Desk
 groups:
   '1':
     friendly_name: Light / Group / Bathroom
