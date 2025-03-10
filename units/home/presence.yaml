@@ -79,6 +79,11 @@ actions:
           entity_id: !input presence_sensor
           from: "on"
           to: "off"
-      - sequence: !input extra_off
-      - action: light.turn_off
-        target: !input light
+      - if:
+          - condition: state
+            entity_id: input_boolean.stop
+            state: "off"
+        then:
+          - sequence: !input extra_off
+          - action: light.turn_off
+            target: !input light
