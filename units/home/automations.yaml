@@ -672,7 +672,7 @@
   actions:
     - action: mqtt.publish
       data:
-        payload: "SLEEP"
+        payload: "LOCK"
         topic: "ai_laptop"
         retain: true
     - service: switch.turn_off
