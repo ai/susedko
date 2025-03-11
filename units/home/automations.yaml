@@ -690,3 +690,21 @@
     - action: media_player.media_pause
       target:
         entity_id: media_player.tv_remote
+
+- id: lock_screen_on_andrey_leaving
+  alias: Блокировка ноутбука Андрея при его уходе
+  mode: restart
+  trigger:
+    - platform: state
+      entity_id: person.andrey_sitnik
+      to: "not_home"
+      from: "home"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+  actions:
+    - action: mqtt.publish
+      data:
+        payload: "LOCK"
+        topic: "ai_laptop"
