@@ -15,7 +15,7 @@
           input_boolean.turn_off
         {% endif %}
       target:
-        entity_id: input_boolean.everyone_left_house
+        entity_id: input_boolean.home_empty
 
 - id: open_blind_dawn
   alias: "Открыть штору на рассвете"
@@ -455,6 +455,9 @@
     - platform: state
       entity_id: input_boolean.home_empty
       to: "on"
+    - platform: state
+      entity_id: input_boolean.cat_alone
+      to: "on"
     - platform: time
       at: "00:00:00"
   action:
@@ -472,11 +475,17 @@
     - platform: state
       entity_id: input_boolean.home_empty
       to: "off"
+    - platform: state
+      entity_id: input_boolean.cat_alone
+      to: "off"
     - platform: time
       at: "06:30:00"
   conditions:
     - condition: state
       entity_id: input_boolean.home_empty
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
       state: "off"
   action:
     - action: select.select_option
@@ -537,7 +546,7 @@
           target:
             entity_id: climate.heater_micraplus_25_zone_1_climate
           data:
-            temperature: 16
+            temperature: 18
       else:
         - action: switch.turn_on
           target:
@@ -601,7 +610,7 @@
   alias: Включать розетки в ванной при возвращении
   trigger:
     - platform: state
-      entity_id: input_boolean.everyone_left_house
+      entity_id: input_boolean.home_empty
       to: "off"
   conditions:
     - condition: state
@@ -647,6 +656,9 @@
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
   actions:
     - action: mqtt.publish
       data:
@@ -665,6 +677,9 @@
       entity_id: binary_sensor.presence_apollo_msr_2_radar_zone_1_occupancy
       to: "off"
       for: 00:06:00
+    - platform: state
+      entity_id: input_boolean.cat_alone
+      state: "on"
   conditions:
     - condition: state
       entity_id: input_boolean.stop
