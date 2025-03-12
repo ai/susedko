@@ -107,6 +107,14 @@
     - action: script.turn_on
       target:
         entity_id: script.turn_off_everything
+    - action: switch.turn_on
+      target:
+        entity_id: switch.heater_micraplus_25_main_away_mode
+    - action: water_heater.set_operation_mode
+      target:
+        entity_id: water_heater.home_domestic_hot_water_0
+      data:
+        operation_mode: "OFF"
 
 - id: notify_door_opened
   alias: Уведомить об открытии двери
@@ -484,9 +492,6 @@
     - condition: state
       entity_id: input_boolean.home_empty
       state: "off"
-    - condition: state
-      entity_id: input_boolean.cat_alone
-      state: "off"
   action:
     - action: select.select_option
       target:
@@ -525,37 +530,6 @@
       data:
         title: "CO²"
         message: "Высокий уровень: {{ states('sensor.presence_apollo_msr_2_co2') }}"
-
-- id: turn_off_heating_on_leaving
-  alias: Выключить отопление, когда все ушли
-  trigger:
-    - platform: state
-      entity_id: input_boolean.home_empty
-      to: "on"
-  conditions:
-    - condition: state
-      entity_id: input_boolean.stop
-      state: "off"
-  action:
-    - if:
-        - condition: state
-          entity_id: input_boolean.cat_alone
-          state: "on"
-      then:
-        - action: climate.set_temperature
-          target:
-            entity_id: climate.heater_micraplus_25_zone_1_climate
-          data:
-            temperature: 18
-      else:
-        - action: switch.turn_on
-          target:
-            entity_id: switch.heater_micraplus_25_main_away_mode
-    - action: water_heater.set_operation_mode
-      target:
-        entity_id: water_heater.home_domestic_hot_water_0
-      data:
-        operation_mode: "OFF"
 
 - id: turn_on_heating_on_coming
   alias: Включить отопление, когда пришли
