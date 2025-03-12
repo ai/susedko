@@ -679,7 +679,7 @@
       for: 00:06:00
     - platform: state
       entity_id: input_boolean.cat_alone
-      state: "on"
+      to: "on"
   conditions:
     - condition: state
       entity_id: input_boolean.stop
