@@ -575,7 +575,7 @@
       data:
         temperature: >
           {% if states('input_boolean.everyone_sleep') == 'on' %}
-            16
+            18
           {% else %}
             22
           {% endif %}
