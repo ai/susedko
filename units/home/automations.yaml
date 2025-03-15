@@ -99,6 +99,9 @@
     - platform: state
       entity_id: input_boolean.home_empty
       to: "on"
+    - platform: state
+      entity_id: input_boolean.cat_alone
+      to: "on"
   conditions:
     - condition: state
       entity_id: input_boolean.stop
@@ -492,6 +495,9 @@
     - condition: state
       entity_id: input_boolean.home_empty
       state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
   action:
     - action: select.select_option
       target:
@@ -651,9 +657,6 @@
       entity_id: binary_sensor.presence_apollo_msr_2_radar_zone_1_occupancy
       to: "off"
       for: 00:06:00
-    - platform: state
-      entity_id: input_boolean.cat_alone
-      to: "on"
   conditions:
     - condition: state
       entity_id: input_boolean.stop

@@ -12,6 +12,7 @@ turn_off_everything:
           - switch.plug_ikea_bedroom_heating
           - switch.plug_ikea_bathroom_1
           - switch.plug_ikea_bathroom_2
+          - switch.plug_ikea_andrey_screen
     - action: media_player.turn_off
       target:
         entity_id: media_player.tv_remote
