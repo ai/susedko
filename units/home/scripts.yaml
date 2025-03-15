@@ -65,7 +65,7 @@ heat_bedroom:
     - if:
         - condition: numeric_state
           entity_id: sensor.weather_waqi_temperature
-          below: 18
+          below: 16
       then:
         - action: switch.turn_on
           target:
