@@ -99,9 +99,6 @@
     - platform: state
       entity_id: input_boolean.home_empty
       to: "on"
-    - platform: state
-      entity_id: input_boolean.cat_alone
-      to: "on"
   conditions:
     - condition: state
       entity_id: input_boolean.stop
