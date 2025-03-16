@@ -1,6 +1,6 @@
 - id: home_empty_tracker
   alias: Отслеживание когда все ушли из дома
-  trigger:
+  triggers:
     - platform: template
       value_template: >
         {{ states.person | selectattr('state', 'eq', 'home') | list | count == 0 }}
@@ -20,7 +20,7 @@
 - id: open_blind_dawn
   alias: "Открыть штору на рассвете"
   mode: single
-  trigger:
+  triggers:
     - platform: time
       at: sensor.weather_sun_next_dawn
   conditions:
@@ -30,7 +30,7 @@
     - condition: state
       entity_id: input_boolean.cat_alone
       state: "off"
-  action:
+  actions:
     - action: cover.open_cover
       target:
         entity_id: cover.blind_ikea_bedroom
@@ -38,7 +38,7 @@
 - id: close_blind_morning
   alias: "Закрыть штору утром"
   mode: single
-  trigger:
+  triggers:
     - platform: time
       at: "10:00:00"
   conditions:
@@ -51,7 +51,7 @@
     - condition: numeric_state
       entity_id: sensor.weather_waqi_temperature
       below: 14
-  action:
+  actions:
     - action: cover.close_cover
       target:
         entity_id: cover.blind_ikea_bedroom
@@ -59,7 +59,7 @@
 - id: close_blind_evening
   alias: "Закрыть штору вечером"
   mode: single
-  trigger:
+  triggers:
     - platform: time
       at: "19:40:00"
   conditions:
@@ -72,7 +72,7 @@
     - condition: numeric_state
       entity_id: sensor.weather_waqi_temperature
       below: 16
-  action:
+  actions:
     - action: cover.close_cover
       target:
         entity_id: cover.blind_ikea_bedroom
@@ -80,7 +80,7 @@
 - id: start_eddie_sleep
   alias: Укладываем Эди спать по расписанию
   mode: single
-  trigger:
+  triggers:
     - platform: time
       at: "19:40:00"
   conditions:
@@ -90,12 +90,12 @@
     - condition: state
       entity_id: input_boolean.cat_alone
       state: "off"
-  action:
+  actions:
     action: script.prepare_eddie_for_sleep
 
 - id: turn_off_on_leaving
   alias: Выключить всё, когда все ушли
-  trigger:
+  triggers:
     - platform: state
       entity_id: input_boolean.home_empty
       to: "on"
@@ -103,7 +103,7 @@
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
-  action:
+  actions:
     - action: script.turn_on
       target:
         entity_id: script.turn_off_everything
@@ -118,7 +118,7 @@
 
 - id: notify_door_opened
   alias: Уведомить об открытии двери
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.door_ikea_main_contact
       from: "off"
@@ -127,7 +127,7 @@
     - condition: state
       entity_id: input_boolean.notifications
       state: "on"
-  action:
+  actions:
     - if:
         - condition: state
           entity_id: person.andrey_sitnik
@@ -149,7 +149,7 @@
 
 - id: notify_door_open_too_long
   alias: Уведомить о двери открытой слишком долго
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.door_ikea_main_contact
       from: "off"
@@ -160,7 +160,7 @@
     - condition: state
       entity_id: input_boolean.notifications
       state: "on"
-  action:
+  actions:
     - action: notify.mobile_app_atocha
       data:
         title: "Дверь"
@@ -177,12 +177,12 @@
 
 - id: water_leak_bathroom
   alias: Уведомить о протечке воды в ванной
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.water_ikea_bathroom_water_leak
       from: "off"
       to: "on"
-  action:
+  actions:
     - action: script.turn_on
       target:
         entity_id: script.alert
@@ -196,12 +196,12 @@
 
 - id: water_leak_washing_machine
   alias: Уведомить о протечке воды от стиральной машины
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.water_ikea_washing_machine_water_leak
       from: "off"
       to: "on"
-  action:
+  actions:
     - action: script.turn_on
       target:
         entity_id: script.alert
@@ -215,12 +215,12 @@
 
 - id: water_leak_dishwasher
   alias: Уведомить о протечке воды от стиральной машины
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.water_ikea_dishwasher_water_leak
       from: "off"
       to: "on"
-  action:
+  actions:
     - action: script.turn_on
       target:
         entity_id: script.alert
@@ -234,7 +234,7 @@
 
 - id: notify_cleaning_started
   alias: Уведомить о начале уборки
-  trigger:
+  triggers:
     - platform: state
       entity_id: vacuum.vacuum_roborock_q7_max
       to: "cleaning"
@@ -242,7 +242,7 @@
     - condition: state
       entity_id: input_boolean.notifications
       state: "on"
-  action:
+  actions:
     - action: notify.notify
       data:
         title: Робот-пылесос
@@ -250,7 +250,7 @@
 
 - id: notify_cleaning_finished
   alias: Уведомить о завершении уборки
-  trigger:
+  triggers:
     - platform: state
       entity_id: vacuum.vacuum_roborock_q7_max
       from:
@@ -262,7 +262,7 @@
     - condition: state
       entity_id: input_boolean.notifications
       state: "on"
-  action:
+  actions:
     - action: notify.notify
       data:
         title: Робот-пылесос
@@ -270,29 +270,29 @@
 
 - id: mark_vacuum_started_today
   alias: Отметить, что пылесос был запущен сегодня
-  trigger:
+  triggers:
     - platform: state
       entity_id: vacuum.vacuum_roborock_q7_max
       from: "docked"
       to: "cleaning"
-  action:
+  actions:
     - action: input_boolean.turn_on
       data:
         entity_id: input_boolean.vacuum_was_run_today
 
 - id: reset_vacuum_started_today
   alias: Сбросить отметку о запуске пылесоса сегодня
-  trigger:
+  triggers:
     - platform: time
       at: "04:00:00"
-  action:
+  actions:
     - action: input_boolean.turn_off
       data:
         entity_id: input_boolean.vacuum_was_run_today
 
 - id: daily_vacuum_on_leaving
   alias: Ежедневная уборка пылесосом когда все ушли
-  trigger:
+  triggers:
     - platform: state
       entity_id: input_boolean.home_empty
       to: "on"
@@ -309,7 +309,7 @@
     - condition: time
       after: "08:40:00"
       before: "22:00:00"
-  action:
+  actions:
     - action: vacuum.start
       target:
         entity_id: vacuum.vacuum_roborock_q7_max
@@ -395,10 +395,10 @@
 
 - id: adaptive_lights_sync
   alias: Управление сменой цвета ламп при переключении автоматизации
-  trigger:
+  triggers:
     - platform: state
       entity_id: input_boolean.stop
-  action:
+  actions:
     - choose:
         - conditions:
             - condition: state
@@ -420,10 +420,10 @@
 - id: night_mode_enable
   alias: Включить ночной режим
   mode: single
-  trigger:
+  triggers:
     - platform: time
       at: "00:00:00"
-  action:
+  actions:
     - action: input_boolean.turn_on
       target:
         entity_id: input_boolean.everyone_sleep
@@ -431,10 +431,10 @@
 - id: night_mode_disable
   alias: Выключить ночной режим
   mode: single
-  trigger:
+  triggers:
     - platform: time
       at: "07:00:00"
-  action:
+  actions:
     - action: input_boolean.turn_off
       target:
         entity_id: input_boolean.everyone_sleep
@@ -452,12 +452,12 @@
       {% endfor %}
       {{result.sensors|join(', ')}}
   mode: single
-  trigger:
+  triggers:
     - platform: time
       at: "10:00:00"
   conditions:
     - "{{ sensors != '' }}"
-  action:
+  actions:
     - action: notify.mobile_app_atocha
       data:
         title: "Дом"
@@ -465,7 +465,7 @@
 
 - id: disable_fast_presence
   alias: Экономить батарею датчиков присутствия
-  trigger:
+  triggers:
     - platform: state
       entity_id: input_boolean.home_empty
       to: "on"
@@ -474,7 +474,7 @@
       to: "on"
     - platform: time
       at: "00:00:00"
-  action:
+  actions:
     - action: select.select_option
       target:
         entity_id:
@@ -485,7 +485,7 @@
 
 - id: enable_fast_presence
   alias: Ускорить обнаружение в датчиках присутствия
-  trigger:
+  triggers:
     - platform: state
       entity_id: input_boolean.home_empty
       to: "off"
@@ -501,7 +501,7 @@
     - condition: state
       entity_id: input_boolean.cat_alone
       state: "off"
-  action:
+  actions:
     - action: select.select_option
       target:
         entity_id:
@@ -512,7 +512,7 @@
 
 - id: co2_andrey_notification
   alias: Уведомить Андрея о высоком уровне CO2
-  trigger:
+  triggers:
     - platform: numeric_state
       entity_id: sensor.presence_apollo_msr_2_co2
       above: 800
@@ -534,7 +534,7 @@
     - condition: state
       entity_id: person.andrey_sitnik
       state: "home"
-  action:
+  actions:
     - action: notify.mobile_app_atocha
       data:
         title: "CO²"
@@ -542,7 +542,7 @@
 
 - id: turn_on_heating_on_coming
   alias: Включить отопление, когда пришли
-  trigger:
+  triggers:
     - platform: state
       entity_id: input_boolean.home_empty
       to: "off"
@@ -550,7 +550,7 @@
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
-  action:
+  actions:
     - action: switch.turn_off
       target:
         entity_id: switch.heater_micraplus_25_main_away_mode
@@ -567,7 +567,7 @@
 
 - id: night_heating_mode
   alias: Выключать отопление ночью
-  trigger:
+  triggers:
     - platform: state
       entity_id: input_boolean.everyone_sleep
   conditions:
@@ -591,7 +591,7 @@
 
 - id: bathroom_plugs_control
   alias: Включать розетки в ванной при возвращении
-  trigger:
+  triggers:
     - platform: state
       entity_id: input_boolean.home_empty
       to: "off"
@@ -599,7 +599,7 @@
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
-  action:
+  actions:
     - action: switch.turn_on
       target:
         entity_id:
@@ -609,7 +609,7 @@
 - id: auto_off_bedroom_heating
   alias: Автовыключение обогревателя ног через час
   mode: restart
-  trigger:
+  triggers:
     - platform: state
       entity_id: switch.plug_ikea_bedroom_heating
       from: "off"
@@ -623,7 +623,7 @@
     - condition: state
       entity_id: switch.plug_ikea_bedroom_heating
       state: "on"
-  action:
+  actions:
     - action: switch.turn_off
       target:
         entity_id: switch.plug_ikea_bedroom_heating
@@ -631,7 +631,7 @@
 - id: start_screen_on_presence
   alias: Включение монитора Андрея по датчику присутствия
   mode: restart
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.presence_apollo_msr_2_radar_zone_1_occupancy
       to: "on"
@@ -655,7 +655,7 @@
 - id: stop_screen_on_presence
   alias: Выключение монитора Андрея по датчику присутствия
   mode: restart
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.presence_apollo_msr_2_radar_zone_1_occupancy
       to: "off"
@@ -677,7 +677,7 @@
 - id: pause_tv_on_doorbell
   alias: Пауза телевизора при звонке двери
   mode: restart
-  trigger:
+  triggers:
     - trigger: state
       entity_id: event.front_door_ding
   conditions:
@@ -692,7 +692,7 @@
 - id: pause_tv_on_call
   alias: Пауза телевизора при звонке на телефон
   mode: restart
-  trigger:
+  triggers:
     - platform: state
       entity_id: sensor.phone_atocha_phone_state
       to: "ringing"
@@ -711,7 +711,7 @@
 - id: lock_screen_on_andrey_leaving
   alias: Блокировка ноутбука Андрея при его уходе
   mode: restart
-  trigger:
+  triggers:
     - platform: state
       entity_id: person.andrey_sitnik
       to: "not_home"
