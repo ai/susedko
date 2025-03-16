@@ -321,25 +321,12 @@ actions:
             state: "on"
         sequence:
           - choose:
-              - conditions:
-                  - condition: state
+              sequence:
+                - action: light.turn_on
+                  target:
                     entity_id: !input light
-                    state: "on"
-                sequence:
-                  - action: light.turn_on
-                    target:
-                      entity_id: !input light
-                    data:
-                      brightness_step_pct: -10
-              - conditions:
-                  - condition: state
-                    entity_id: !input light
-                    state: "off"
-                sequence:
-                  - action: scene.turn_on
-                    data:
-                      entity_id: >
-                        {{ 'scene.' ~ current_room ~ '_night' }}
+                  data:
+                    brightness_step_pct: -10
 
       - conditions:
           - condition: trigger
