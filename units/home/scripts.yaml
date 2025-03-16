@@ -9,6 +9,7 @@ turn_off_everything:
         entity_id:
           - switch.plug_ikea_andrey_back
           - switch.wall_switch_yandex_bathroom_1
+          - switch.wall_switch_yandex_lounge_1
           - switch.plug_ikea_bedroom_heating
           - switch.plug_ikea_bathroom_1
           - switch.plug_ikea_bathroom_2
