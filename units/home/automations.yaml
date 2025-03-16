@@ -343,6 +343,15 @@
       light: light.light_aqara_t2_e27_rgb_lounge
       room: lounge
       scene_helper: input_number.lounge_last_scene
+      before_on:
+        - action: switch.turn_on
+          target:
+            entity_id: switch.wall_switch_yandex_lounge_1
+      after_off:
+        - delay: "00:00:02"
+        - action: switch.turn_off
+          target:
+            entity_id: switch.wall_switch_yandex_lounge_1
 
 - id: bathroom_wall_switch_buttons
   alias: Управление светом в ванной с помощью выключателя
@@ -354,11 +363,8 @@
       room: bathroom
       reverse: true
       scene_helper: input_number.bathroom_last_scene
-      extra_on:
-        - action: switch.turn_on
-          target:
-            entity_id: switch.wall_switch_yandex_bathroom_1
-      extra_off:
+      extra_switch: switch.wall_switch_yandex_bathroom_1
+      after_off:
         - action: switch.turn_off
           target:
             entity_id: switch.wall_switch_yandex_bathroom_1
@@ -372,7 +378,7 @@
       night_scene: scene.bathroom_night
       light:
         entity_id: light.light_group_bathroom
-      extra_off:
+      after_off:
         - action: switch.turn_off
           target:
             entity_id: switch.wall_switch_yandex_bathroom_1

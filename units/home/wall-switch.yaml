@@ -15,12 +15,12 @@ blueprint:
         entity:
           filter:
             domain: light
-    extra_on:
+    before_on:
       name: Дополнительное действие при включении
       selector:
         action: {}
       default: []
-    extra_off:
+    after_off:
       name: Дополнительное действие при выключении
       selector:
         action: {}
@@ -39,6 +39,13 @@ blueprint:
       default: false
       selector:
         boolean: {}
+    extra_switch:
+      name: Управлять реле вместо яркости
+      default: null
+      selector:
+        entity:
+          filter:
+            domain: switch
 
 mode: restart
 
@@ -184,6 +191,7 @@ triggers:
 variables:
   current_room: !input room
   current_scene_helper: !input scene_helper
+  current_extra_switch: !input extra_switch
   matched_scenes: >
     {{ states.scene
       | selectattr('entity_id','match','^scene\\.' ~ current_room)
@@ -230,19 +238,19 @@ actions:
                     entity_id: !input light
                     state: "off"
                 sequence:
+                  - sequence: !input before_on
                   - action: light.turn_on
                     target:
                       entity_id: !input light
-                  - sequence: !input extra_on
 
       - conditions:
           - condition: trigger
             id: turn_off
         sequence:
-          - sequence: !input extra_off
           - action: light.turn_off
             target:
               entity_id: !input light
+          - sequence: !input after_off
 
       - conditions:
           - condition: trigger
@@ -254,20 +262,29 @@ actions:
                     entity_id: !input light
                     state: "on"
                 sequence:
-                  - action: light.turn_on
-                    target:
-                      entity_id: !input light
-                    data:
-                      brightness_step_pct: 10
+                  - sequence: !input before_on
+                  - if:
+                      - condition: template
+                        value_template: "{{ current_extra_switch is not none }}"
+                    then:
+                      - action: switch.turn_on
+                        target:
+                          entity_id: !input extra_switch
+                    else:
+                      - action: light.turn_on
+                        target:
+                          entity_id: !input light
+                        data:
+                          brightness_step_pct: 10
               - conditions:
                   - condition: state
                     entity_id: !input light
                     state: "off"
                 sequence:
+                  - sequence: !input before_on
                   - action: light.turn_on
                     target:
                       entity_id: !input light
-                  - sequence: !input extra_on
 
       - conditions:
           - condition: trigger
@@ -276,6 +293,7 @@ actions:
             entity_id: !input light
             state: "on"
         sequence:
+          - sequence: !input before_on
           - action: light.turn_on
             target:
               entity_id: !input light
@@ -307,6 +325,7 @@ actions:
             entity_id: !input light
             state: "on"
         sequence:
+          - sequence: !input before_on
           - action: light.turn_on
             target:
               entity_id: !input light
@@ -320,11 +339,20 @@ actions:
             entity_id: !input light
             state: "on"
         sequence:
-          - action: light.turn_on
-            target:
-              entity_id: !input light
-            data:
-              brightness_step_pct: -10
+          - sequence: !input before_on
+          - if:
+              - condition: template
+                value_template: "{{ current_extra_switch is not none }}"
+            then:
+              - action: switch.turn_off
+                target:
+                  entity_id: !input extra_switch
+            else:
+              - action: light.turn_on
+                target:
+                  entity_id: !input light
+                data:
+                  brightness_step_pct: -10
 
       - conditions:
           - condition: trigger
@@ -333,6 +361,7 @@ actions:
             entity_id: !input light
             state: "on"
         sequence:
+          - sequence: !input before_on
           - action: light.turn_on
             target:
               entity_id: !input light
@@ -346,6 +375,7 @@ actions:
             entity_id: !input light
             state: "on"
         sequence:
+          - sequence: !input before_on
           - action: light.turn_on
             target:
               entity_id: !input light

@@ -20,7 +20,7 @@ blueprint:
         target:
           entity:
             domain: light
-    extra_off:
+    after_off:
       name: Дополнительное действие при включении
       selector:
         action: {}
@@ -68,9 +68,9 @@ actions:
               entity_id: !input presence_sensor
               from: "on"
               to: "off"
-          - sequence: !input extra_off
           - action: light.turn_off
             target: !input light
+          - sequence: !input after_off
     else:
       - action: light.turn_on
         target: !input light
@@ -84,6 +84,6 @@ actions:
             entity_id: input_boolean.stop
             state: "off"
         then:
-          - sequence: !input extra_off
           - action: light.turn_off
             target: !input light
+          - sequence: !input after_off
