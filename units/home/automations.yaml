@@ -609,9 +609,7 @@
   actions:
     - action: switch.turn_on
       target:
-        entity_id:
-          - switch.plug_ikea_bathroom_1
-          - switch.plug_ikea_bathroom_2
+        entity_id: switch.plug_group_bathroom
 
 - id: auto_off_bedroom_heating
   alias: Автовыключение обогревателя ног через час
