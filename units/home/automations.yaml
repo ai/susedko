@@ -68,7 +68,7 @@
   mode: single
   triggers:
     - platform: time
-      at: "19:40:00"
+      at: "20:00:00"
   conditions:
     - condition: state
       entity_id: input_boolean.stop
