@@ -400,6 +400,16 @@
       light:
         entity_id: light.light_ikea_gu10_toilet
 
+- id: hall_light_on_motion
+  alias: Включить свет на входе при движении
+  use_blueprint:
+    path: presence.yaml
+    input:
+      presence_sensor: binary_sensor.presence_tuya_hall_presence
+      night_scene: scene.hall_night
+      light:
+        entity_id: light.light_ikea_ceiling_hall_1
+
 - id: adaptive_lights_sync
   alias: Управление сменой цвета ламп при переключении автоматизации
   triggers:
@@ -487,6 +497,7 @@
         entity_id:
           - select.presence_tuya_bathroom_motion_detection_mode
           - select.presence_tuya_kitchen_motion_detection_mode
+          - select.presence_tuya_hall_motion_detection_mode
       data:
         option: "only_pir"
 
@@ -514,6 +525,7 @@
         entity_id:
           - select.presence_tuya_bathroom_motion_detection_mode
           - select.presence_tuya_kitchen_motion_detection_mode
+          - select.presence_tuya_hall_motion_detection_mode
       data:
         option: "pir_and_radar"
 
