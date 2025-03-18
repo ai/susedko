@@ -342,7 +342,7 @@
 
 - id: notify_on_vacuum_unavailable
   alias: Уведомление о недоступности пылесоса
-  trigger:
+  triggers:
     - platform: time
       at: "00:11:30"
   conditions:
@@ -383,6 +383,23 @@
       light: light.light_group_kitchen
       room: kitchen
       scene_helper: input_number.kitchen_last_scene
+
+- id: reset_kitchen_light
+  alias: Яркий свет на кухне утром
+  triggers:
+    - platform: time
+      at: "06:00:00"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+  actions:
+    - action: scene.turn_on
+      target:
+        entity_id: scene.kitchen_full
+    - action: light.turn_off
+      target:
+        entity_id: light.light_group_kitchen
 
 - id: lounge_wall_switch_buttons
   alias: Управление светом в зале с помощью выключателя
@@ -754,7 +771,7 @@
   alias: Пауза телевизора при звонке двери
   mode: restart
   triggers:
-    - trigger: state
+    - platform: state
       entity_id: event.front_door_ding
   conditions:
     - condition: state
