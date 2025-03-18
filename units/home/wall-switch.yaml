@@ -316,9 +316,6 @@ actions:
       - conditions:
           - condition: trigger
             id: full_brighter
-          - condition: state
-            entity_id: !input light
-            state: "on"
         sequence:
           - sequence: !input before_on
           - action: light.turn_on
@@ -366,9 +363,6 @@ actions:
       - conditions:
           - condition: trigger
             id: full_darker
-          - condition: state
-            entity_id: !input light
-            state: "on"
         sequence:
           - sequence: !input before_on
           - action: light.turn_on
