@@ -340,6 +340,30 @@
       target:
         entity_id: vacuum.vacuum_roborock_q7_max
 
+- id: notify_on_vacuum_unavailable
+  alias: Уведомление о недоступности пылесоса
+  trigger:
+    - platform: time
+      at: "00:11:30"
+  conditions:
+    - condition: state
+      entity_id: sensor.vacuum_roborock_q7_max_battery
+      state: "unavailable"
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.notifications
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.guests
+      state: "off"
+  actions:
+    - action: notify.mobile_app_atocha
+      data:
+        title: "Робот-пылесос"
+        message: "Недоступен"
+
 - id: kitchen_light_on_motion
   alias: Включить свет на кухне при движении
   use_blueprint:
