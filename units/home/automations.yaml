@@ -679,7 +679,7 @@
       entity_id: input_boolean.cat_alone
       state: "off"
     - condition: state
-      entity_id: person.andrey
+      entity_id: person.andrey_sitnik
       state: "home"
   actions:
     - if:
@@ -709,7 +709,7 @@
       entity_id: input_boolean.stop
       state: "off"
     - condition: state
-      entity_id: person.andrey
+      entity_id: person.andrey_sitnik
       state: "home"
   actions:
     - if:
