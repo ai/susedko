@@ -101,6 +101,10 @@ devices:
     friendly_name: Light / IKEA E14 RGB / Desk
   '0xa4c138c0750e2e22':
     friendly_name: Presence / Tuya / Hall
+  '0xd44867fffeb3f24a':
+    friendly_name: Door / IKEA / Balcony Right
+  '0xd44867fffeb38881':
+    friendly_name: Door / IKEA / Balcony Left
 groups:
   '1':
     friendly_name: Light / Group / Bathroom

@@ -735,6 +735,9 @@
             payload: "WAKE"
             topic: "ai_laptop"
             retain: true
+    - action: light.turn_on
+      target:
+        entity_id: light.light_group_andrey
     - action: switch.turn_on
       target:
         entity_id: switch.plug_ikea_andrey_screen
@@ -765,6 +768,9 @@
             payload: "LOCK"
             topic: "ai_laptop"
             retain: true
+    - action: light.turn_off
+      target:
+        entity_id: light.light_group_andrey
     - action: switch.turn_off
       target:
         entity_id: switch.plug_ikea_andrey_screen
@@ -825,3 +831,59 @@
         payload: "LOCK"
         topic: "ai_laptop"
         retain: true
+
+- id: notify_balcony_opened
+  alias: Уведомить об открытии балкона, когда нас нет
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.door_ikea_balcony_left_contact
+      from: "off"
+      to: "on"
+    - trigger: state
+      entity_id: binary_sensor.door_ikea_balcony_right_contact
+      from: "off"
+      to: "on"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.notifications
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.home_empty
+      state: "on"
+  actions:
+    - action: notify.mobile_app_atocha
+      data:
+        title: "Балкон"
+        message: "Открыт"
+    - action: notify.mobile_app_pixel_7a
+      data:
+        title: "Балкон"
+        message: "Открыт"
+
+- id: notify_balcony_forgot
+  alias: Уведомить об открытии балкона, когда мы забыли его закрыть
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.home_empty
+      to: "on"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.notifications
+      state: "on"
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.door_ikea_balcony_left_contact
+          state: "on"
+        - condition: state
+          entity_id: binary_sensor.door_ikea_balcony_right_contact
+          state: "on"
+  actions:
+    - action: notify.mobile_app_atocha
+      data:
+        title: "Балкон"
+        message: "Забыли закрыть"
+    - action: notify.mobile_app_pixel_7a
+      data:
+        title: "Балкон"
+        message: "Забыли закрыть"
