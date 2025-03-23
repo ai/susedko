@@ -932,9 +932,19 @@
           target:
             entity_id: climate.heater_micraplus_25_zone_1_climate
       else:
-        - action: climate.turn_off
-          target:
-            entity_id: climate.heater_micraplus_25_zone_1_climate
+        - if:
+            - condition: or
+              conditions:
+                - condition: state
+                  entity_id: binary_sensor.door_ikea_balcony_left_contact
+                  state: "on"
+                - condition: state
+                  entity_id: binary_sensor.door_ikea_balcony_right_contact
+                  state: "on"
+          then:
+            - action: climate.turn_off
+              target:
+                entity_id: climate.heater_micraplus_25_zone_1_climate
 
 - id: notify_air_quality_eddie
   alias: Предупредить о плохом воздухе, когда забираем Эди
