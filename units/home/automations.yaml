@@ -854,6 +854,9 @@
           entity_id: input_boolean.heating
           state: "on"
       then:
+        - action: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.cooling
         - action: climate.turn_on
           target:
             entity_id: climate.heater_micraplus_25_zone_1_climate
