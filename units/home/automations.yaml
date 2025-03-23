@@ -832,6 +832,31 @@
         topic: "ai_laptop"
         retain: true
 
+- id: switch_heater
+  alias: Включить отопление при включении настройки
+  mode: restart
+  trigger:
+    - trigger: state
+      entity_id: input_boolean.heating
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+  actions:
+    - if:
+        - condition: state
+          entity_id: input_boolean.heating
+          state: "on"
+      then:
+        - action: climate.turn_on
+          target:
+            entity_id: climate.heater_micraplus_25_zone_1_climate
+      else:
+        - action: climate.turn_off
+          entity_id: climate.heater_micraplus_25_zone_1_climate
+          target:
+            entity_id: climate.heater_micraplus_25_zone_1_climate
+
 - id: notify_balcony_opened
   alias: Уведомить об открытии балкона, когда нас нет
   triggers:
@@ -887,3 +912,34 @@
       data:
         title: "Балкон"
         message: "Забыли закрыть"
+
+- id: disable_heating_on_balcony
+  alias: Отключить отопление при открытии балкона
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.door_ikea_balcony_left_contact
+    - trigger: state
+      entity_id: binary_sensor.door_ikea_balcony_right_contact
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.heating
+      state: "on"
+  actions:
+    - if:
+        - condition: state
+          entity_id: binary_sensor.door_ikea_balcony_left_contact
+          state: "off"
+        - condition: state
+          entity_id: binary_sensor.door_ikea_balcony_right_contact
+          state: "off"
+      then:
+        - action: climate.turn_on
+          target:
+            entity_id: climate.heater_micraplus_25_zone_1_climate
+      else:
+        - action: climate.turn_off
+          target:
+            entity_id: climate.heater_micraplus_25_zone_1_climate
