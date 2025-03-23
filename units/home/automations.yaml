@@ -734,9 +734,9 @@
             payload: "WAKE"
             topic: "ai_laptop"
             retain: true
-        - action: switch.turn_on
-          target:
-            entity_id: switch.plug_ikea_andrey_screen
+    - action: switch.turn_on
+      target:
+        entity_id: switch.plug_ikea_andrey_screen
 
 - id: stop_screen_on_presence
   alias: Выключение монитора Андрея по датчику присутствия
