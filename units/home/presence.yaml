@@ -34,7 +34,7 @@ blueprint:
 mode: restart
 
 triggers:
-  - platform: state
+  - trigger: state
     entity_id: !input presence_sensor
     from: "off"
     to: "on"
