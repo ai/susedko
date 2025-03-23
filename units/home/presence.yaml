@@ -22,14 +22,21 @@ blueprint:
             domain: light
     after_off:
       name: Дополнительное действие при включении
+      default: []
       selector:
         action: {}
-      default: []
     night_scene:
       name: Ночной режим
+      default: null
       selector:
         entity:
           domain: scene
+    scene_helper:
+      name: "Индекс сцены для сброса"
+      default: null
+      selector:
+        entity:
+          domain: input_number
 
 mode: restart
 
@@ -49,8 +56,17 @@ conditions:
 
 variables:
   current_night_scene: !input night_scene
+  current_scene_helper: !input scene_helper
 
 actions:
+  - if:
+      - condition: template
+        value_template: "{{ current_scene_helper is not none  }}"
+    then:
+      - action: input_number.set_value
+        data:
+          entity_id: !input scene_helper
+          value: "0"
   - if:
       - condition: state
         entity_id: input_boolean.everyone_sleep
