@@ -789,10 +789,14 @@
   triggers:
     - trigger: state
       entity_id: sensor.phone_atocha_phone_state
-      to: "ringing"
+      to:
+        - "ringing"
+        - "offhook"
     - trigger: state
       entity_id: sensor.phone_pixel_7a_phone_state
-      to: "ringing"
+      to:
+        - "ringing"
+        - "offhook"
   conditions:
     - condition: state
       entity_id: input_boolean.stop
