@@ -631,6 +631,9 @@
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
+    - condition: state
+      entity_id: input_boolean.heating
+      state: "on"
   actions:
     - action: switch.turn_off
       target:
@@ -658,6 +661,9 @@
     - condition: state
       entity_id: input_boolean.cat_alone
       state: "off"
+    - condition: state
+      entity_id: input_boolean.heating
+      state: "on"
   actions:
     - action: climate.set_temperature
       target:
@@ -853,7 +859,6 @@
             entity_id: climate.heater_micraplus_25_zone_1_climate
       else:
         - action: climate.turn_off
-          entity_id: climate.heater_micraplus_25_zone_1_climate
           target:
             entity_id: climate.heater_micraplus_25_zone_1_climate
 
