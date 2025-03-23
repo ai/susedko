@@ -876,11 +876,7 @@
       entity_id: input_boolean.home_empty
       state: "on"
   actions:
-    - action: notify.mobile_app_atocha
-      data:
-        title: "Балкон"
-        message: "Открыт"
-    - action: notify.mobile_app_pixel_7a
+    - action: notify.notify
       data:
         title: "Балкон"
         message: "Открыт"
@@ -904,11 +900,7 @@
           entity_id: binary_sensor.door_ikea_balcony_right_contact
           state: "on"
   actions:
-    - action: notify.mobile_app_atocha
-      data:
-        title: "Балкон"
-        message: "Забыли закрыть"
-    - action: notify.mobile_app_pixel_7a
+    - action: notify.notify
       data:
         title: "Балкон"
         message: "Забыли закрыть"
@@ -943,3 +935,27 @@
         - action: climate.turn_off
           target:
             entity_id: climate.heater_micraplus_25_zone_1_climate
+
+- id: notify_air_quality_eddie
+  alias: Предупредить о плохом воздухе, когда забираем Эди
+  triggers:
+    - trigger: time
+      at: "16:20:00"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.notifications
+      state: "on"
+    - condition: numeric_state
+      entity_id: sensor.weather_waqi_air_quality_index
+      above: 50
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.guests
+      state: "off"
+  actions:
+    - action: notify.notify
+      data:
+        title: "Качество воздуха: {{ states('sensor.weather_waqi_air_quality_index') }}"
+        message: "Лучше Эди не гулять"
