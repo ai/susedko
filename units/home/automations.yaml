@@ -969,9 +969,14 @@
     - condition: state
       entity_id: input_boolean.cat_alone
       state: "off"
-    - condition: state
-      entity_id: input_boolean.guests
-      state: "off"
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_boolean.home_empty
+          state: "off"
+        - condition: state
+          entity_id: input_boolean.guests
+          state: "off"
   actions:
     - action: notify.notify
       data:
