@@ -492,6 +492,7 @@
       room: andrey
       reverse: true
       scene_helper: input_number.andrey_last_scene
+      extra_light: light.light_ikea_e27_rgb_andrey
       after_off:
         - action: switch.turn_off
           target:
