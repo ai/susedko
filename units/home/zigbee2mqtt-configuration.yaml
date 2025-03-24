@@ -105,6 +105,12 @@ devices:
     friendly_name: Door / IKEA / Balcony Right
   '0xd44867fffeb38881':
     friendly_name: Door / IKEA / Balcony Left
+  '0xacbac0fffebdf631':
+    friendly_name: Wall Switch / Yandex / Children
+    state_action: true
+  '0xacbac0fffebbd71f':
+    friendly_name: Wall Switch / Yandex / Andrey
+    state_action: true
 groups:
   '1':
     friendly_name: Light / Group / Bathroom
@@ -116,3 +122,5 @@ groups:
     friendly_name: Light / Group / Andrey
   '5':
     friendly_name: Plug / Group / Bathroom
+  '6':
+    friendly_name: Light / Group / Children

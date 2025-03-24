@@ -472,6 +472,31 @@
       light:
         entity_id: light.light_ikea_ceiling_hall_1
 
+- id: children_wall_switch_buttons
+  alias: Управление светом в детской с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: 1397c21e23f9d7221a9c1ef2c864bd06
+      light: light.light_group_children
+      room: children
+      scene_helper: input_number.children_last_scene
+
+- id: andrey_wall_switch_buttons
+  alias: Управление светом в кабинете Андрея с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: c2f4768909c1d88ce70e0b83f87cec68
+      light: light.light_group_andrey
+      room: andrey
+      reverse: true
+      scene_helper: input_number.andrey_last_scene
+      after_off:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.plug_ikea_andrey_screen
+
 - id: adaptive_lights_sync
   alias: Управление сменой цвета ламп при переключении автоматизации
   triggers:
