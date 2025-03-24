@@ -480,6 +480,7 @@
       wall_switch: 1397c21e23f9d7221a9c1ef2c864bd06
       light: light.light_group_children
       room: children
+      reverse: true
       scene_helper: input_number.children_last_scene
 
 - id: andrey_wall_switch_buttons
