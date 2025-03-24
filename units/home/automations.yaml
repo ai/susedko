@@ -494,9 +494,14 @@
       scene_helper: input_number.andrey_last_scene
       extra_light: light.light_ikea_e27_rgb_andrey
       after_off:
-        - action: switch.turn_off
-          target:
-            entity_id: switch.plug_ikea_andrey_screen
+        - if:
+            - condition: state
+              entity_id: input_boolean.guests
+              state: "off"
+          then:
+            - action: switch.turn_off
+              target:
+                entity_id: switch.plug_ikea_andrey_screen
 
 - id: adaptive_lights_sync
   alias: Управление сменой цвета ламп при переключении автоматизации
@@ -756,6 +761,9 @@
     - condition: state
       entity_id: person.andrey_sitnik
       state: "home"
+    - condition: state
+      entity_id: input_boolean.guests
+      state: "off"
   actions:
     - if:
         - condition: state
@@ -789,6 +797,9 @@
     - condition: state
       entity_id: person.andrey_sitnik
       state: "home"
+    - condition: state
+      entity_id: input_boolean.guests
+      state: "off"
   actions:
     - if:
         - condition: state
@@ -1008,3 +1019,26 @@
       data:
         title: "Качество воздуха: {{ states('sensor.weather_waqi_air_quality_index') }}"
         message: "Лучше Эди не гулять"
+
+- id: turn_on_screen_on_guests
+  alias: Включить экран, когда приходят гости
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.guests
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+  actions:
+    - if:
+        condition: state
+        entity_id: input_boolean.guests
+        state: "on"
+      then:
+        - action: switch.turn_on
+          target:
+            entity_id: switch.plug_ikea_andrey_screen
+      else:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.plug_ikea_andrey_screen
