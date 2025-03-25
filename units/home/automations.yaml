@@ -520,7 +520,7 @@
       after_off:
         - if:
             - condition: state
-              entity_id: input_boolean.guests
+              entity_id: input_boolean.auto_andrey_desk
               state: "off"
           then:
             - action: switch.turn_off
@@ -810,14 +810,11 @@
       entity_id: input_boolean.stop
       state: "off"
     - condition: state
-      entity_id: input_boolean.cat_alone
-      state: "off"
-    - condition: state
       entity_id: person.andrey_sitnik
       state: "home"
     - condition: state
-      entity_id: input_boolean.guests
-      state: "off"
+      entity_id: input_boolean.auto_andrey_desk
+      state: "on"
   actions:
     - if:
         - condition: state
@@ -852,8 +849,8 @@
       entity_id: person.andrey_sitnik
       state: "home"
     - condition: state
-      entity_id: input_boolean.guests
-      state: "off"
+      entity_id: input_boolean.auto_andrey_desk
+      state: "on"
   actions:
     - if:
         - condition: state
@@ -922,6 +919,9 @@
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
+    - condition: state
+      entity_id: input_boolean.auto_andrey_desk
+      state: "on"
   actions:
     - action: mqtt.publish
       data:
@@ -1074,19 +1074,15 @@
         title: "Качество воздуха: {{ states('sensor.weather_waqi_air_quality_index') }}"
         message: "Лучше Эди не гулять"
 
-- id: turn_on_screen_on_guests
-  alias: Включить экран, когда приходят гости
+- id: turn_on_screen_on_auto_desk
+  alias: Включить экран, когда выключается умный режим
   triggers:
     - trigger: state
-      entity_id: input_boolean.guests
-  conditions:
-    - condition: state
-      entity_id: input_boolean.stop
-      state: "off"
+      entity_id: input_boolean.auto_andrey_desk
   actions:
     - if:
         condition: state
-        entity_id: input_boolean.guests
+        entity_id: input_boolean.auto_andrey_desk
         state: "on"
       then:
         - action: switch.turn_on
@@ -1096,3 +1092,22 @@
         - action: switch.turn_off
           target:
             entity_id: switch.plug_ikea_andrey_screen
+
+- id: sync_auto_desk_and_cat_alone
+  alias: Выключать авто-стол, когда кошка одна
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.cat_alone
+  actions:
+    - if:
+        condition: state
+        entity_id: input_boolean.cat_alone
+        state: "on"
+      then:
+        - action: input_boolean.turn_on
+          target:
+            entity_id: input_boolean.auto_andrey_desk
+      else:
+        - action: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.auto_andrey_desk
