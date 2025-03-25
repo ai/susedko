@@ -527,6 +527,36 @@
               target:
                 entity_id: switch.plug_ikea_andrey_screen
 
+- id: bedroom_wall_switch_buttons
+  alias: Управление светом в спальне с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: cf1aab04d291030894e3814a743a2152
+      light: light.light_group_bedroom
+      room: bedroom
+      scene_helper: input_number.bedroom_last_scene
+
+- id: entrance_wall_switch_buttons
+  alias: Управление светом у входа с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: 4ecbee73df7092e59b71c4c360340352
+      light: light.light_ikea_ceiling_entrance
+      room: entrance
+      scene_helper: input_number.entrance_last_scene
+
+- id: hall_wall_switch_buttons
+  alias: Управление светом в коридоре с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: 28614872fff069cfbba7facf6e46e801
+      light: light.light_ikea_ceiling_hall
+      room: hall
+      scene_helper: input_number.hall_last_scene
+
 - id: adaptive_lights_sync
   alias: Управление сменой цвета ламп при переключении автоматизации
   triggers:
