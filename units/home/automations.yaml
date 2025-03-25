@@ -25,8 +25,8 @@
           target:
             entity_id: input_boolean.home_empty
 
-- id: open_blind_dawn
-  alias: "Открыть штору на рассвете"
+- id: open_blinds_dawn
+  alias: "Открыть шторы на рассвете"
   mode: single
   triggers:
     - trigger: time
@@ -41,10 +41,12 @@
   actions:
     - action: cover.open_cover
       target:
-        entity_id: cover.blind_ikea_bedroom
+        entity_id:
+          - cover.blind_ikea_bedroom
+          - cover.blind_ikea_lounge
 
-- id: close_blind_morning
-  alias: "Закрыть штору утром"
+- id: close_bedroom_blind_morning
+  alias: "Закрыть штору в спальне утром"
   mode: single
   triggers:
     - trigger: time
@@ -64,8 +66,8 @@
       target:
         entity_id: cover.blind_ikea_bedroom
 
-- id: close_blind_evening
-  alias: "Закрыть штору вечером"
+- id: close_bedroom_blind_evening
+  alias: "Закрыть штору в спалье вечером"
   mode: single
   triggers:
     - trigger: time
@@ -84,6 +86,27 @@
     - action: cover.close_cover
       target:
         entity_id: cover.blind_ikea_bedroom
+
+- id: close_lounge_blind_night
+  alias: "Закрыть штору в зале ночью"
+  mode: single
+  triggers:
+    - trigger: time
+      at: "00:00:00"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+    - condition: numeric_state
+      entity_id: sensor.weather_waqi_temperature
+      below: 14
+  actions:
+    - action: cover.close_cover
+      target:
+        entity_id: cover.blind_ikea_lounge
 
 - id: start_eddie_sleep
   alias: Укладываем Эди спать по расписанию
