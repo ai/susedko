@@ -25,9 +25,9 @@ devices:
   '0x680ae2fffe1a89e8':
     friendly_name: Light / IKEA E27 RGB / Bedroom
   '0x403059fffe81d106':
-    friendly_name: Light / IKEA Ceiling / Hall 2
+    friendly_name: Light / IKEA Ceiling / Hall
   '0x44e2f8fffe4cca2f':
-    friendly_name: Light / IKEA Ceiling / Hall 1
+    friendly_name: Light / IKEA Ceiling / Entrance
   '0xec1bbdfffece5c65':
     friendly_name: Light / IKEA E27 RGB / Kate
   '0xb4e3f9fffe21589b':
@@ -47,7 +47,7 @@ devices:
   '0x90395efffe09f14f':
     friendly_name: Blind / IKEA / Bedroom
   '0x0c2a6ffffe2c3bb0':
-    friendly_name: Door / IKEA / Main
+    friendly_name: Door / IKEA / Entrance
   '0x8c65a3fffe7015dc':
     friendly_name: Water / IKEA / Washing Machine
   '0xecf64cfffe27d62e':
@@ -100,7 +100,7 @@ devices:
   '0x94b216fffec4d411':
     friendly_name: Light / IKEA E14 RGB / Desk
   '0xa4c138c0750e2e22':
-    friendly_name: Presence / Tuya / Hall
+    friendly_name: Presence / Tuya / Entrance
   '0xd44867fffeb3f24a':
     friendly_name: Door / IKEA / Balcony Right
   '0xd44867fffeb38881':

@@ -128,7 +128,7 @@
   alias: Включить свет при открытии двери
   triggers:
     - trigger: state
-      entity_id: binary_sensor.door_ikea_main_contact
+      entity_id: binary_sensor.door_ikea_entrance_contact
       from: "off"
       to: "on"
   conditions:
@@ -141,13 +141,13 @@
   actions:
     - action: light.turn_on
       target:
-        entity_id: light.light_ikea_ceiling_hall_1
+        entity_id: light.light_ikea_ceiling_entrance
 
 - id: notify_door_opened
   alias: Уведомить об открытии двери
   triggers:
     - trigger: state
-      entity_id: binary_sensor.door_ikea_main_contact
+      entity_id: binary_sensor.door_ikea_entrance_contact
       from: "off"
       to: "on"
   conditions:
@@ -178,7 +178,7 @@
   alias: Уведомить о двери открытой слишком долго
   triggers:
     - trigger: state
-      entity_id: binary_sensor.door_ikea_main_contact
+      entity_id: binary_sensor.door_ikea_entrance_contact
       from: "off"
       to: "on"
       for:
@@ -462,15 +462,15 @@
       light:
         entity_id: light.light_ikea_gu10_toilet
 
-- id: hall_light_on_motion
+- id: entrance_light_on_motion
   alias: Включить свет на входе при движении
   use_blueprint:
     path: presence.yaml
     input:
-      presence_sensor: binary_sensor.presence_tuya_hall_presence
+      presence_sensor: binary_sensor.presence_tuya_entrance_presence
       night_scene: scene.hall_night
       light:
-        entity_id: light.light_ikea_ceiling_hall_1
+        entity_id: light.light_ikea_ceiling_entrance
 
 - id: children_wall_switch_buttons
   alias: Управление светом в детской с помощью выключателя
@@ -591,7 +591,7 @@
         entity_id:
           - select.presence_tuya_bathroom_motion_detection_mode
           - select.presence_tuya_kitchen_motion_detection_mode
-          - select.presence_tuya_hall_motion_detection_mode
+          - select.presence_tuya_entrance_motion_detection_mode
       data:
         option: "only_pir"
 
@@ -619,7 +619,7 @@
         entity_id:
           - select.presence_tuya_bathroom_motion_detection_mode
           - select.presence_tuya_kitchen_motion_detection_mode
-          - select.presence_tuya_hall_motion_detection_mode
+          - select.presence_tuya_entrance_motion_detection_mode
       data:
         option: "pir_and_radar"
 
