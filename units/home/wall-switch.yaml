@@ -53,6 +53,11 @@ blueprint:
         entity:
           filter:
             domain: light
+    long_off:
+      name: Долгое нажатие на выключение
+      selector:
+        action: {}
+      default: []
 
 mode: restart
 
@@ -134,6 +139,21 @@ triggers:
     subtype: on_b2_up
     enabled: "{{ current_reverse }}"
     id: fast_turn_on
+
+  - trigger: device
+    device_id: !input wall_switch
+    domain: mqtt
+    type: action
+    subtype: off_b1_down
+    enabled: "{{ not current_reverse }}"
+    id: full_turn_off
+  - trigger: device
+    device_id: !input wall_switch
+    domain: mqtt
+    type: action
+    subtype: off_b2_down
+    enabled: "{{ current_reverse }}"
+    id: full_turn_off
 
   - trigger: device
     device_id: !input wall_switch
@@ -332,6 +352,11 @@ actions:
                   - action: scene.turn_on
                     data:
                       entity_id: "{{ matched_scenes[next_next_scene_index] }}"
+
+      - conditions:
+          - condition: trigger
+            id: full_turn_off
+        sequence: !input long_off
 
       - conditions:
           - condition: trigger

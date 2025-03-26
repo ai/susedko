@@ -555,6 +555,10 @@
       light: light.light_ikea_ceiling_entrance
       room: entrance
       scene_helper: input_number.entrance_last_scene
+      long_off:
+        - action: script.turn_on
+          target:
+            entity_id: script.turn_off_everything
 
 - id: hall_wall_switch_buttons
   alias: Управление светом в коридоре с помощью выключателя

@@ -20,109 +20,120 @@ homeassistant:
   legacy_action_sensor: false
 version: 4
 devices:
-  "0xec1bbdfffed34bcd":
+  '0xec1bbdfffed34bcd':
     friendly_name: Light / IKEA E27 RGB / Andrey
-  "0x680ae2fffe1a89e8":
+  '0x680ae2fffe1a89e8':
     friendly_name: Light / IKEA E27 RGB / Bedroom
-  "0x403059fffe81d106":
+  '0x403059fffe81d106':
     friendly_name: Light / IKEA Ceiling / Hall
-  "0x44e2f8fffe4cca2f":
+  '0x44e2f8fffe4cca2f':
     friendly_name: Light / IKEA Ceiling / Entrance
-  "0xec1bbdfffece5c65":
+  '0xec1bbdfffece5c65':
     friendly_name: Light / IKEA E27 RGB / Kate
-  "0xb4e3f9fffe21589b":
+  '0xb4e3f9fffe21589b':
     friendly_name: Light / IKEA E27 RGB / Children
-  "0xb4e3f9fffef344d4":
+  '0xb4e3f9fffef344d4':
     friendly_name: Light / IKEA E14 / Round
-  "0x2c1165fffe168d53":
+  '0x2c1165fffe168d53':
     friendly_name: Light / IKEA E14 RGB / Square 1
-  "0x50325ffffe5d981f":
+  '0x50325ffffe5d981f':
     friendly_name: Light / IKEA E14 RGB / Square 2
-  "0x6cfd22fffe2c7c66":
+  '0x6cfd22fffe2c7c66':
     friendly_name: Light / IKEA E27 1055 / Kitchen 1
-  "0x6cfd22fffe2ca6bb":
+  '0x6cfd22fffe2ca6bb':
     friendly_name: Light / IKEA E27 1055 / Kitchen 2
-  "0x0015bc001b100b14":
+  '0x0015bc001b100b14':
     friendly_name: Meter / Frient Electricity LED 2
-  "0x90395efffe09f14f":
+  '0x90395efffe09f14f':
     friendly_name: Blind / IKEA / Bedroom
-  "0x0c2a6ffffe2c3bb0":
+  '0x0c2a6ffffe2c3bb0':
     friendly_name: Door / IKEA / Entrance
-  "0x8c65a3fffe7015dc":
+  '0x8c65a3fffe7015dc':
     friendly_name: Water / IKEA / Washing Machine
-  "0xecf64cfffe27d62e":
+  '0xecf64cfffe27d62e':
     friendly_name: Water / IKEA / Bathroom
-  "0xa4c13895ecdde75d":
+  '0xa4c13895ecdde75d':
     friendly_name: Temperature / Tuya / Andrey
-  "0xa4c138c75a35df06":
+  '0xa4c138c75a35df06':
     friendly_name: Temperature / Tuya / Lounge
-  "0xa4c1386f1508f97d":
+  '0xa4c1386f1508f97d':
     friendly_name: Temperature / Tuya / Kate
-  "0xa4c138fbdd629c0c":
+  '0xa4c138fbdd629c0c':
     friendly_name: Temperature / Tuya / Children
-  "0xa4c13860dc937739":
+  '0xa4c13860dc937739':
     friendly_name: Temperature / Tuya / Bedroom
-  "0xa4c13838c42fa3a1":
+  '0xa4c13838c42fa3a1':
     friendly_name: Presence / Tuya / Kitchen
-  "0xacbac0fffebe4a11":
+  '0xacbac0fffebe4a11':
     friendly_name: Wall Switch / Yandex / Bathroom
     state_action: true
-  "0xacbac0fffebbd757":
+  '0xacbac0fffebbd757':
     friendly_name: Wall Switch / Yandex / Lounge
     state_action: true
-  "0xacbac0fffebbd0f1":
+  '0xacbac0fffebbd0f1':
     friendly_name: Wall Switch / Yandex / Kitchen
     state_action: true
-  "0xa4c13885a3be18a7":
+  '0xa4c13885a3be18a7':
     friendly_name: Presence / Tuya / Toilet
-  "0xa4c138749b6c3720":
+  '0xa4c138749b6c3720':
     friendly_name: Presence / Tuya / Bathroom
-  "0x54ef4410010fcfc5":
+  '0x54ef4410010fcfc5':
     friendly_name: Light / Aqara T2 E27 RGB / Lounge
-  "0x94b216fffec9a04c":
+  '0x94b216fffec9a04c':
     friendly_name: Light / IKEA GU10 / Toilet
-  "0x0c2a6ffffe2688a0":
+  '0x0c2a6ffffe2688a0':
     friendly_name: Light / IKEA GU10 / Bathroom 1
-  "0x0c2a6ffffe2688b2":
+  '0x0c2a6ffffe2688b2':
     friendly_name: Light / IKEA GU10 / Bathroom 2
-  "0xb0c7defffe63b9a7":
+  '0xb0c7defffe63b9a7':
     friendly_name: Water / IKEA / Dishwasher
-  "0x94ec32fffe29af67":
+  '0x94ec32fffe29af67':
     friendly_name: Plug / IKEA / Bathroom 1
-  "0x1cc089fffe4dd035":
+  '0x1cc089fffe4dd035':
     friendly_name: Plug / IKEA / Bathroom 2
-  "0x1cc089fffe4dc8a7":
+  '0x1cc089fffe4dc8a7':
     friendly_name: Plug / IKEA / Andrey Back
-  "0x1cc089fffe4df3bb":
+  '0x1cc089fffe4df3bb':
     friendly_name: Plug / IKEA / Andrey Screen
-  "0x1cc089fffe4db08a":
+  '0x1cc089fffe4db08a':
     friendly_name: Plug / IKEA / Bedroom Heating
-  "0x94b216fffec4d411":
+  '0x94b216fffec4d411':
     friendly_name: Light / IKEA E14 RGB / Desk
-  "0xa4c138c0750e2e22":
+  '0xa4c138c0750e2e22':
     friendly_name: Presence / Tuya / Entrance
-  "0xd44867fffeb3f24a":
+  '0xd44867fffeb3f24a':
     friendly_name: Door / IKEA / Balcony Right
-  "0xd44867fffeb38881":
+  '0xd44867fffeb38881':
     friendly_name: Door / IKEA / Balcony Left
-  "0xacbac0fffebdf631":
+  '0xacbac0fffebdf631':
     friendly_name: Wall Switch / Yandex / Children
     state_action: true
-  "0xacbac0fffebbd71f":
+  '0xacbac0fffebbd71f':
     friendly_name: Wall Switch / Yandex / Andrey
     state_action: true
-  "0xd87a3bfffeeb7050":
+  '0xacbac0fffebbd1fc':
+    friendly_name: Wall Switch / Yandex / Entrance
+    state_action: true
+  '0xacbac0fffebe5bda':
+    friendly_name: Wall Switch / Yandex / Hall
+    state_action: true
+  '0xacbac0fffebe616f':
+    friendly_name: Wall Switch / Yandex / Bedroom
+    state_action: true
+  '0xd87a3bfffeeb7050':
     friendly_name: Blind / IKEA / Lounge
 groups:
-  "1":
+  '1':
     friendly_name: Light / Group / Bathroom
-  "2":
+  '2':
     friendly_name: Light / Group / Kitchen
-  "3":
+  '3':
     friendly_name: Light / Group / Hall
-  "4":
+  '4':
     friendly_name: Light / Group / Andrey
-  "5":
+  '5':
     friendly_name: Plug / Group / Bathroom
-  "6":
+  '6':
     friendly_name: Light / Group / Children
+  '7':
+    friendly_name: Light / Group / Bedroom
