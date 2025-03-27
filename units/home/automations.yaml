@@ -926,8 +926,9 @@
   triggers:
     - trigger: state
       entity_id: person.andrey_sitnik
-      to: "not_home"
-      from: "home"
+      to:
+        - "not_home"
+        - "home"
   conditions:
     - condition: state
       entity_id: input_boolean.stop
