@@ -1079,6 +1079,41 @@
               target:
                 entity_id: climate.heater_micraplus_25_zone_1_climate
 
+- id: notify_air_balcony
+  alias: Предупредить о плохом воздухе, когда проветриваем балкон
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.door_ikea_balcony_right_contact
+      state: "on"
+      for: "00:05:00"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.notifications
+      state: "on"
+    - condition: numeric_state
+      entity_id: sensor.weather_waqi_air_quality_index
+      above: 50
+  actions:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: person.andrey_sitnik
+              state: "not_home"
+          sequence:
+            - action: notify.mobile_app_atocha
+              data:
+                title: "Качество воздуха: {{ states('sensor.weather_waqi_air_quality_index') }}"
+                message: "Лучше не проветривать сегодня"
+        - conditions:
+            - condition: state
+              entity_id: person.ekaterina_sitnik
+              state: "not_home"
+          sequence:
+            - action: notify.mobile_app_pixel_7a
+              data:
+                title: "Качество воздуха: {{ states('sensor.weather_waqi_air_quality_index') }}"
+                message: "Лучше не проветривать сегодня"
+
 - id: notify_air_quality_eddie
   alias: Предупредить о плохом воздухе, когда забираем Эди
   triggers:
