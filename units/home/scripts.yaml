@@ -112,11 +112,17 @@ bedroom_light_toggle:
               - switch.wall_switch_yandex_bedroom_1
               - switch.plug_ikea_bedroom_light
       else:
+        - if:
+            - condition: time
+              after: "08:00:00"
+              before: "20:00:00"
+          then:
+            - action: switch.turn_on
+              target:
+                entity_id: switch.wall_switch_yandex_bedroom_1
         - action: switch.turn_on
           target:
-            entity_id:
-              - switch.wall_switch_yandex_bedroom_1
-              - switch.plug_ikea_bedroom_light
+            entity_id: switch.plug_ikea_bedroom_light
         - action: light.turn_on
           target:
             entity_id: light.light_group_bedroom

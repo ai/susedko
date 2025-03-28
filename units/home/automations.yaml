@@ -539,11 +539,17 @@
       room: bedroom
       scene_helper: input_number.bedroom_last_scene
       before_on:
+        - if:
+            - condition: time
+              after: "08:00:00"
+              before: "20:00:00"
+          then:
+            - action: switch.turn_on
+              target:
+                entity_id: switch.wall_switch_yandex_bedroom_1
         - action: switch.turn_on
           target:
-            entity_id:
-              - switch.wall_switch_yandex_bedroom_1
-              - switch.plug_ikea_bedroom_light
+            entity_id: switch.plug_ikea_bedroom_light
       after_off:
         - delay: "00:00:02"
         - action: switch.turn_off
