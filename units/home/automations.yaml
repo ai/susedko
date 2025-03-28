@@ -828,6 +828,9 @@
     - condition: state
       entity_id: input_boolean.auto_andrey_desk
       state: "on"
+    - condition: time
+      after: "06:00:00"
+      before: "01:00:00"
   actions:
     - if:
         - condition: state
@@ -861,6 +864,9 @@
     - condition: state
       entity_id: input_boolean.auto_andrey_desk
       state: "on"
+    - condition: time
+      after: "06:00:00"
+      before: "01:00:00"
   actions:
     - if:
         - condition: state
@@ -1167,10 +1173,10 @@
         entity_id: input_boolean.cat_alone
         state: "on"
       then:
-        - action: input_boolean.turn_on
+        - action: input_boolean.turn_off
           target:
             entity_id: input_boolean.auto_andrey_desk
       else:
-        - action: input_boolean.turn_off
+        - action: input_boolean.turn_on
           target:
             entity_id: input_boolean.auto_andrey_desk
