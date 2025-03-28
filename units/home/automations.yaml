@@ -411,13 +411,15 @@
 - id: reset_kitchen_light
   alias: Яркий свет на кухне утром
   triggers:
-    - trigger: time
-      at: "06:00:00"
+    - trigger: state
+      entity_id: input_boolean.everyone_sleep
+      to: "off"
   conditions:
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
   actions:
+    - delay: "00:00:10"
     - action: scene.turn_on
       target:
         entity_id: scene.kitchen_full
@@ -610,7 +612,7 @@
   mode: single
   triggers:
     - trigger: time
-      at: "07:00:00"
+      at: "06:00:00"
   actions:
     - action: input_boolean.turn_off
       target:
@@ -649,8 +651,9 @@
     - trigger: state
       entity_id: input_boolean.cat_alone
       to: "on"
-    - trigger: time
-      at: "00:00:00"
+    - trigger: state
+      entity_id: input_boolean.everyone_sleep
+      to: "on"
   actions:
     - action: select.select_option
       target:
@@ -670,8 +673,9 @@
     - trigger: state
       entity_id: input_boolean.cat_alone
       to: "off"
-    - trigger: time
-      at: "06:30:00"
+    - trigger: state
+      entity_id: input_boolean.everyone_sleep
+      to: "off"
   conditions:
     - condition: state
       entity_id: input_boolean.home_empty
