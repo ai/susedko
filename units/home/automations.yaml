@@ -135,9 +135,7 @@
       entity_id: input_boolean.stop
       state: "off"
   actions:
-    - action: script.turn_on
-      target:
-        entity_id: script.turn_off_everything
+    - action: script.turn_off_everything
     - action: switch.turn_on
       target:
         entity_id: switch.heater_micraplus_25_main_away_mode
@@ -233,9 +231,7 @@
       from: "off"
       to: "on"
   actions:
-    - action: script.turn_on
-      target:
-        entity_id: script.alert
+    - action: script.alert
     - action: scene.turn_on
       target:
         entity_id: scene.bathroom_full_no_mirror
@@ -252,9 +248,7 @@
       from: "off"
       to: "on"
   actions:
-    - action: script.turn_on
-      target:
-        entity_id: script.alert
+    - action: script.alert
     - action: scene.turn_on
       target:
         entity_id: scene.kitchen_full
@@ -271,9 +265,7 @@
       from: "off"
       to: "on"
   actions:
-    - action: script.turn_on
-      target:
-        entity_id: script.alert
+    - action: script.alert
     - action: scene.turn_on
       target:
         entity_id: scene.kitchen_full
@@ -539,17 +531,7 @@
       room: bedroom
       scene_helper: input_number.bedroom_last_scene
       before_on:
-        - if:
-            - condition: time
-              after: "08:00:00"
-              before: "20:00:00"
-          then:
-            - action: switch.turn_on
-              target:
-                entity_id: switch.wall_switch_yandex_bedroom_1
-        - action: switch.turn_on
-          target:
-            entity_id: switch.plug_ikea_bedroom_light
+        - action: script.bedroom_light_power_on
       after_off:
         - delay: "00:00:02"
         - action: switch.turn_off
@@ -568,9 +550,7 @@
       room: entrance
       scene_helper: input_number.entrance_last_scene
       long_off:
-        - action: script.turn_on
-          target:
-            entity_id: script.turn_off_everything
+        - action: script.turn_off_everything
 
 - id: hall_wall_switch_buttons
   alias: Управление светом в коридоре с помощью выключателя
@@ -594,7 +574,7 @@
               entity_id: input_boolean.stop
               state: "on"
           sequence:
-            - action: script.turn_on
+            - action: switch.turn_on
               target:
                 entity_id: switch.adaptive_lighting_integration_adaptive_lights
         - conditions:
@@ -602,7 +582,7 @@
               entity_id: input_boolean.stop
               state: "off"
           sequence:
-            - action: script.turn_off
+            - action: switch.turn_off
               target:
                 entity_id: switch.adaptive_lighting_integration_adaptive_lights
 
