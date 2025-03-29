@@ -119,18 +119,27 @@ bedroom_light_power_on:
   alias: Включение питания света в спальне
   sequence:
     - if:
-        - condition: time
-          after: "08:00:00"
-          before: "19:40:00"
-        - condition: state
-          entity_id: input_boolean.another_people
-          state: "off"
+        - condition: or
+          conditions:
+            - condition: time
+              after: "08:00:00"
+              before: "19:40:00"
+            - condition: state
+              entity_id: input_boolean.another_people
+              state: "off"
       then:
         - action: switch.turn_on
           target:
             entity_id:
               - switch.wall_switch_yandex_bedroom_1
               - switch.plug_ikea_bedroom_light
+        - action: light.turn_on
+          target:
+            entity_id:
+              - light.light_ikea_e14_rgb_square_1
+              - light.light_ikea_e27_rgb_bedroom
+          data:
+            brightness_pct: 100
       else:
         - action: switch.turn_on
           target:
