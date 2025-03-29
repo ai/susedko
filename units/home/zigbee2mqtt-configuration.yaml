@@ -122,6 +122,8 @@ devices:
     state_action: true
   '0xd87a3bfffeeb7050':
     friendly_name: Blind / IKEA / Lounge
+  '0x94ec32fffe29c482':
+    friendly_name: Plug / IKEA / Bedroom Light
 groups:
   '1':
     friendly_name: Light / Group / Bathroom

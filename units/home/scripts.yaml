@@ -94,20 +94,49 @@ lounge_light_toggle:
           target:
             entity_id: light.light_aqara_t2_e27_rgb_lounge
 
+bedroom_small_light_toggle:
+  alias: Переключание света в спальне
+  sequence:
+    - if:
+        - condition: state
+          entity_id: switch.plug_ikea_bedroom_light
+          state: "on"
+      then:
+        - action: light.turn_off
+          target:
+            entity_id: light.light_ikea_e14_rgb_square_1
+        - delay: "00:00:02"
+        - action: switch.turn_off
+          target:
+            entity_id: switch.plug_ikea_bedroom_light
+      else:
+        - action: script.bedroom_light_power_on
+        - action: light.turn_on
+          target:
+            entity_id: light.light_ikea_e14_rgb_square_1
+
 bedroom_light_power_on:
   alias: Включение питания света в спальне
   sequence:
     - if:
         - condition: time
           after: "08:00:00"
-          before: "20:00:00"
+          before: "19:40:00"
       then:
         - action: switch.turn_on
           target:
-            entity_id: switch.wall_switch_yandex_bedroom_1
-    - action: switch.turn_on
-      target:
-        entity_id: switch.plug_ikea_bedroom_light
+            entity_id:
+              - switch.wall_switch_yandex_bedroom_1
+              - switch.plug_ikea_bedroom_light
+      else:
+        - action: switch.turn_on
+          target:
+            entity_id: switch.plug_ikea_bedroom_light
+        - action: light.turn_on
+          target:
+            entity_id: light.light_ikea_e14_rgb_square_1
+          data:
+            brightness_pct: 1
 
 bedroom_light_toggle:
   alias: Переключание света в спальне
