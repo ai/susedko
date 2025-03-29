@@ -9,13 +9,15 @@
         {{ states.person | selectattr('state', 'eq', 'home') | list | count > 0 }}
     - trigger: state
       entity_id: input_boolean.guests
-
+    - trigger: state
+      entity_id: input_boolean.other_people
   actions:
     - if:
         condition: template
         value_template: >
           {{ states.person | selectattr('state', 'eq', 'home') | list | count == 0 and
-             states('input_boolean.guests') == 'off' }}
+             states('input_boolean.guests') == 'off' and
+             states('input_boolean.other_people') == 'off' }}
       then:
         - action: input_boolean.turn_on
           target:
@@ -121,6 +123,9 @@
     - condition: state
       entity_id: input_boolean.cat_alone
       state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
   actions:
     action: script.prepare_eddie_for_sleep
 
@@ -156,9 +161,6 @@
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
-    - condition: state
-      entity_id: input_boolean.home_empty
-      state: "on"
   actions:
     - action: light.turn_on
       target:
@@ -175,6 +177,9 @@
     - condition: state
       entity_id: input_boolean.notifications
       state: "on"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
   actions:
     - if:
         - condition: state
@@ -284,6 +289,9 @@
     - condition: state
       entity_id: input_boolean.notifications
       state: "on"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
   actions:
     - action: notify.notify
       data:
@@ -304,6 +312,9 @@
     - condition: state
       entity_id: input_boolean.notifications
       state: "on"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
   actions:
     - action: notify.notify
       data:
@@ -348,6 +359,9 @@
     - condition: state
       entity_id: input_boolean.cat_alone
       state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
     - condition: time
       after: "08:40:00"
       before: "22:00:00"
@@ -372,7 +386,7 @@
       entity_id: input_boolean.notifications
       state: "on"
     - condition: state
-      entity_id: input_boolean.guests
+      entity_id: input_boolean.other_people
       state: "off"
   actions:
     - action: notify.mobile_app_atocha
@@ -434,10 +448,15 @@
           target:
             entity_id: switch.wall_switch_yandex_lounge_1
       after_off:
-        - delay: "00:00:02"
-        - action: switch.turn_off
-          target:
-            entity_id: switch.wall_switch_yandex_lounge_1
+        if:
+          condition: state
+          entity_id: input_boolean.other_people
+          state: "off"
+        then:
+          - delay: "00:00:02"
+          - action: switch.turn_off
+            target:
+              entity_id: switch.wall_switch_yandex_lounge_1
 
 - id: bathroom_wall_switch_buttons
   alias: Управление светом в ванной с помощью выключателя
@@ -710,6 +729,9 @@
     - condition: state
       entity_id: person.andrey_sitnik
       state: "home"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
   actions:
     - action: notify.mobile_app_atocha
       data:
@@ -913,6 +935,29 @@
       entity_id: input_boolean.stop
       state: "off"
   actions:
+    - if:
+        - condition: or
+          conditions:
+            - condition: and
+              conditions:
+                - condition: state
+                  entity_id: person.andrey_sitnik
+                  state: "home"
+                - condition: state
+                  entity_id: sensor.phone_atocha_phone_state
+                  state:
+                    - "ringing"
+                    - "offhook"
+            - condition: and
+              conditions:
+                - condition: state
+                  entity_id: person.ekaterina_sitnik
+                  state: "home"
+                - condition: state
+                  entity_id: sensor.phone_pixel_7a_phone_state
+                  state:
+                    - "ringing"
+                    - "offhook"
     - action: media_player.media_pause
       target:
         entity_id: media_player.tv_remote
@@ -931,8 +976,11 @@
       entity_id: input_boolean.stop
       state: "off"
     - condition: state
-      entity_id: input_boolean.auto_andrey_desk
-      state: "on"
+      entity_id: input_boolean.other_people
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
   actions:
     - if:
         - condition: state
@@ -948,17 +996,12 @@
             payload: "LOCK"
             topic: "ai_laptop"
             retain: true
-        - if:
-            - condition: state
-              entity_id: input_boolean.auto_andrey_desk
-              state: "on"
-          then:
-            - action: input_boolean.turn_off
-              target:
-                entity_id: input_boolean.auto_andrey_desk
-            - action: switch.turn_off
-              target:
-                entity_id: switch.plug_ikea_andrey_screen
+        - action: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.auto_andrey_desk
+        - action: switch.turn_off
+          target:
+            entity_id: switch.plug_ikea_andrey_screen
 
 - id: switch_heater
   alias: Включить отопление при включении настройки
@@ -1004,6 +1047,9 @@
       state: "on"
     - condition: state
       entity_id: input_boolean.home_empty
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.other_people
       state: "on"
   actions:
     - action: notify.notify
@@ -1090,6 +1136,9 @@
     - condition: numeric_state
       entity_id: sensor.weather_waqi_air_quality_index
       above: 50
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
   actions:
     - choose:
         - conditions:
@@ -1126,14 +1175,9 @@
     - condition: state
       entity_id: input_boolean.cat_alone
       state: "off"
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: input_boolean.home_empty
-          state: "off"
-        - condition: state
-          entity_id: input_boolean.guests
-          state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
   actions:
     - action: notify.notify
       data:
@@ -1160,20 +1204,25 @@
             entity_id: switch.plug_ikea_andrey_screen
 
 - id: sync_auto_desk_and_cat_alone
-  alias: Выключать авто-стол, когда кошка одна
+  alias: Выключать авто-стол, когда мы уезжаем
   triggers:
     - trigger: state
       entity_id: input_boolean.cat_alone
+    - trigger: state
+      entity_id: input_boolean.other_people
   actions:
     - if:
-        condition: state
-        entity_id: input_boolean.cat_alone
-        state: "on"
+        - condition: state
+          entity_id: input_boolean.cat_alone
+          state: "off"
+        - condition: state
+          entity_id: input_boolean.other_people
+          state: "off"
       then:
-        - action: input_boolean.turn_off
+        - action: input_boolean.turn_on
           target:
             entity_id: input_boolean.auto_andrey_desk
       else:
-        - action: input_boolean.turn_on
+        - action: input_boolean.turn_off
           target:
             entity_id: input_boolean.auto_andrey_desk
