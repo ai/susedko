@@ -958,9 +958,10 @@
                   state:
                     - "ringing"
                     - "offhook"
-    - action: media_player.media_pause
-      target:
-        entity_id: media_player.tv_remote
+      then:
+        - action: media_player.media_pause
+          target:
+            entity_id: media_player.tv_remote
 
 - id: lock_screen_on_andrey_leaving
   alias: Блокировка ноутбука Андрея при его уходе
