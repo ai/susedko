@@ -672,7 +672,6 @@
         entity_id:
           - select.presence_tuya_bathroom_motion_detection_mode
           - select.presence_tuya_kitchen_motion_detection_mode
-          - select.presence_tuya_entrance_motion_detection_mode
       data:
         option: "only_pir"
 
@@ -701,7 +700,6 @@
         entity_id:
           - select.presence_tuya_bathroom_motion_detection_mode
           - select.presence_tuya_kitchen_motion_detection_mode
-          - select.presence_tuya_entrance_motion_detection_mode
       data:
         option: "pir_and_radar"
 
