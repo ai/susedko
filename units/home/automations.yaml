@@ -590,23 +590,18 @@
     - trigger: state
       entity_id: input_boolean.stop
   actions:
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: input_boolean.stop
-              state: "on"
-          sequence:
-            - action: switch.turn_on
-              target:
-                entity_id: switch.adaptive_lighting_integration_adaptive_lights
-        - conditions:
-            - condition: state
-              entity_id: input_boolean.stop
-              state: "off"
-          sequence:
-            - action: switch.turn_off
-              target:
-                entity_id: switch.adaptive_lighting_integration_adaptive_lights
+    - if:
+        - condition: state
+          entity_id: input_boolean.stop
+          state: "on"
+      then:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.adaptive_lighting_integration_adaptive_lights
+      else:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.adaptive_lighting_integration_adaptive_lights
 
 - id: night_mode_enable
   alias: Включить ночной режим
