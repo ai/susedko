@@ -1032,6 +1032,9 @@
         - action: input_boolean.turn_off
           target:
             entity_id: input_boolean.cooling
+        - action: switch.turn_off
+          target:
+            entity_id: switch.heater_micraplus_25_main_away_mode
         - action: climate.turn_on
           target:
             entity_id: climate.heater_micraplus_25_zone_1_climate
@@ -1241,3 +1244,45 @@
         - action: input_boolean.turn_off
           target:
             entity_id: input_boolean.auto_andrey_desk
+
+- id: prevent_bacteria_heating_pipes
+  alias: Включения отопления каждый месяц, чтобы бактерии не размножались
+  triggers:
+    - trigger: time
+      at: "08:00:00"
+  conditions:
+    - condition: template
+      value_template: "{{ now().day == 1 and now().month % 3 == 0 }}"
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.home_empty
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.heating
+      state: "off"
+  actions:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.heater_micraplus_25_main_away_mode
+    - action: climate.turn_on
+      target:
+        entity_id: climate.heater_micraplus_25_zone_1_climate
+    - action: climate.set_temperature
+      target:
+        entity_id: climate.heater_micraplus_25_zone_1_climate
+      data:
+        temperature: 30
+    - delay: 00:30:00
+    - action: climate.set_temperature
+      target:
+        entity_id: climate.heater_micraplus_25_zone_1_climate
+      data:
+        temperature: 22
+    - action: climate.turn_off
+      target:
+        entity_id: climate.heater_micraplus_25_zone_1_climate
