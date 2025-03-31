@@ -599,7 +599,7 @@
           target:
             entity_id: switch.adaptive_lighting_integration_adaptive_lights
       else:
-        - action: switch.turn_off
+        - action: switch.turn_on
           target:
             entity_id: switch.adaptive_lighting_integration_adaptive_lights
 
