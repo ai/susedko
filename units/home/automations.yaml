@@ -1035,6 +1035,11 @@
         - action: climate.turn_on
           target:
             entity_id: climate.heater_micraplus_25_zone_1_climate
+        - action: climate.set_temperature
+          target:
+            entity_id: climate.heater_micraplus_25_zone_1_climate
+          data:
+            temperature: 22
       else:
         - action: climate.turn_off
           target:
