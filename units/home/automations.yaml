@@ -237,9 +237,12 @@
       to: "on"
   actions:
     - action: script.alert
+    - action: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.stop_kitchen
     - action: scene.turn_on
       target:
-        entity_id: scene.bathroom_full_no_mirror
+        entity_id: scene.bathroom_full
     - action: notify.notify
       data:
         title: Ванная
@@ -254,6 +257,9 @@
       to: "on"
   actions:
     - action: script.alert
+    - action: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.stop_kitchen
     - action: scene.turn_on
       target:
         entity_id: scene.kitchen_full
@@ -271,6 +277,9 @@
       to: "on"
   actions:
     - action: script.alert
+    - action: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.stop_kitchen
     - action: scene.turn_on
       target:
         entity_id: scene.kitchen_full
