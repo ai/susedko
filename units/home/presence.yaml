@@ -37,6 +37,11 @@ blueprint:
       selector:
         entity:
           domain: input_number
+    stop_helper:
+      name: "Блокиратор авто-выключения"
+      selector:
+        entity:
+          domain: input_boolean
 
 mode: restart
 
@@ -52,6 +57,9 @@ conditions:
     state: "off"
   - condition: state
     entity_id: input_boolean.cat_alone
+    state: "off"
+  - condition: state
+    entity_id: !input stop_helper
     state: "off"
 
 variables:
@@ -84,9 +92,17 @@ actions:
               entity_id: !input presence_sensor
               from: "on"
               to: "off"
-          - action: light.turn_off
-            target: !input light
-          - sequence: !input after_off
+          - if:
+              - condition: state
+                entity_id: input_boolean.stop
+                state: "off"
+              - condition: state
+                entity_id: !input stop_helper
+                state: "off"
+            then:
+              - action: light.turn_off
+                target: !input light
+              - sequence: !input after_off
     else:
       - action: light.turn_on
         target: !input light
@@ -98,6 +114,9 @@ actions:
       - if:
           - condition: state
             entity_id: input_boolean.stop
+            state: "off"
+          - condition: state
+            entity_id: !input stop_helper
             state: "off"
         then:
           - action: light.turn_off

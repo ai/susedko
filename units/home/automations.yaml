@@ -401,6 +401,7 @@
     input:
       presence_sensor: binary_sensor.presence_tuya_kitchen_presence
       night_scene: scene.kitchen_night
+      stop_helper: input_boolean.stop_kitchen
       light:
         entity_id: light.light_group_kitchen
 
@@ -413,6 +414,7 @@
       light: light.light_group_kitchen
       room: kitchen
       scene_helper: input_number.kitchen_last_scene
+      stop_helper: input_boolean.stop_kitchen
 
 - id: reset_kitchen_light
   alias: Яркий свет на кухне утром
@@ -458,6 +460,21 @@
             target:
               entity_id: switch.wall_switch_yandex_lounge_1
 
+- id: bathroom_light_on_motion
+  alias: Включить свет в ванной при движении
+  use_blueprint:
+    path: presence.yaml
+    input:
+      presence_sensor: binary_sensor.presence_tuya_bathroom_presence
+      night_scene: scene.bathroom_night
+      stop_helper: input_boolean.stop_bathroom
+      light:
+        entity_id: light.light_group_bathroom
+      after_off:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.wall_switch_yandex_bathroom_1
+
 - id: bathroom_wall_switch_buttons
   alias: Управление светом в ванной с помощью выключателя
   use_blueprint:
@@ -468,21 +485,8 @@
       room: bathroom
       reverse: true
       scene_helper: input_number.bathroom_last_scene
+      stop_helper: input_boolean.stop_bathroom
       extra_switch: switch.wall_switch_yandex_bathroom_1
-      after_off:
-        - action: switch.turn_off
-          target:
-            entity_id: switch.wall_switch_yandex_bathroom_1
-
-- id: bathroom_light_on_motion
-  alias: Включить свет в ванной при движении
-  use_blueprint:
-    path: presence.yaml
-    input:
-      presence_sensor: binary_sensor.presence_tuya_bathroom_presence
-      night_scene: scene.bathroom_night
-      light:
-        entity_id: light.light_group_bathroom
       after_off:
         - action: switch.turn_off
           target:
@@ -495,6 +499,7 @@
     input:
       presence_sensor: binary_sensor.presence_tuya_toilet_presence
       night_scene: scene.toilet_night
+      stop_helper: input_boolean.stop_toilet
       light:
         entity_id: light.light_ikea_gu10_toilet
 
@@ -505,8 +510,22 @@
     input:
       presence_sensor: binary_sensor.presence_tuya_entrance_presence
       night_scene: scene.hall_night
+      stop_helper: input_boolean.stop_entrance
       light:
         entity_id: light.light_ikea_ceiling_entrance
+
+- id: entrance_wall_switch_buttons
+  alias: Управление светом у входа с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: 4ecbee73df7092e59b71c4c360340352
+      light: light.light_ikea_ceiling_entrance
+      room: entrance
+      scene_helper: input_number.entrance_last_scene
+      stop_helper: input_boolean.stop_entrance
+      long_off:
+        - action: script.turn_off_everything
 
 - id: children_wall_switch_buttons
   alias: Управление светом в детской с помощью выключателя
@@ -561,18 +580,6 @@
             entity_id:
               - switch.wall_switch_yandex_bedroom_1
               - switch.plug_ikea_bedroom_light
-
-- id: entrance_wall_switch_buttons
-  alias: Управление светом у входа с помощью выключателя
-  use_blueprint:
-    path: wall-switch.yaml
-    input:
-      wall_switch: 4ecbee73df7092e59b71c4c360340352
-      light: light.light_ikea_ceiling_entrance
-      room: entrance
-      scene_helper: input_number.entrance_last_scene
-      long_off:
-        - action: script.turn_off_everything
 
 - id: hall_wall_switch_buttons
   alias: Управление светом в коридоре с помощью выключателя

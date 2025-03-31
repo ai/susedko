@@ -58,6 +58,12 @@ blueprint:
       selector:
         action: {}
       default: []
+    stop_helper:
+      name: "Блокиратор авто-выключения"
+      default: null
+      selector:
+        entity:
+          domain: input_boolean
 
 mode: restart
 
@@ -220,6 +226,7 @@ variables:
   current_scene_helper: !input scene_helper
   current_extra_switch: !input extra_switch
   current_extra_light: !input extra_light
+  current_stop_helper: !input stop_helper
   matched_scenes: >
     {{ states.scene
       | selectattr('entity_id','match','^scene\\.' ~ current_room)
@@ -248,6 +255,13 @@ actions:
           - condition: trigger
             id: turn_on
         sequence:
+          - if:
+              - condition: template
+                value_template: "{{ current_stop_helper is not none }}"
+            then:
+              - action: input_boolean.turn_on
+                target:
+                  entity_id: !input stop_helper
           - if:
               - condition: state
                 entity_id: !input light
@@ -278,6 +292,9 @@ actions:
             target:
               entity_id: !input light
           - sequence: !input after_off
+          - action: input_boolean.turn_off
+            target:
+              entity_id: !input stop_helper
 
       - conditions:
           - condition: trigger
