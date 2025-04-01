@@ -73,7 +73,7 @@
   mode: single
   triggers:
     - trigger: time
-      at: "20:00:00"
+      at: input_datetime.eddie_sleep
   conditions:
     - condition: state
       entity_id: input_boolean.stop
@@ -115,7 +115,7 @@
   mode: single
   triggers:
     - trigger: time
-      at: "19:40:00"
+      at: input_datetime.eddie_sleep
   conditions:
     - condition: state
       entity_id: input_boolean.stop
