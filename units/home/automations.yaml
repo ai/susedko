@@ -1252,7 +1252,7 @@
       at: "08:00:00"
   conditions:
     - condition: template
-      value_template: "{{ now().day == 1 and now().month % 3 == 0 }}"
+      value_template: "{{ now().day == 1 }}"
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
@@ -1277,7 +1277,7 @@
         entity_id: climate.heater_micraplus_25_zone_1_climate
       data:
         temperature: 30
-    - delay: 00:30:00
+    - delay: 00:10:00
     - action: climate.set_temperature
       target:
         entity_id: climate.heater_micraplus_25_zone_1_climate
