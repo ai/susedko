@@ -17,7 +17,8 @@
         value_template: >
           {{ states.person | selectattr('state', 'eq', 'home') | list | count == 0 and
              states('input_boolean.guests') == 'off' and
-             states('input_boolean.other_people') == 'off' }}
+             states('input_boolean.other_people') == 'off' and
+             states('device_tracker.ucg_max') == 'home' }}
       then:
         - action: input_boolean.turn_on
           target:
