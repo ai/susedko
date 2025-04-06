@@ -1210,13 +1210,23 @@
     - condition: state
       entity_id: input_boolean.other_people
       state: "off"
-    - condition: weekday
-      weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
+    - condition: or
+      conditions:
+        - condition: time
+          weekday:
+            - mon
+        - condition: time
+          weekday:
+            - tue
+        - condition: time
+          weekday:
+            - wed
+        - condition: time
+          weekday:
+            - thu
+        - condition: time
+          weekday:
+            - fri
   actions:
     - action: notify.notify
       data:
