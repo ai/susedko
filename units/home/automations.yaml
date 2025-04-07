@@ -468,20 +468,6 @@
       light: light.light_aqara_t2_e27_rgb_lounge
       room: lounge
       scene_helper: input_number.lounge_last_scene
-      before_on:
-        - action: switch.turn_on
-          target:
-            entity_id: switch.wall_switch_yandex_lounge_1
-      after_off:
-        if:
-          condition: state
-          entity_id: input_boolean.other_people
-          state: "off"
-        then:
-          - delay: "00:00:02"
-          - action: switch.turn_off
-            target:
-              entity_id: switch.wall_switch_yandex_lounge_1
 
 - id: bathroom_light_on_motion
   alias: Включить свет в ванной при движении

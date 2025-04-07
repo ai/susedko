@@ -9,7 +9,6 @@ turn_off_everything:
         entity_id:
           - switch.plug_ikea_andrey_back
           - switch.wall_switch_yandex_bathroom_1
-          - switch.wall_switch_yandex_lounge_1
           - switch.plug_ikea_bedroom_heating
           - switch.plug_group_bathroom
           - switch.plug_ikea_andrey_screen
@@ -77,29 +76,6 @@ heat_bedroom:
         - action: switch.turn_on
           target:
             entity_id: switch.plug_ikea_bedroom_heating
-
-lounge_light_toggle:
-  alias: Переключание света в зале
-  sequence:
-    - if:
-        - condition: state
-          entity_id: switch.wall_switch_yandex_lounge_1
-          state: "on"
-      then:
-        - action: light.turn_off
-          target:
-            entity_id: light.light_aqara_t2_e27_rgb_lounge
-        - delay: "00:00:02"
-        - action: switch.turn_off
-          target:
-            entity_id: switch.wall_switch_yandex_lounge_1
-      else:
-        - action: switch.turn_on
-          target:
-            entity_id: switch.wall_switch_yandex_lounge_1
-        - action: light.turn_on
-          target:
-            entity_id: light.light_aqara_t2_e27_rgb_lounge
 
 bedroom_small_light_toggle:
   alias: Переключание света в спальне
