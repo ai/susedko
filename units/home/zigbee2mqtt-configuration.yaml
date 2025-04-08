@@ -126,7 +126,7 @@ devices:
     friendly_name: Plug / IKEA / Bedroom Light
 groups:
   '1':
-    friendly_name: Light / Group / Bathroom
+    friendly_name: Light / Group / None
   '2':
     friendly_name: Light / Group / Kitchen
   '3':
@@ -139,3 +139,5 @@ groups:
     friendly_name: Light / Group / Children
   '7':
     friendly_name: Light / Group / Bedroom
+  '8':
+    friendly_name: Light / Group / Bathroom
