@@ -564,7 +564,9 @@
       after_off:
         - action: light.turn_off
           target:
-            entity_id: light.light_ikea_e27_rgb_andrey
+            entity_id:
+              - light.light_ikea_e27_rgb_andrey
+              - light.elgato_light_air_andrey
         - if:
             - condition: state
               entity_id: input_boolean.auto_andrey_desk
