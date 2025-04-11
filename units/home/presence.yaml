@@ -20,6 +20,11 @@ blueprint:
         target:
           entity:
             domain: light
+    before_on:
+      name: Дополнительное действие при включении
+      selector:
+        action: {}
+      default: []
     after_off:
       name: Дополнительное действие при включении
       default: []
@@ -84,6 +89,7 @@ actions:
           - condition: template
             value_template: "{{ current_night_scene is not none  }}"
         then:
+          - sequence: !input before_on
           - action: scene.turn_on
             target:
               entity_id: !input night_scene
@@ -104,6 +110,7 @@ actions:
                 target: !input light
               - sequence: !input after_off
     else:
+      - sequence: !input before_on
       - action: light.turn_on
         target: !input light
       - wait_for_trigger:
