@@ -154,6 +154,11 @@
         entity_id: water_heater.home_domestic_hot_water_0
       data:
         operation_mode: "OFF"
+    - action: switch.turn_off
+      target:
+        entity_id:
+          - switch.plug_group_bathroom
+          - switch.wall_switch_yandex_bathroom_1
 
 - id: turn_on_lights_on_door_open
   alias: Включить свет при открытии двери
@@ -482,10 +487,6 @@
       stop_helper: input_boolean.stop_bathroom
       light:
         entity_id: light.light_group_bathroom
-      after_off:
-        - action: switch.turn_off
-          target:
-            entity_id: switch.wall_switch_yandex_bathroom_1
 
 - id: bathroom_wall_switch_buttons
   alias: Управление светом в ванной с помощью выключателя
@@ -498,11 +499,6 @@
       reverse: true
       scene_helper: input_number.bathroom_last_scene
       stop_helper: input_boolean.stop_bathroom
-      extra_switch: switch.wall_switch_yandex_bathroom_1
-      after_off:
-        - action: switch.turn_off
-          target:
-            entity_id: switch.wall_switch_yandex_bathroom_1
 
 - id: toilet_light_on_motion
   alias: Включить свет в туалете при движении
@@ -820,7 +816,9 @@
   actions:
     - action: switch.turn_on
       target:
-        entity_id: switch.plug_group_bathroom
+        entity_id:
+          - switch.plug_group_bathroom
+          - switch.wall_switch_yandex_bathroom_1
 
 - id: auto_off_bedroom_heating
   alias: Автовыключение обогревателя ног через час

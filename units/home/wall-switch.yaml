@@ -39,13 +39,6 @@ blueprint:
       default: false
       selector:
         boolean: {}
-    extra_switch:
-      name: Управлять реле вместо яркости
-      default: null
-      selector:
-        entity:
-          filter:
-            domain: switch
     extra_light:
       name: Управлять другой лампой вместо яркости
       default: null
@@ -224,7 +217,6 @@ triggers:
 variables:
   current_room: !input room
   current_scene_helper: !input scene_helper
-  current_extra_switch: !input extra_switch
   current_extra_light: !input extra_light
   current_stop_helper: !input stop_helper
   matched_scenes: >
@@ -315,13 +307,6 @@ actions:
                           - action: light.turn_on
                             target:
                               entity_id: !input extra_light
-                      - conditions:
-                          - condition: template
-                            value_template: "{{ current_extra_switch is not none }}"
-                        sequence:
-                          - action: switch.turn_on
-                            target:
-                              entity_id: !input extra_switch
                     default:
                       - action: light.turn_on
                         target:
@@ -402,13 +387,6 @@ actions:
                   - action: light.turn_off
                     target:
                       entity_id: !input extra_light
-              - conditions:
-                  - condition: template
-                    value_template: "{{ current_extra_switch is not none }}"
-                sequence:
-                  - action: switch.turn_off
-                    target:
-                      entity_id: !input extra_switch
             default:
               - action: light.turn_on
                 target:
