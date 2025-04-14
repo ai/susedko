@@ -57,6 +57,11 @@ blueprint:
       selector:
         entity:
           domain: input_boolean
+    direct_link:
+      name: "У выключателя и лампы есть прямая связь"
+      default: false
+      selector:
+        boolean: {}
 
 mode: restart
 
@@ -219,6 +224,7 @@ variables:
   current_scene_helper: !input scene_helper
   current_extra_light: !input extra_light
   current_stop_helper: !input stop_helper
+  current_direct_link: !input direct_link
   matched_scenes: >
     {{ states.scene
       | selectattr('entity_id','match','^scene\\.' ~ current_room)
@@ -273,6 +279,8 @@ actions:
                   entity_id: !input scene_helper
                   value: "0"
               - action: light.turn_on
+                data:
+                  transition: 0
                 target:
                   entity_id: !input light
 
@@ -280,9 +288,33 @@ actions:
           - condition: trigger
             id: turn_off
         sequence:
-          - action: light.turn_off
-            target:
-              entity_id: !input light
+          - if:
+              - condition: template
+                value_template: "{{ current_direct_link }}"
+            then:
+              - if:
+                  - condition: state
+                    entity_id: !input light
+                    state: "off"
+                then:
+                  - action: light.turn_off
+                    target:
+                      entity_id: !input light
+                    data:
+                      transition: off
+                  - delay:
+                      milliseconds: 200
+                  - action: light.turn_off
+                    target:
+                      entity_id: !input light
+                    data:
+                      transition: off
+            else:
+              - action: light.turn_off
+                target:
+                  entity_id: !input light
+                data:
+                  transition: off
           - sequence: !input after_off
           - action: input_boolean.turn_off
             target:

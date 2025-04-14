@@ -458,6 +458,7 @@
       room: kitchen
       scene_helper: input_number.kitchen_last_scene
       stop_helper: input_boolean.stop_kitchen
+      direct_link: true
 
 - id: reset_kitchen_light
   alias: Яркий свет на кухне утром
@@ -474,10 +475,14 @@
     - action: scene.turn_on
       target:
         entity_id: scene.kitchen_full
-    - delay: "00:00:02"
+      data:
+        transition: off
+    - delay: "00:00:01"
     - action: light.turn_off
       target:
         entity_id: light.light_group_kitchen
+      data:
+        transition: off
 
 - id: lounge_wall_switch_buttons
   alias: Управление светом в зале с помощью выключателя
@@ -488,6 +493,7 @@
       light: light.light_aqara_t2_e27_rgb_lounge
       room: lounge
       scene_helper: input_number.lounge_last_scene
+      direct_link: true
 
 - id: bathroom_light_on_motion
   alias: Включить свет в ванной при движении
@@ -524,6 +530,7 @@
       reverse: true
       scene_helper: input_number.bathroom_last_scene
       stop_helper: input_boolean.stop_bathroom
+      direct_link: true
       before_on:
         - action: switch.turn_on
           target:
@@ -565,6 +572,7 @@
       room: entrance
       scene_helper: input_number.entrance_last_scene
       stop_helper: input_boolean.stop_entrance
+      direct_link: true
       long_off:
         - action: script.turn_off_everything
 
@@ -575,6 +583,7 @@
     input:
       wall_switch: 1397c21e23f9d7221a9c1ef2c864bd06
       light: light.light_group_children
+      direct_link: true
       room: children
       reverse: true
       scene_helper: input_number.children_last_scene
@@ -596,6 +605,8 @@
             entity_id:
               - light.light_ikea_e27_rgb_andrey
               - light.elgato_light_air_andrey
+          data:
+            transition: off
         - if:
             - condition: state
               entity_id: input_boolean.auto_andrey_desk
