@@ -477,7 +477,7 @@
         entity_id: scene.kitchen_full
       data:
         transition: off
-    - delay: "00:00:01"
+    - delay: "00:00:02"
     - action: light.turn_off
       target:
         entity_id: light.light_group_kitchen
