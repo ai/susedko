@@ -417,7 +417,7 @@
   alias: Уведомление о недоступности пылесоса
   triggers:
     - trigger: time
-      at: "00:11:30"
+      at: "11:30:00"
   conditions:
     - condition: state
       entity_id: sensor.vacuum_roborock_q7_max_battery
