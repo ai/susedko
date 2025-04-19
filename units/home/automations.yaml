@@ -642,6 +642,7 @@
     input:
       wall_switch: 28614872fff069cfbba7facf6e46e801
       light: light.light_ikea_ceiling_hall
+      direct_link: true
       room: hall
       scene_helper: input_number.hall_last_scene
 
