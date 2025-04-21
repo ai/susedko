@@ -437,6 +437,30 @@
         title: "Робот-пылесос"
         message: "Недоступен"
 
+- id: notify_on_guest_morning
+  alias: Уведомление о том, что забывли выключить Гости
+  triggers:
+    - trigger: time
+      at: "11:30:00"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.notifications
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.guests
+      state: "on"
+    - condition: state
+      entity_id: person.andrey_sitnik
+      state: "home"
+  actions:
+    - action: notify.mobile_app_atocha
+      data:
+        title: "Робот-пылесос"
+        message: "Недоступен"
+
 - id: kitchen_light_on_motion
   alias: Включить свет на кухне при движении
   use_blueprint:
