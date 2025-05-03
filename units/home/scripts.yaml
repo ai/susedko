@@ -54,7 +54,7 @@ alert:
           - light.light_group_bathroom
           - light.light_group_kitchen
     - repeat:
-        count: 60
+        count: 30
         sequence:
           - action: light.toggle
             data:
@@ -109,6 +109,9 @@ bedroom_light_power_on:
               before: input_datetime.eddie_sleep
             - condition: state
               entity_id: input_boolean.another_people
+              state: "off"
+            - condition: state
+              entity_id: input_boolean.child_home
               state: "off"
       then:
         - action: switch.turn_on

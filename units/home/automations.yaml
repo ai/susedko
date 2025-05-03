@@ -148,6 +148,9 @@
     - condition: state
       entity_id: input_boolean.other_people
       state: "off"
+    - condition: state
+      entity_id: input_boolean.child_home
+      state: "on"
   actions:
     action: script.prepare_eddie_for_sleep
 
@@ -1267,6 +1270,9 @@
     - condition: state
       entity_id: input_boolean.cat_alone
       state: "off"
+    - condition: state
+      entity_id: input_boolean.child_home
+      state: "on"
     - condition: state
       entity_id: input_boolean.other_people
       state: "off"
