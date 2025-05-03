@@ -581,7 +581,7 @@
     path: presence.yaml
     input:
       presence_sensor: binary_sensor.presence_tuya_entrance_presence
-      night_scene: scene.hall_night
+      night_scene: scene.entrance_night
       stop_helper: input_boolean.stop_entrance
       light:
         entity_id: light.light_ikea_ceiling_entrance
