@@ -343,6 +343,8 @@
       data:
         title: Робот-пылесос
         message: "Начал уборку"
+        data:
+          clickAction: /lovelace/cleaning
 
 - id: notify_cleaning_finished
   alias: Уведомить о завершении уборки
