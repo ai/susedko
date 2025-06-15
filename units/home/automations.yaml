@@ -106,6 +106,9 @@
     - condition: state
       entity_id: input_boolean.other_people
       state: "off"
+    - condition: numeric_state
+      entity_id: sensor.weather_waqi_temperature
+      below: 14
   actions:
     - action: cover.close_cover
       target:
