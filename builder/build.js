@@ -65,6 +65,7 @@ function generateService(file, input, uids) {
         'REGISTRY_AUTH_FILE="/usr/local/etc/docker-auth.json"'
       ])
     }
+    yml.environment = (yml.environment ?? []).concat(['PODMAN_SYSTEMD_UNIT=%n'])
     yml.execStartPre = (yml.execStartPre ?? []).concat([
       `/bin/rm -f /run/user/${uid}/%n.ctr-id`
     ])
