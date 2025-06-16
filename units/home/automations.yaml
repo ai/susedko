@@ -1272,6 +1272,9 @@
     - condition: numeric_state
       entity_id: sensor.weather_waqi_air_quality_index
       above: 50
+    - condition: numeric_state
+      entity_id: sensor.weather_waqi_temperature
+      below: 26
     - condition: state
       entity_id: input_boolean.cat_alone
       state: "off"
