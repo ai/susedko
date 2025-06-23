@@ -268,25 +268,38 @@
             title: "Дверь"
             message: "Открыта более 10 минут"
 
-- id: water_leak_bathroom
-  alias: Уведомить о протечке воды в ванной
+# - id: water_leak_bathroom
+#   alias: Уведомить о протечке воды в ванной
+#   triggers:
+#     - trigger: state
+#       entity_id: binary_sensor.water_ikea_bathroom_water_leak
+#       from: "off"
+#       to: "on"
+#   actions:
+#     - action: script.alert
+#     - action: input_boolean.turn_on
+#       target:
+#         entity_id: input_boolean.stop_kitchen
+#     - action: scene.turn_on
+#       target:
+#         entity_id: scene.bathroom_full
+#     - action: notify.notify
+#       data:
+#         title: Ванная
+#         message: Протечка воды
+
+- id: water_update_balcony
+  alias: Уведомить о переполнении воды у кондиционера
   triggers:
     - trigger: state
-      entity_id: binary_sensor.water_ikea_bathroom_water_leak
+      entity_id: binary_sensor.water_ikea_balcony_water_leak
       from: "off"
       to: "on"
   actions:
-    - action: script.alert
-    - action: input_boolean.turn_on
-      target:
-        entity_id: input_boolean.stop_kitchen
-    - action: scene.turn_on
-      target:
-        entity_id: scene.bathroom_full
     - action: notify.notify
       data:
-        title: Ванная
-        message: Протечка воды
+        title: Балкон
+        message: Вода переливается из бутылки
 
 - id: water_leak_washing_machine
   alias: Уведомить о протечке воды от стиральной машины
@@ -644,9 +657,11 @@
               entity_id: input_boolean.auto_andrey_desk
               state: "on"
           then:
-            - action: switch.turn_off
-              target:
-                entity_id: switch.plug_ikea_andrey_screen
+            - action: mqtt.publish
+              data:
+                payload: "LOCK"
+                topic: "ai_laptop"
+                retain: true
 
 - id: bedroom_wall_switch_buttons
   alias: Управление светом в спальне с помощью выключателя
@@ -921,9 +936,9 @@
     - condition: state
       entity_id: person.andrey_sitnik
       state: "home"
-    # - condition: state
-    #   entity_id: input_boolean.auto_andrey_desk
-    #   state: "on"
+    - condition: state
+      entity_id: input_boolean.auto_andrey_desk
+      state: "on"
     - condition: time
       after: "06:00:00"
       before: "01:00:00"
@@ -938,47 +953,36 @@
             payload: "WAKE"
             topic: "ai_laptop"
             retain: true
-    # Until I will buy new monitor
-    # - action: switch.turn_on
-    #   target:
-    #     entity_id: switch.plug_ikea_andrey_screen
 
-# Until I will buy new monitor
-# - id: stop_screen_on_presence
-#   alias: Выключение монитора Андрея по датчику присутствия
-#   mode: restart
-#   triggers:
-#     - trigger: state
-#       entity_id: binary_sensor.presence_apollo_msr_2_radar_target
-#       to: "off"
-#       for: 00:06:00
-#   conditions:
-#     - condition: state
-#       entity_id: input_boolean.stop
-#       state: "off"
-#     - condition: state
-#       entity_id: person.andrey_sitnik
-#       state: "home"
-#     - condition: state
-#       entity_id: input_boolean.auto_andrey_desk
-#       state: "on"
-#     - condition: time
-#       after: "06:00:00"
-#       before: "01:00:00"
-#   actions:
-#     - if:
-#         - condition: state
-#           entity_id: device_tracker.savoia_ethernet
-#           state: "home"
-#       then:
-#         - action: mqtt.publish
-#           data:
-#             payload: "LOCK"
-#             topic: "ai_laptop"
-#             retain: true
-#     - action: switch.turn_off
-#       target:
-#         entity_id: switch.plug_ikea_andrey_screen
+- id: stop_screen_on_presence
+  alias: Выключение монитора Андрея по датчику присутствия
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.presence_apollo_msr_2_radar_target
+      to: "off"
+      for: 00:06:00
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: person.andrey_sitnik
+      state: "home"
+    - condition: state
+      entity_id: input_boolean.auto_andrey_desk
+      state: "on"
+  actions:
+    - if:
+        - condition: state
+          entity_id: device_tracker.savoia_ethernet
+          state: "home"
+      then:
+        - action: mqtt.publish
+          data:
+            payload: "LOCK"
+            topic: "ai_laptop"
+            retain: true
 
 - id: pause_tv_on_doorbell
   alias: Пауза телевизора при звонке двери
@@ -1042,47 +1046,43 @@
           target:
             entity_id: media_player.tv_remote
 
-# Until I will buy new monitor
-# - id: lock_screen_on_andrey_leaving
-#   alias: Блокировка ноутбука Андрея при его уходе
-#   mode: restart
-#   triggers:
-#     - trigger: state
-#       entity_id: person.andrey_sitnik
-#       to:
-#         - "not_home"
-#         - "home"
-#   conditions:
-#     - condition: state
-#       entity_id: input_boolean.stop
-#       state: "off"
-#     - condition: state
-#       entity_id: input_boolean.other_people
-#       state: "off"
-#     - condition: state
-#       entity_id: input_boolean.cat_alone
-#       state: "off"
-#   actions:
-#     - if:
-#         - condition: state
-#           entity_id: person.andrey_sitnik
-#           state: "home"
-#       then:
-#         - action: input_boolean.turn_on
-#           target:
-#             entity_id: input_boolean.auto_andrey_desk
-#       else:
-#         - action: mqtt.publish
-#           data:
-#             payload: "LOCK"
-#             topic: "ai_laptop"
-#             retain: true
-#         - action: input_boolean.turn_off
-#           target:
-#             entity_id: input_boolean.auto_andrey_desk
-#         - action: switch.turn_off
-#           target:
-#             entity_id: switch.plug_ikea_andrey_screen
+- id: lock_screen_on_andrey_leaving
+  alias: Блокировка ноутбука Андрея при его уходе
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id: person.andrey_sitnik
+      to:
+        - "not_home"
+        - "home"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+  actions:
+    - if:
+        - condition: state
+          entity_id: person.andrey_sitnik
+          state: "home"
+      then:
+        - action: input_boolean.turn_on
+          target:
+            entity_id: input_boolean.auto_andrey_desk
+      else:
+        - action: mqtt.publish
+          data:
+            payload: "LOCK"
+            topic: "ai_laptop"
+            retain: true
+        - action: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.auto_andrey_desk
 
 - id: switch_heater
   alias: Включить отопление при включении настройки
@@ -1296,49 +1296,29 @@
         title: "Качество воздуха: {{ states('sensor.weather_waqi_air_quality_index') }}"
         message: "Лучше Эди не гулять"
 
-- id: turn_on_screen_on_auto_desk
-  alias: Включить экран, когда выключается умный режим
+- id: sync_auto_desk_and_cat_alone
+  alias: Выключать авто-стол, когда мы уезжаем
   triggers:
     - trigger: state
-      entity_id: input_boolean.auto_andrey_desk
+      entity_id: input_boolean.cat_alone
+    - trigger: state
+      entity_id: input_boolean.other_people
   actions:
     - if:
-        condition: state
-        entity_id: input_boolean.auto_andrey_desk
-        state: "on"
+        - condition: state
+          entity_id: input_boolean.cat_alone
+          state: "off"
+        - condition: state
+          entity_id: input_boolean.other_people
+          state: "off"
       then:
-        - action: switch.turn_on
+        - action: input_boolean.turn_on
           target:
-            entity_id: switch.plug_ikea_andrey_screen
+            entity_id: input_boolean.auto_andrey_desk
       else:
-        - action: switch.turn_off
+        - action: input_boolean.turn_off
           target:
-            entity_id: switch.plug_ikea_andrey_screen
-
-# Until I will buy new monitor
-# - id: sync_auto_desk_and_cat_alone
-#   alias: Выключать авто-стол, когда мы уезжаем
-#   triggers:
-#     - trigger: state
-#       entity_id: input_boolean.cat_alone
-#     - trigger: state
-#       entity_id: input_boolean.other_people
-#   actions:
-#     - if:
-#         - condition: state
-#           entity_id: input_boolean.cat_alone
-#           state: "off"
-#         - condition: state
-#           entity_id: input_boolean.other_people
-#           state: "off"
-#       then:
-#         - action: input_boolean.turn_on
-#           target:
-#             entity_id: input_boolean.auto_andrey_desk
-#       else:
-#         - action: input_boolean.turn_off
-#           target:
-#             entity_id: input_boolean.auto_andrey_desk
+            entity_id: input_boolean.auto_andrey_desk
 
 - id: prevent_bacteria_heating_pipes
   alias: Включения отопления каждый месяц, чтобы бактерии не размножались
