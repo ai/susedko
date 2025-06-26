@@ -621,7 +621,7 @@
       long_off:
         - action: script.turn_off_everything
 
-- id: katya_wall_switch_buttons
+- id: kate_wall_switch_buttons
   alias: Управление светом в кабинете Кати с помощью выключателя
   use_blueprint:
     path: wall-switch.yaml
@@ -629,9 +629,9 @@
       wall_switch: 1397c21e23f9d7221a9c1ef2c864bd06
       light: light.light_ikea_e27_rgb_kate
       direct_link: true
-      room: katya
+      room: kate
       reverse: true
-      scene_helper: input_number.katya_last_scene
+      scene_helper: input_number.kate_last_scene
 
 - id: andrey_wall_switch_buttons
   alias: Управление светом в кабинете Андрея с помощью выключателя

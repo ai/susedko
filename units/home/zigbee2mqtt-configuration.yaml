@@ -104,7 +104,7 @@ devices:
   '0xd44867fffeb38881':
     friendly_name: Door / IKEA / Balcony Left
   '0xacbac0fffebdf631':
-    friendly_name: Wall Switch / Yandex / Katya
+    friendly_name: Wall Switch / Yandex / Kate
     state_action: true
   '0xacbac0fffebbd71f':
     friendly_name: Wall Switch / Yandex / Andrey
