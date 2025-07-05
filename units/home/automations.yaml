@@ -362,6 +362,25 @@
         data:
           clickAction: /lovelace/cleaning
 
+- id: notify_cleaning_error
+  alias: Уведомить о ошибке уборки
+  triggers:
+    - trigger: state
+      entity_id: sensor.vacuum_roborock_q7_max_vacuum_error
+      from: "none"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.notifications
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+  actions:
+    - action: notify.notify
+      data:
+        title: Робот-пылесос
+        message: "Уборка остановлена из-за ошибки {{ states('sensor.vacuum_roborock_q7_max_vacuum_error') }}"
+
 - id: notify_cleaning_finished
   alias: Уведомить о завершении уборки
   triggers:
