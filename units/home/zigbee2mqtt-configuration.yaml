@@ -29,9 +29,9 @@ devices:
   '0x44e2f8fffe4cca2f':
     friendly_name: Light / IKEA Ceiling / Entrance
   '0xec1bbdfffece5c65':
-    friendly_name: Light / IKEA E27 RGB / Kate
-  '0xb4e3f9fffe21589b':
     friendly_name: Light / IKEA E27 RGB / Children
+  '0xb4e3f9fffe21589b':
+    friendly_name: Light / IKEA E27 RGB / Kate
   '0xb4e3f9fffef344d4':
     friendly_name: Light / IKEA E14 / Round
   '0x2c1165fffe168d53':
