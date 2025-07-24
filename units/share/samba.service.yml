@@ -13,5 +13,5 @@ podman:
   security:
     - label=disable
   volumes:
-    - /var/mnt/vault/shared:/var/mnt/vault/shared:z
-    - /var/local/etc/samba/:/data/:z
+    - /var/mnt/vault/shared:/var/mnt/vault/shared
+    - /var/local/etc/samba/:/data/
