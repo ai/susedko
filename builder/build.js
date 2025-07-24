@@ -115,7 +115,7 @@ function generateService(file, input, uids) {
       `/bin/podman stop --ignore --cidfile=/run/user/${uid}/%n.ctr-id`
     ])
     yml.execStopPost = (yml.execStopPost ?? []).concat([
-      `/bin/podman rm -f --ignore --cidfile=/run/user/${uid}//%n.ctr-id`
+      `/bin/podman rm -f --ignore --cidfile=/run/user/${uid}/%n.ctr-id`
     ])
   }
 
