@@ -6,14 +6,14 @@ After=network-ping.service
 [Service]
 Type=oneshot
 ExecStart=/bin/podman auto-update
-ExecStart=sudo -u home /bin/podman auto-update
-ExecStart=sudo -u domains /bin/podman auto-update
-ExecStart=sudo -u media /bin/podman auto-update
-ExecStart=sudo -u passwords /bin/podman auto-update
-ExecStart=sudo -u share /bin/podman auto-update
-ExecStart=sudo -u speed /bin/podman auto-update
-ExecStart=sudo -u status /bin/podman auto-update
-ExecStart=sudo -u torrent /bin/podman auto-update
+ExecStart=/bin/sudo -u home /bin/podman auto-update
+ExecStart=/bin/sudo -u domains /bin/podman auto-update
+ExecStart=/bin/sudo -u media /bin/podman auto-update
+ExecStart=/bin/sudo -u passwords /bin/podman auto-update
+ExecStart=/bin/sudo -u share /bin/podman auto-update
+ExecStart=/bin/sudo -u speed /bin/podman auto-update
+ExecStart=/bin/sudo -u status /bin/podman auto-update
+ExecStart=/bin/sudo -u torrent /bin/podman auto-update
 
 [Install]
 WantedBy=multi-user.target default.target
