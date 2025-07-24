@@ -7,11 +7,8 @@ group: status
 restart: true
 
 podman:
-  image: docker.io/nicolargo/glances:alpine-latest-full
+  image: docker.io/nicolargo/glances:latest-full
   readonly: true
-  ports:
-    - 61208:61208
-    - 61209:61209
   env:
     GLANCES_OPT: "-w"
   volumes:
