@@ -7,8 +7,5 @@ storage:
             export PS1="\n\e[01;31m\h \e[01;36m\w\n\e[0;32m❯\e[m "
 
             alias ..='cd ..'
-            alias l='eza --all'
-            alias ll='eza --long --all --git --group'
             alias cat='bat --plain'
-            alias ls='eza'
             alias rg='rg --hidden'
