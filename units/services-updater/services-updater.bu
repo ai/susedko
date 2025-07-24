@@ -4,3 +4,7 @@ systemd:
       enabled: true
     - name: services-updater.timer
       enabled: true
+storage:
+  files:
+    - path: /etc/systemd/system/podman-autoupdate@.service
+      mode: 0o444

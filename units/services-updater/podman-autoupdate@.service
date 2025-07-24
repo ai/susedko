@@ -1,0 +1,9 @@
+[Unit]
+Description=Podman auto-update for user %i
+Wants=network-ping.service
+After=network-ping.service
+
+[Service]
+Type=oneshot
+User=%i
+ExecStart=/usr/bin/podman auto-update

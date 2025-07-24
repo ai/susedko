@@ -1,19 +1,17 @@
 [Unit]
 Description=Containers auto-update
-Wants=network-ping.service
-After=network-ping.service
+Wants=podman-autoupdate@home.service
+Wants=podman-autoupdate@domains.service
+Wants=podman-autoupdate@media.service
+Wants=podman-autoupdate@passwords.service
+Wants=podman-autoupdate@share.service
+Wants=podman-autoupdate@speed.service
+Wants=podman-autoupdate@status.service
+Wants=podman-autoupdate@torrent.service
 
 [Service]
 Type=oneshot
 ExecStart=/bin/podman auto-update
-ExecStart=/bin/sudo -u home /bin/podman auto-update
-ExecStart=/bin/sudo -u domains /bin/podman auto-update
-ExecStart=/bin/sudo -u media /bin/podman auto-update
-ExecStart=/bin/sudo -u passwords /bin/podman auto-update
-ExecStart=/bin/sudo -u share /bin/podman auto-update
-ExecStart=/bin/sudo -u speed /bin/podman auto-update
-ExecStart=/bin/sudo -u status /bin/podman auto-update
-ExecStart=/bin/sudo -u torrent /bin/podman auto-update
 
 [Install]
 WantedBy=multi-user.target default.target
