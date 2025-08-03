@@ -67,11 +67,11 @@ function generateService(file, input, uids) {
     }
     yml.environment = (yml.environment ?? []).concat(['PODMAN_SYSTEMD_UNIT=%n'])
     yml.execStartPre = (yml.execStartPre ?? []).concat([
-      `/bin/rm -f /run/user/${uid}/%n.ctr-id`
+      `/bin/rm -f %t/%n.ctr-id`
     ])
     let run = `/bin/podman run \\\n`
     run += runLine('--pull=missing')
-    run += runLine(`--cidfile=/run/user/${uid}/%n.ctr-id`)
+    run += runLine(`--cidfile=%t/%n.ctr-id`)
     run += runLine('--cgroups=no-conmon')
     run += runLine('--rm')
     run += runLine('--tz=local')
@@ -112,10 +112,10 @@ function generateService(file, input, uids) {
     run += `          ${yml.podman.image}`
     yml.execStart = (yml.execStart ?? []).concat([run])
     yml.execStop = (yml.execStop ?? []).concat([
-      `/bin/podman stop --ignore --cidfile=/run/user/${uid}/%n.ctr-id`
+      `/bin/podman stop --ignore --cidfile=%t/%n.ctr-id`
     ])
     yml.execStopPost = (yml.execStopPost ?? []).concat([
-      `/bin/podman rm -f --ignore --cidfile=/run/user/${uid}/%n.ctr-id`
+      `/bin/podman rm -f --ignore --cidfile=%t/%n.ctr-id`
     ])
   }
 
