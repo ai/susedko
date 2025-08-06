@@ -172,6 +172,11 @@
     - action: switch.turn_on
       target:
         entity_id: switch.heater_micraplus_25_main_away_mode
+    - action: climate.turn_off
+      target:
+        entity_id:
+          - climate.ac_hall
+          - climate.ac_bedroom
     - action: water_heater.set_operation_mode
       target:
         entity_id: water_heater.home_domestic_hot_water_0
@@ -1105,7 +1110,7 @@
             entity_id: input_boolean.auto_andrey_desk
 
 - id: switch_heater
-  alias: Включить отопление при включении настройки
+  alias: Включить отопление при включении настройки отопления
   mode: restart
   trigger:
     - trigger: state
@@ -1138,6 +1143,33 @@
         - action: climate.turn_off
           target:
             entity_id: climate.heater_micraplus_25_zone_1_climate
+
+- id: switch_cooling
+  alias: Включить кондиционера при включении настройки
+  mode: restart
+  trigger:
+    - trigger: state
+      entity_id: input_boolean.cooling
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+  actions:
+    - if:
+        - condition: state
+          entity_id: input_boolean.cooling
+          state: "on"
+      then:
+        - action: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.heating
+        - action: climate.turn_on
+          target:
+            entity_id: climate.ac_hall
+      else:
+        - action: climate.turn_off
+          target:
+            entity_id: climate.ac_hall
 
 - id: notify_balcony_opened
   alias: Уведомить об открытии балкона, когда нас нет
@@ -1230,6 +1262,47 @@
             - action: climate.turn_off
               target:
                 entity_id: climate.heater_micraplus_25_zone_1_climate
+
+- id: disable_cooling_on_balcony
+  alias: Отключить кондиционера при открытии балкона
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.door_ikea_balcony_left_contact
+    - trigger: state
+      entity_id: binary_sensor.door_ikea_balcony_right_contact
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cooling
+      state: "on"
+  actions:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.door_ikea_balcony_left_contact
+              state: "off"
+            - condition: state
+              entity_id: binary_sensor.door_ikea_balcony_right_contact
+              state: "off"
+          sequence:
+            - action: climate.turn_on
+              target:
+                entity_id: climate.ac_hall
+        - conditions:
+            - condition: or
+              conditions:
+                - condition: state
+                  entity_id: binary_sensor.door_ikea_balcony_left_contact
+                  state: "on"
+                - condition: state
+                  entity_id: binary_sensor.door_ikea_balcony_right_contact
+                  state: "on"
+          sequence:
+            - action: climate.turn_off
+              target:
+                entity_id: climate.ac_hall
 
 - id: notify_air_balcony
   alias: Предупредить о плохом воздухе, когда проветриваем балкон
