@@ -1557,3 +1557,35 @@
         entity_id: climate.ac_hall
       data:
         hvac_mode: cool
+
+- id: ac_hall_enter
+  alias: Включение кондиционера, когда мы входим
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.home_empty
+      to: "off"
+    - trigger: numeric_state
+      entity_id: zone.home
+      above: 0
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cooling
+      state: "on"
+    - condition: state
+      entity_id: binary_sensor.door_ikea_balcony_left_contact
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.door_ikea_balcony_right_contact
+      state: "off"
+  actions:
+    - action: climate.turn_on
+      target:
+        entity_id: climate.ac_hall
+    - action: climate.set_hvac_mode
+      target:
+        entity_id: climate.ac_hall
+      data:
+        hvac_mode: cool
