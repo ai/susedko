@@ -1504,3 +1504,21 @@
         entity_id: climate.ac_bedroom
       data:
         hvac_mode: cool
+
+- id: ac_hall_night
+  alias: Выключение кондиционера спальни утром
+  mode: single
+  triggers:
+    - trigger: time
+      at: input_datetime.sleep_start
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+  actions:
+    - action: climate.turn_off
+      target:
+        entity_id: climate.ac_bedroom
