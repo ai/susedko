@@ -1,12 +1,10 @@
 - id: home_empty_tracker
   alias: Отслеживание когда все ушли из дома
   triggers:
-    - trigger: template
-      value_template: >
-        {{ states.person | selectattr('state', 'ne', 'away') | list | count == 0 }}
-    - trigger: template
-      value_template: >
-        {{ states.person | selectattr('state', 'ne', 'away') | list | count > 0 }}
+    - condition: state
+      entity_id: person.andrey_sitnik
+    - condition: state
+      entity_id: person.ekaterina_sitnik
     - trigger: state
       entity_id: input_boolean.guests
     - trigger: state
