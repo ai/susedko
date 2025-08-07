@@ -1,9 +1,9 @@
 - id: home_empty_tracker
   alias: Отслеживание когда все ушли из дома
   triggers:
-    - condition: state
+    - trigger: state
       entity_id: person.andrey_sitnik
-    - condition: state
+    - trigger: state
       entity_id: person.ekaterina_sitnik
     - trigger: state
       entity_id: input_boolean.guests
@@ -199,10 +199,10 @@
             - condition: state
               entity_id: input_boolean.cooling
               state: "on"
-        - then:
-            - action: cover.close_cover
-              target:
-                entity_id: cover.blind_ikea_lounge
+      then:
+        - action: cover.close_cover
+          target:
+            entity_id: cover.blind_ikea_lounge
 
 - id: turn_on_everything_on_coming
   alias: Включить отопление, когда пришли
