@@ -167,19 +167,42 @@
       state: "off"
   actions:
     - action: script.turn_off_everything
-    - action: switch.turn_on
-      target:
-        entity_id: switch.heater_micraplus_25_main_away_mode
-    - action: climate.turn_off
-      target:
-        entity_id:
-          - climate.ac_hall
-          - climate.ac_bedroom
     - action: water_heater.set_operation_mode
       target:
         entity_id: water_heater.home_domestic_hot_water_0
       data:
         operation_mode: "OFF"
+    - if:
+        - condition: state
+          entity_id: input_boolean.heating
+          state: "on"
+      then:
+        - action: switch.turn_on
+          target:
+            entity_id: switch.heater_micraplus_25_main_away_mode
+    - if:
+        - condition: state
+          entity_id: input_boolean.cooling
+          state: "on"
+      then:
+        - action: climate.turn_off
+          target:
+            entity_id:
+              - climate.ac_hall
+              - climate.ac_bedroom
+    - if:
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: input_boolean.heating
+              state: "on"
+            - condition: state
+              entity_id: input_boolean.cooling
+              state: "on"
+        - then:
+            - action: cover.close_cover
+              target:
+                entity_id: cover.blind_ikea_lounge
 
 - id: turn_on_everything_on_coming
   alias: Включить отопление, когда пришли
@@ -196,6 +219,9 @@
       target:
         entity_id:
           - switch.plug_group_bathroom
+    - action: cover.open_cover
+      target:
+        entity_id: cover.blind_ikea_lounge
     - if:
         - condition: state
           entity_id: input_boolean.heating
@@ -1506,6 +1532,9 @@
     - condition: state
       entity_id: input_boolean.other_people
       state: "off"
+    - condition: state
+      entity_id: input_boolean.cooling
+      state: "on"
   actions:
     - action: climate.turn_off
       target:
