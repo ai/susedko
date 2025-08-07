@@ -181,6 +181,40 @@
       data:
         operation_mode: "OFF"
 
+- id: turn_on_everything_on_coming
+  alias: Включить отопление, когда пришли
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.home_empty
+      to: "off"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+  actions:
+    - action: switch.turn_on
+      target:
+        entity_id:
+          - switch.plug_group_bathroom
+    - if:
+        - condition: state
+          entity_id: input_boolean.heating
+          state: "on"
+      then:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.heater_micraplus_25_main_away_mode
+        - action: water_heater.set_operation_mode
+          target:
+            entity_id: water_heater.home_domestic_hot_water_0
+          data:
+            operation_mode: "TIME_CONTROLLED"
+        - action: climate.set_temperature
+          target:
+            entity_id: climate.heater_micraplus_25_zone_1_climate
+          data:
+            temperature: 22
+
 - id: turn_on_lights_on_door_open
   alias: Включить свет при открытии двери
   triggers:
@@ -852,34 +886,6 @@
         title: "CO²"
         message: "Высокий уровень: {{ states('sensor.presence_apollo_msr_2_co2') }}"
 
-- id: turn_on_heating_on_coming
-  alias: Включить отопление, когда пришли
-  triggers:
-    - trigger: state
-      entity_id: input_boolean.home_empty
-      to: "off"
-  conditions:
-    - condition: state
-      entity_id: input_boolean.stop
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.heating
-      state: "on"
-  actions:
-    - action: switch.turn_off
-      target:
-        entity_id: switch.heater_micraplus_25_main_away_mode
-    - action: water_heater.set_operation_mode
-      target:
-        entity_id: water_heater.home_domestic_hot_water_0
-      data:
-        operation_mode: "TIME_CONTROLLED"
-    - action: climate.set_temperature
-      target:
-        entity_id: climate.heater_micraplus_25_zone_1_climate
-      data:
-        temperature: 22
-
 - id: night_heating_mode
   alias: Выключать отопление ночью
   triggers:
@@ -906,22 +912,6 @@
           {% else %}
             22
           {% endif %}
-
-- id: bathroom_plugs_control
-  alias: Включать розетки в ванной при возвращении
-  triggers:
-    - trigger: state
-      entity_id: input_boolean.home_empty
-      to: "off"
-  conditions:
-    - condition: state
-      entity_id: input_boolean.stop
-      state: "off"
-  actions:
-    - action: switch.turn_on
-      target:
-        entity_id:
-          - switch.plug_group_bathroom
 
 - id: auto_off_bedroom_heating
   alias: Автовыключение обогревателя ног через час
