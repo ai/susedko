@@ -13,7 +13,7 @@
     - if:
         condition: template
         value_template: >
-          {{ states.person | selectattr('state', 'ne', 'away') | list | count == 0 and
+          {{ states.person | selectattr('state', 'ne', 'not_home') | list | count == 0 and
              states('input_boolean.guests') == 'off' and
              states('input_boolean.other_people') == 'off' and
              states('device_tracker.ucg_max') == 'home' and
