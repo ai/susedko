@@ -15,19 +15,17 @@
       entity_id: input_boolean.other_people
   actions:
     - if:
-        - condition: or
-          conditions:
-            - condition: template
-              value_template: >
-                {{ states.person | selectattr('state', 'ne', 'not_home') | list | count == 0 and
-                  states('input_boolean.guests') == 'off' and
-                  states('input_boolean.other_people') == 'off' }}
-            - condition: state
-              entity_id: device_tracker.ip_atocha
-              state: "home"
-            - condition: state
-              entity_id: device_tracker.ip_pixel_7a
-              state: "home"
+        - condition: template
+          value_template: >
+            {{ states.person | selectattr('state', 'ne', 'not_home') | list | count == 0 and
+              states('input_boolean.guests') == 'off' and
+              states('input_boolean.other_people') == 'off' }}
+        - condition: state
+          entity_id: device_tracker.ip_atocha
+          state: "not_home"
+        - condition: state
+          entity_id: device_tracker.ip_pixel_7a
+          state: "not_home"
       then:
         - action: input_boolean.turn_on
           target:
