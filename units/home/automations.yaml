@@ -6,18 +6,28 @@
     - trigger: state
       entity_id: person.ekaterina_sitnik
     - trigger: state
+      entity_id: device_tracker.ip_atocha
+    - trigger: state
+      entity_id: device_tracker.ip_pixel_7a
+    - trigger: state
       entity_id: input_boolean.guests
     - trigger: state
       entity_id: input_boolean.other_people
   actions:
     - if:
-        condition: template
-        value_template: >
-          {{ states.person | selectattr('state', 'ne', 'not_home') | list | count == 0 and
-             states('input_boolean.guests') == 'off' and
-             states('input_boolean.other_people') == 'off' and
-             states('device_tracker.ucg_max') == 'home' and
-             states('device_tracker.u7_pro_xgs') == 'home' }}
+        - condition: or
+          conditions:
+            - condition: template
+              value_template: >
+                {{ states.person | selectattr('state', 'ne', 'not_home') | list | count == 0 and
+                  states('input_boolean.guests') == 'off' and
+                  states('input_boolean.other_people') == 'off' }}
+            - condition: state
+              entity_id: device_tracker.ip_atocha
+              state: "home"
+            - condition: state
+              entity_id: device_tracker.ip_pixel_7a
+              state: "home"
       then:
         - action: input_boolean.turn_on
           target:
@@ -1582,7 +1592,7 @@
       entity_id: input_boolean.home_empty
       to: "off"
     - trigger: numeric_state
-      entity_id: zone.home
+      entity_id: zone.near_home
       above: 0
   conditions:
     - condition: state
