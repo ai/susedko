@@ -33,7 +33,7 @@ prepare_eddie_for_sleep:
     - action: media_player.volume_set
       data:
         entity_id: media_player.tv_google
-        volume_level: 0.4
+        volume_level: 0.5
     - action: media_player.play_media
       data:
         media_content_type: url
