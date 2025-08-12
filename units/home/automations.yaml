@@ -169,7 +169,18 @@
     - trigger: state
       entity_id: input_boolean.home_empty
       to: "on"
+    - trigger: state
+      entity_id: person.andrey_sitnik
+      from: "near_home"
+      to: "not_home"
+    - trigger: state
+      entity_id: person.ekaterina_sitnik
+      from: "near_home"
+      to: "not_home"
   conditions:
+    - condition: state
+      entity_id: input_boolean.home_empty
+      state: "on"
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
@@ -1589,9 +1600,14 @@
     - trigger: state
       entity_id: input_boolean.home_empty
       to: "off"
-    - trigger: numeric_state
-      entity_id: zone.near_home
-      above: 0
+    - trigger: state
+      entity_id: person.andrey_sitnik
+      from: "not_home"
+      to: "near_home"
+    - trigger: state
+      entity_id: person.ekaterina_sitnik
+      from: "not_home"
+      to: "near_home"
   conditions:
     - condition: state
       entity_id: input_boolean.stop
@@ -1605,6 +1621,14 @@
     - condition: state
       entity_id: binary_sensor.door_ikea_balcony_right_contact
       state: "off"
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: person.andrey_sitnik
+          state: "near_home"
+        - condition: state
+          entity_id: person.ekaterina_sitnik
+          state: "near_home"
   actions:
     - action: climate.turn_on
       target:
