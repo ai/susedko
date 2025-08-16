@@ -1638,3 +1638,24 @@
         entity_id: climate.ac_hall
       data:
         hvac_mode: cool
+
+- id: notify_on_forgotten_guests
+  alias: Уведомить о забытой настройки Гости
+  triggers:
+    - trigger: time
+      at: "10:00:00"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.notifications
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.guests
+      state: "on"
+  actions:
+    - action: notify.mobile_app_atocha
+      data:
+        title: "Режим Гости"
+        message: "Всё ещё активен"
