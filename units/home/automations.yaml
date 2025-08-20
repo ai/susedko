@@ -17,13 +17,6 @@
       entity_id: input_boolean.guests
     - trigger: state
       entity_id: input_boolean.other_people
-  conditions:
-    - condition: state
-      entity_id: input_boolean.other_people
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.guests
-      state: "off"
   actions:
     - if:
         - or:
@@ -40,11 +33,11 @@
               entity_id: input_boolean.guests
               state: "on"
       then:
-        - action: input_boolean.turn_on
+        - action: input_boolean.turn_off
           target:
             entity_id: input_boolean.home_empty
       else:
-        - action: input_boolean.turn_off
+        - action: input_boolean.turn_on
           target:
             entity_id: input_boolean.home_empty
 
