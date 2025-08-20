@@ -51,8 +51,7 @@
     - condition: state
       entity_id: input_boolean.other_people
       state: "off"
-    - condition: or
-      conditions:
+    - or:
         - condition: time
           weekday:
             - mon
@@ -210,8 +209,7 @@
               - climate.ac_hall
               - climate.ac_bedroom
     - if:
-        - condition: or
-          conditions:
+        - or:
             - condition: state
               entity_id: input_boolean.heating
               state: "on"
@@ -1077,8 +1075,7 @@
       state: "off"
   actions:
     - if:
-        - condition: or
-          conditions:
+        - or:
             - condition: and
               conditions:
                 - condition: state
@@ -1089,8 +1086,7 @@
                   state:
                     - "ringing"
                     - "offhook"
-            - condition: and
-              conditions:
+            - and:
                 - condition: state
                   entity_id: person.ekaterina_sitnik
                   state: "home"
@@ -1241,8 +1237,7 @@
     - condition: state
       entity_id: input_boolean.notifications
       state: "on"
-    - condition: or
-      conditions:
+    - or:
         - condition: state
           entity_id: binary_sensor.door_ikea_balcony_left_contact
           state: "on"
@@ -1283,8 +1278,7 @@
 #               target:
 #                 entity_id: climate.heater_micraplus_25_zone_1_climate
 #         - conditions:
-#             - condition: or
-#               conditions:
+#             - or:
 #                 - condition: state
 #                   entity_id: binary_sensor.door_ikea_balcony_left_contact
 #                   state: "on"
@@ -1324,8 +1318,7 @@
 #               target:
 #                 entity_id: climate.ac_hall
 #         - conditions:
-#             - condition: or
-#               conditions:
+#             - or:
 #                 - condition: state
 #                   entity_id: binary_sensor.door_ikea_balcony_left_contact
 #                   state: "on"
@@ -1399,8 +1392,7 @@
     - condition: state
       entity_id: input_boolean.other_people
       state: "off"
-    - condition: or
-      conditions:
+    - or:
         - condition: time
           weekday:
             - mon
@@ -1621,8 +1613,7 @@
     - condition: state
       entity_id: binary_sensor.door_ikea_balcony_right_contact
       state: "off"
-    - condition: or
-      conditions:
+    - or:
         - condition: state
           entity_id: person.andrey_sitnik
           state: "near_home"
