@@ -3,8 +3,12 @@
   triggers:
     - trigger: state
       entity_id: person.andrey_sitnik
+      from: near_home
+      to: not_home
     - trigger: state
       entity_id: person.ekaterina_sitnik
+      from: near_home
+      to: not_home
     - trigger: state
       entity_id: device_tracker.ip_atocha
     - trigger: state
@@ -13,19 +17,28 @@
       entity_id: input_boolean.guests
     - trigger: state
       entity_id: input_boolean.other_people
+  conditions:
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.guests
+      state: "off"
   actions:
     - if:
-        - condition: template
-          value_template: >
-            {{ states.person | selectattr('state', 'ne', 'not_home') | list | count == 0 and
-              states('input_boolean.guests') == 'off' and
-              states('input_boolean.other_people') == 'off' }}
-        - condition: state
-          entity_id: device_tracker.ip_atocha
-          state: "not_home"
-        - condition: state
-          entity_id: device_tracker.ip_pixel_7a
-          state: "not_home"
+        - or:
+            - condition: state
+              entity_id: device_tracker.ip_atocha
+              state: "home"
+            - condition: state
+              entity_id: device_tracker.ip_pixel_7a
+              state: "home"
+            - condition: state
+              entity_id: input_boolean.other_people
+              state: "on"
+            - condition: state
+              entity_id: input_boolean.guests
+              state: "on"
       then:
         - action: input_boolean.turn_on
           target:
