@@ -49,7 +49,7 @@ function runLine(str) {
   return `          ${str} \\\n`
 }
 
-function generateService(file, input, uids) {
+function generateService(file, input, uids, userLevel) {
   let name = basename(file, '.service')
   let yml = parse(input)
 
@@ -150,8 +150,18 @@ function generateService(file, input, uids) {
     service += `Restart=${restartType}\nRestartSec=3\n`
   }
 
-  service += `\n[Install]\nWantedBy=multi-user.target\n`
+  if (!userLevel) {
+    service += `\n[Install]\nWantedBy=multi-user.target\n`
+  }
   return service
+}
+
+function setHomeUser(branch) {
+  if (branch.path.startsWith('/home/') && !branch.user) {
+    let name = branch.path.match(/\/home\/([^/]+)\//)[1]
+    branch.user = { name }
+    branch.group = { name }
+  }
 }
 
 function processFile(path) {
@@ -194,7 +204,16 @@ function processFile(path) {
     }
   }
 
+  for (let link of parsed.storage?.links ?? []) {
+    setHomeUser(link)
+  }
+
+  for (let dir of parsed.storage?.directories ?? []) {
+    setHomeUser(dir)
+  }
+
   for (let file of parsed.storage?.files ?? []) {
+    setHomeUser(file)
     if (!file.contents && !file.append && !file.file) {
       file.file = basename(file.path)
     }
@@ -205,6 +224,10 @@ function processFile(path) {
         let data = readFileSync(join(dir, name))
         file.contents = {
           source: `data:;base64,${data.toString('base64')}`
+        }
+      } else if (existsSync(join(dir, name + '.yml'))) {
+        file.contents = {
+          inline: generateService(name, read(dir, name + '.yml'), uids, 'user')
         }
       } else {
         file.contents = {

@@ -1,9 +1,6 @@
 desc: OpenSpeedTest
 waitOnline: true
 
-user: speed
-group: speed
-
 restart: true
 
 podman:

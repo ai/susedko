@@ -3,9 +3,6 @@ after:
   - video-driver.service
 waitOnline: true
 
-user: media
-group: media
-
 restart: true
 
 podman:

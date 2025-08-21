@@ -9,10 +9,6 @@ passwd:
   groups:
     - name: share
       gid: 1004
-systemd:
-  units:
-    - name: samba.service
-      enabled: true
 storage:
   files:
     - path: /var/lib/systemd/linger/share
@@ -43,6 +39,11 @@ storage:
         name: share
       group:
         name: share
+    - path: /home/share/.config/systemd/user/samba.service
+  links:
+    - path: /home/share/.config/systemd/user/default.target.wants/samba.service
+      target: /home/share/.config/systemd/user/samba.service
+      hard: false
   directories:
     - path: /var/mnt/vault/shared
       mode: 0o777
@@ -56,3 +57,7 @@ storage:
         name: share
       group:
         name: share
+    - path: /home/share/.config
+    - path: /home/share/.config/systemd
+    - path: /home/share/.config/systemd/user
+    - path: /home/share/.config/systemd/user/default.target.wants

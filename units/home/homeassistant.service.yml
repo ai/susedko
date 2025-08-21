@@ -7,9 +7,6 @@ after:
 
 restart: true
 
-user: home
-group: home
-
 podman:
   image: ghcr.io/home-assistant/home-assistant:stable
   network: host

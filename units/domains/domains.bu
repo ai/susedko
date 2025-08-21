@@ -2,8 +2,6 @@ systemd:
   units:
     - name: avahi-publisher.service
       enabled: true
-    - name: balancer.service
-      enabled: true
     - name: ports.service
       enabled: true
 passwd:
@@ -66,9 +64,13 @@ storage:
         name: domains
       group:
         name: domains
+    - path: /home/domains/.config/systemd/user/balancer.service
   links:
     - path: /etc/pki/ca-trust/source/anchors/ssl.pem
       target: /usr/local/etc/ssl/ssl.crt
+    - path: /home/domains/.config/systemd/user/default.target.wants/balancer.service
+      target: /home/domains/.config/systemd/user/balancer.service
+      hard: false
   directories:
     - path: /usr/local/etc/nginx
       mode: 0o555
@@ -88,3 +90,7 @@ storage:
         name: domains
       group:
         name: domains
+    - path: /home/domains/.config
+    - path: /home/domains/.config/systemd
+    - path: /home/domains/.config/systemd/user
+    - path: /home/domains/.config/systemd/user/default.target.wants

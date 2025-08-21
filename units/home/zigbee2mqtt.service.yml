@@ -10,9 +10,6 @@ restart: "always"
 environmentFiles:
   - /usr/local/etc/home.env
 
-user: home
-group: home
-
 podman:
   image: ghcr.io/koenkk/zigbee2mqtt:latest
   ports:

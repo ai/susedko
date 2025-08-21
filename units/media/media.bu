@@ -11,10 +11,6 @@ passwd:
   groups:
     - name: media
       gid: 1006
-systemd:
-  units:
-    - name: jellyfin.service
-      enabled: true
 storage:
   files:
     - path: /var/lib/systemd/linger/media
@@ -23,6 +19,11 @@ storage:
         inline: ''
     - path: /usr/local/etc/nginx/conf.d/media.local.conf
       mode: 0o444
+    - path: /home/media/.config/systemd/user/jellyfin.service
+  links:
+    - path: /home/media/.config/systemd/user/default.target.wants/jellyfin.service
+      target: /home/media/.config/systemd/user/jellyfin.service
+      hard: false
   directories:
     - path: /var/mnt/vault/.cache/jellyfin
       mode: 0o771
@@ -36,3 +37,7 @@ storage:
         name: media
       group:
         name: media
+    - path: /home/media/.config
+    - path: /home/media/.config/systemd
+    - path: /home/media/.config/systemd/user
+    - path: /home/media/.config/systemd/user/default.target.wants

@@ -3,9 +3,6 @@ after:
   - transmission.service
 waitOnline: true
 
-user: torrent
-group: torrent
-
 podman:
   image: lscr.io/linuxserver/transmission:latest
   ports:

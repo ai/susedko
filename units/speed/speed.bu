@@ -9,10 +9,6 @@ passwd:
   groups:
     - name: speed
       gid: 1013
-systemd:
-  units:
-    - name: openspeedtest.service
-      enabled: true
 storage:
   files:
     - path: /var/lib/systemd/linger/speed
@@ -21,3 +17,13 @@ storage:
         inline: ''
     - path: /usr/local/etc/nginx/conf.d/speed.local.conf
       mode: 0o444
+    - path: /home/speed/.config/systemd/user/openspeedtest.service
+  links:
+    - path: /home/speed/.config/systemd/user/default.target.wants/openspeedtest.service
+      target: /home/speed/.config/systemd/user/openspeedtest.service
+      hard: false
+  directories:
+    - path: /home/speed/.config
+    - path: /home/speed/.config/systemd
+    - path: /home/speed/.config/systemd/user
+    - path: /home/speed/.config/systemd/user/default.target.wants

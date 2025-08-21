@@ -1,9 +1,6 @@
 desc: Transmission Server
 waitOnline: true
 
-user: torrent
-group: torrent
-
 restart: true
 
 environmentFiles:

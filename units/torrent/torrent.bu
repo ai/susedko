@@ -12,10 +12,6 @@ passwd:
       gid: 1009
 systemd:
   units:
-    - name: transmission.service
-      enabled: true
-    - name: simple-transmission.service
-      enabled: true
     - name: torrent-access.service
       enabled: true
 storage:
@@ -34,6 +30,15 @@ storage:
         name: torrent
       group:
         name: torrent
+    - path: /home/torrent/.config/systemd/user/transmission.service
+    - path: /home/torrent/.config/systemd/user/simple-transmission.service
+  links:
+    - path: /home/torrent/.config/systemd/user/default.target.wants/transmission.service
+      target: /home/torrent/.config/systemd/user/transmission.service
+      hard: false
+    - path: /home/torrent/.config/systemd/user/default.target.wants/simple-transmission.service
+      target: /home/torrent/.config/systemd/user/simple-transmission.service
+      hard: false
   directories:
     - path: /var/mnt/vault/.config/transmission
       mode: 0o770
@@ -65,3 +70,7 @@ storage:
         name: torrent
       group:
         name: aivault
+    - path: /home/torrent/.config
+    - path: /home/torrent/.config/systemd
+    - path: /home/torrent/.config/systemd/user
+    - path: /home/torrent/.config/systemd/user/default.target.wants

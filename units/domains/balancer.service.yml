@@ -3,9 +3,6 @@ waitOnline: true
 
 restart: true
 
-user: domains
-group: domains
-
 podman:
   image: ghcr.io/nginxinc/nginx-unprivileged:alpine
   readonly: true

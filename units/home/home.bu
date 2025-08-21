@@ -12,13 +12,7 @@ passwd:
       gid: 1014
 systemd:
   units:
-    - name: homeassistant.service
-      enabled: true
     - name: container-dbus.service
-      enabled: true
-    - name: zigbee2mqtt.service
-      enabled: true
-    - name: mosquitto.service
       enabled: true
 storage:
   files:
@@ -97,6 +91,19 @@ storage:
         name: home
       group:
         name: home
+    - path: /home/home/.config/systemd/user/homeassistant.service
+    - path: /home/home/.config/systemd/user/zigbee2mqtt.service
+    - path: /home/home/.config/systemd/user/mosquitto.service
+  links:
+    - path: /home/home/.config/systemd/user/default.target.wants/homeassistant.service
+      target: /home/home/.config/systemd/user/homeassistant.service
+      hard: false
+    - path: /home/home/.config/systemd/user/default.target.wants/zigbee2mqtt.service
+      target: /home/home/.config/systemd/user/zigbee2mqtt.service
+      hard: false
+    - path: /home/home/.config/systemd/user/default.target.wants/mosquitto.service
+      target: /home/home/.config/systemd/user/mosquitto.service
+      hard: false
   directories:
     - path: /var/mnt/vault/.config/homeassistant
       mode: 0o755
@@ -134,3 +141,7 @@ storage:
         name: home
       group:
         name: home
+    - path: /home/home/.config
+    - path: /home/home/.config/systemd
+    - path: /home/home/.config/systemd/user
+    - path: /home/home/.config/systemd/user/default.target.wants

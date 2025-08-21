@@ -7,9 +7,6 @@ after:
 
 restart: true
 
-user: home
-group: home
-
 podman:
   image: docker.io/eclipse-mosquitto:latest
   ports:

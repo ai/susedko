@@ -9,10 +9,6 @@ passwd:
   groups:
     - name: status
       gid: 1008
-systemd:
-  units:
-    - name: glances.service
-      enabled: true
 storage:
   files:
     - path: /var/lib/systemd/linger/status
@@ -21,3 +17,13 @@ storage:
         inline: ''
     - path: /usr/local/etc/nginx/conf.d/susedko.local.conf
       mode: 0o444
+    - path: /home/status/.config/systemd/user/glances.service
+  links:
+    - path: /home/status/.config/systemd/user/default.target.wants/glances.service
+      target: /home/status/.config/systemd/user/glances.service
+      hard: false
+  directories:
+    - path: /home/status/.config
+    - path: /home/status/.config/systemd
+    - path: /home/status/.config/systemd/user
+    - path: /home/status/.config/systemd/user/default.target.wants

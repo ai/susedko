@@ -1,9 +1,6 @@
 desc: Samba Server
 waitOnline: true
 
-user: share
-group: share
-
 restart: true
 
 podman:

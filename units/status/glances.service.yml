@@ -1,9 +1,6 @@
 desc: Glances Server
 waitOnline: true
 
-user: status
-group: status
-
 restart: true
 
 podman:
