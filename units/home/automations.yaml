@@ -17,6 +17,13 @@
       entity_id: input_boolean.guests
     - trigger: state
       entity_id: input_boolean.other_people
+  conditions:
+    - condition: state
+      entity_id: device_tracker.ucg_max
+      state: "home"
+    - condition: state
+      entity_id: sensor.u7_pro_xgs_state
+      state: "connected"
   actions:
     - if:
         - or:
