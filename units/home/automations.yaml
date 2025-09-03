@@ -1058,11 +1058,14 @@
   mode: restart
   triggers:
     - trigger: state
-      entity_id: event.front_door_ding
+      entity_id: event.intercom_ring_ding
   conditions:
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
+    - condition: state
+      entity_id: media_player.tv_remote
+      state: "on"
   actions:
     - action: media_player.media_pause
       target:
@@ -1086,6 +1089,9 @@
     - condition: state
       entity_id: input_boolean.stop
       state: "off"
+    - condition: state
+      entity_id: media_player.tv_remote
+      state: "on"
   actions:
     - if:
         - or:
