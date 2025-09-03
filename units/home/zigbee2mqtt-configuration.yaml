@@ -123,6 +123,10 @@ devices:
     friendly_name: Blind / IKEA / Lounge
   '0x94ec32fffe29c482':
     friendly_name: Plug / IKEA / Bedroom Light
+  '0x04cd15fffe37cd0f':
+    friendly_name: Light / IKEA E14 / Clip
+  '0xec1bbdfffe6a495a':
+    friendly_name: Light / IKEA E27 / Threads
 groups:
   '1':
     friendly_name: Light / Group / None
@@ -140,3 +144,5 @@ groups:
     friendly_name: Light / Group / Bedroom
   '8':
     friendly_name: Light / Group / Bathroom
+  '9':
+    friendly_name: Light / Group / Kate
