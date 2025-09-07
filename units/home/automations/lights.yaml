@@ -1,0 +1,315 @@
+- id: turn_on_lights_on_door_open
+  alias: Включить свет при открытии двери
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.door_ikea_entrance_contact
+      from: "off"
+      to: "on"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+  actions:
+    - action: light.turn_on
+      target:
+        entity_id: light.light_ikea_ceiling_entrance
+
+- id: kitchen_light_on_motion
+  alias: Включить свет на кухне при движении
+  use_blueprint:
+    path: presence.yaml
+    input:
+      presence_sensor: binary_sensor.presence_tuya_kitchen_presence
+      night_scene: scene.kitchen_night
+      stop_helper: input_boolean.stop_kitchen
+      light:
+        entity_id: light.light_group_kitchen
+
+- id: kitchen_wall_switch_buttons
+  alias: Управление светом на кухне с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: 4b07057170cdb07b760d2f31a4e0e5a5
+      light: light.light_group_kitchen
+      room: kitchen
+      scene_helper: input_number.kitchen_last_scene
+      stop_helper: input_boolean.stop_kitchen
+      direct_link: true
+
+- id: reset_kitchen_light
+  alias: Яркий свет на кухне утром
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.everyone_sleep
+      to: "off"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+  actions:
+    - delay: "00:00:10"
+    - action: scene.turn_on
+      target:
+        entity_id: scene.kitchen_full
+      data:
+        transition: off
+    - delay: "00:00:02"
+    - action: light.turn_off
+      target:
+        entity_id: light.light_group_kitchen
+      data:
+        transition: off
+
+- id: lounge_wall_switch_buttons
+  alias: Управление светом в зале с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: 3f13b7a4f814bac7b7f94f4a68a4aee1
+      light: light.light_aqara_t2_e27_rgb_lounge
+      room: lounge
+      scene_helper: input_number.lounge_last_scene
+      direct_link: true
+
+- id: bathroom_light_on_motion
+  alias: Включить свет в ванной при движении
+  use_blueprint:
+    path: presence.yaml
+    input:
+      presence_sensor: binary_sensor.presence_tuya_bathroom_presence
+      night_scene: scene.bathroom_night
+      stop_helper: input_boolean.stop_bathroom
+      before_on:
+        - if:
+            - condition: state
+              entity_id: input_boolean.everyone_sleep
+              state: "off"
+          then:
+            - action: switch.turn_on
+              target:
+                entity_id: switch.wall_switch_yandex_bathroom_1
+      after_off:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.wall_switch_yandex_bathroom_1
+      light:
+        entity_id: light.light_group_bathroom
+
+- id: bathroom_wall_switch_buttons
+  alias: Управление светом в ванной с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: e0f9d156e55b2a79a46d334c2522d795
+      light: light.light_group_bathroom
+      room: bathroom
+      reverse: true
+      scene_helper: input_number.bathroom_last_scene
+      stop_helper: input_boolean.stop_bathroom
+      direct_link: true
+      before_on:
+        - action: switch.turn_on
+          target:
+            entity_id: switch.wall_switch_yandex_bathroom_1
+      after_off:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.wall_switch_yandex_bathroom_1
+
+- id: toilet_light_on_motion
+  alias: Включить свет в туалете при движении
+  use_blueprint:
+    path: presence.yaml
+    input:
+      presence_sensor: binary_sensor.presence_tuya_toilet_presence
+      night_scene: scene.toilet_night
+      stop_helper: input_boolean.stop_toilet
+      light:
+        entity_id: light.light_ikea_gu10_toilet
+
+- id: entrance_light_on_motion
+  alias: Включить свет на входе при движении
+  use_blueprint:
+    path: presence.yaml
+    input:
+      presence_sensor: binary_sensor.presence_tuya_entrance_presence
+      night_scene: scene.entrance_night
+      stop_helper: input_boolean.stop_entrance
+      light:
+        entity_id: light.light_ikea_ceiling_entrance
+
+- id: entrance_wall_switch_buttons
+  alias: Управление светом у входа с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: 4ecbee73df7092e59b71c4c360340352
+      light: light.light_ikea_ceiling_entrance
+      room: entrance
+      scene_helper: input_number.entrance_last_scene
+      stop_helper: input_boolean.stop_entrance
+      direct_link: true
+      long_off:
+        - action: script.turn_off_everything
+
+- id: kate_wall_switch_buttons
+  alias: Управление светом в кабинете Кати с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: 1397c21e23f9d7221a9c1ef2c864bd06
+      light: light.light_group_kate
+      direct_link: true
+      room: kate
+      reverse: true
+      scene_helper: input_number.kate_last_scene
+
+- id: andrey_wall_switch_buttons
+  alias: Управление светом в кабинете Андрея с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: c2f4768909c1d88ce70e0b83f87cec68
+      light: light.light_group_andrey
+      room: andrey
+      reverse: true
+      scene_helper: input_number.andrey_last_scene
+      extra_light: light.light_ikea_e27_rgb_andrey
+      after_off:
+        - action: light.turn_off
+          target:
+            entity_id:
+              - light.light_ikea_e27_rgb_andrey
+              - light.elgato_light_air_andrey
+          data:
+            transition: off
+        - if:
+            - condition: state
+              entity_id: input_boolean.auto_andrey_desk
+              state: "on"
+          then:
+            - action: mqtt.publish
+              data:
+                payload: "LOCK"
+                topic: "ai_laptop"
+                retain: true
+
+- id: bedroom_wall_switch_buttons
+  alias: Управление светом в спальне с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: cf1aab04d291030894e3814a743a2152
+      light: light.light_group_bedroom
+      room: bedroom
+      scene_helper: input_number.bedroom_last_scene
+      before_on:
+        - action: script.bedroom_light_power_on
+      after_off:
+        - delay: "00:00:02"
+        - action: switch.turn_off
+          target:
+            entity_id:
+              - switch.wall_switch_yandex_bedroom_1
+              - switch.plug_ikea_bedroom_light
+
+- id: hall_wall_switch_buttons
+  alias: Управление светом в коридоре с помощью выключателя
+  use_blueprint:
+    path: wall-switch.yaml
+    input:
+      wall_switch: 28614872fff069cfbba7facf6e46e801
+      light: light.light_ikea_ceiling_hall
+      room: hall
+      scene_helper: input_number.hall_last_scene
+
+- id: adaptive_lights_sync
+  alias: Управление сменой цвета ламп при переключении автоматизации
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.stop
+  actions:
+    - if:
+        - condition: state
+          entity_id: input_boolean.stop
+          state: "on"
+      then:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.adaptive_lighting_integration_adaptive_lights
+      else:
+        - action: switch.turn_on
+          target:
+            entity_id: switch.adaptive_lighting_integration_adaptive_lights
+
+- id: night_mode_enable
+  alias: Включить ночной режим
+  mode: single
+  triggers:
+    - trigger: time
+      at: input_datetime.sleep_start
+  actions:
+    - action: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.everyone_sleep
+
+- id: night_mode_disable
+  alias: Выключить ночной режим
+  mode: single
+  triggers:
+    - trigger: time
+      at: input_datetime.sleep_end
+  actions:
+    - action: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.everyone_sleep
+
+- id: disable_fast_presence
+  alias: Экономить батарею датчиков присутствия
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.home_empty
+      to: "on"
+    - trigger: state
+      entity_id: input_boolean.cat_alone
+      to: "on"
+    - trigger: state
+      entity_id: input_boolean.everyone_sleep
+      to: "on"
+  actions:
+    - action: select.select_option
+      target:
+        entity_id:
+          - select.presence_tuya_bathroom_motion_detection_mode
+          - select.presence_tuya_kitchen_motion_detection_mode
+      data:
+        option: "only_pir"
+
+- id: enable_fast_presence
+  alias: Ускорить обнаружение в датчиках присутствия
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.home_empty
+      to: "off"
+    - trigger: state
+      entity_id: input_boolean.cat_alone
+      to: "off"
+    - trigger: state
+      entity_id: input_boolean.everyone_sleep
+      to: "off"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.home_empty
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+  actions:
+    - action: select.select_option
+      target:
+        entity_id:
+          - select.presence_tuya_bathroom_motion_detection_mode
+          - select.presence_tuya_kitchen_motion_detection_mode
+      data:
+        option: "pir_and_radar"

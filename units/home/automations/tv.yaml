@@ -1,0 +1,87 @@
+- id: start_eddie_sleep
+  alias: Укладываем Эди спать по расписанию
+  mode: single
+  triggers:
+    - trigger: time
+      at: input_datetime.eddie_sleep
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.child_home
+      state: "on"
+  actions:
+    action: script.prepare_eddie_for_sleep
+
+- id: pause_tv_on_doorbell
+  alias: Пауза телевизора при звонке двери
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id: event.intercom_ring_ding
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: media_player.tv_remote
+      state: "on"
+  actions:
+    - action: media_player.media_pause
+      target:
+        entity_id: media_player.tv_remote
+
+- id: pause_tv_on_call
+  alias: Пауза телевизора при звонке на телефон
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id: sensor.phone_atocha_phone_state
+      to:
+        - "ringing"
+        - "offhook"
+    - trigger: state
+      entity_id: sensor.phone_pixel_7a_phone_state
+      to:
+        - "ringing"
+        - "offhook"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: media_player.tv_remote
+      state: "on"
+  actions:
+    - if:
+        - or:
+            - condition: and
+              conditions:
+                - condition: state
+                  entity_id: person.andrey_sitnik
+                  state: "home"
+                - condition: state
+                  entity_id: sensor.phone_atocha_phone_state
+                  state:
+                    - "ringing"
+                    - "offhook"
+            - and:
+                - condition: state
+                  entity_id: person.ekaterina_sitnik
+                  state: "home"
+                - condition: state
+                  entity_id: sensor.phone_pixel_7a_phone_state
+                  state:
+                    - "ringing"
+                    - "offhook"
+      then:
+        - action: media_player.media_pause
+          target:
+            entity_id: media_player.tv_remote

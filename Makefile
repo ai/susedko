@@ -50,8 +50,22 @@ ha: secrets.env
 	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
 	scp ./units/home/scripts.yaml \
 	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
-	scp ./units/home/automations.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
+	scp ./units/home/automations/andrey.yaml \
+	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
+	scp ./units/home/automations/blinds.yaml \
+	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
+	scp ./units/home/automations/climate.yaml \
+	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
+	scp ./units/home/automations/leaving.yaml \
+	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
+	scp ./units/home/automations/lights.yaml \
+	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
+	scp ./units/home/automations/notifications.yaml \
+	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
+	scp ./units/home/automations/tv.yaml \
+	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
+	scp ./units/home/automations/water.yaml \
+	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
 	scp ./units/home/wall-switch.yaml \
 	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/blueprints/automation/
 			scp ./units/home/presence.yaml \
@@ -67,12 +81,6 @@ ha: secrets.env
 		  fi
 
 ha_backup:
-	scp ai@susedko.local:/var/mnt/vault/.config/homeassistant/configuration.yaml \
-	  ./units/home/configuration.yaml
-	scp ai@susedko.local:/var/mnt/vault/.config/homeassistant/scripts.yaml \
-	  ./units/home/scripts.yaml
-	scp ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations.yaml \
-		./units/home/automations.yaml
 	scp ai@susedko.local:/var/mnt/vault/.config/zigbee2mqtt/configuration.yaml \
 	  ./units/home/zigbee2mqtt-configuration.yaml
 	sed -i '/auth_token:/d' units/home/zigbee2mqtt-configuration.yaml

@@ -1,0 +1,123 @@
+- id: start_screen_on_presence
+  alias: Включение монитора Андрея по датчику присутствия
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.presence_apollo_msr_2_radar_target
+      to: "on"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: person.andrey_sitnik
+      state: "home"
+    - condition: state
+      entity_id: input_boolean.auto_andrey_desk
+      state: "on"
+    - condition: time
+      after: "06:00:00"
+      before: "01:00:00"
+  actions:
+    - if:
+        - condition: state
+          entity_id: device_tracker.savoia_ethernet
+          state: "home"
+      then:
+        - action: mqtt.publish
+          data:
+            payload: "WAKE"
+            topic: "ai_laptop"
+            retain: true
+
+- id: stop_screen_on_presence
+  alias: Выключение монитора Андрея по датчику присутствия
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.presence_apollo_msr_2_radar_target
+      to: "off"
+      for: 00:06:00
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: person.andrey_sitnik
+      state: "home"
+    - condition: state
+      entity_id: input_boolean.auto_andrey_desk
+      state: "on"
+  actions:
+    - if:
+        - condition: state
+          entity_id: device_tracker.savoia_ethernet
+          state: "home"
+      then:
+        - action: mqtt.publish
+          data:
+            payload: "LOCK"
+            topic: "ai_laptop"
+            retain: true
+
+- id: lock_screen_on_andrey_leaving
+  alias: Блокировка ноутбука Андрея при его уходе
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id: person.andrey_sitnik
+      to:
+        - "not_home"
+        - "home"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+  actions:
+    - if:
+        - condition: state
+          entity_id: person.andrey_sitnik
+          state: "home"
+      then:
+        - action: input_boolean.turn_on
+          target:
+            entity_id: input_boolean.auto_andrey_desk
+      else:
+        - action: mqtt.publish
+          data:
+            payload: "LOCK"
+            topic: "ai_laptop"
+            retain: true
+        - action: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.auto_andrey_desk
+
+- id: sync_auto_desk_and_cat_alone
+  alias: Выключать авто-стол, когда мы уезжаем
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.cat_alone
+    - trigger: state
+      entity_id: input_boolean.other_people
+  actions:
+    - if:
+        - condition: state
+          entity_id: input_boolean.cat_alone
+          state: "off"
+        - condition: state
+          entity_id: input_boolean.other_people
+          state: "off"
+      then:
+        - action: input_boolean.turn_on
+          target:
+            entity_id: input_boolean.auto_andrey_desk
+      else:
+        - action: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.auto_andrey_desk

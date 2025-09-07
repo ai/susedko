@@ -28,27 +28,6 @@ storage:
       mode: 0o555
     - path: /usr/local/share/container-dbus.pp
       mode: 0o444
-    - path: /var/mnt/vault/.config/homeassistant/configuration.yaml
-      mode: 0o770
-      overwrite: true
-      user:
-        name: home
-      group:
-        name: aivault
-    - path: /var/mnt/vault/.config/homeassistant/automations.yaml
-      mode: 0o770
-      overwrite: true
-      user:
-        name: home
-      group:
-        name: aivault
-    - path: /var/mnt/vault/.config/homeassistant/scripts.yaml
-      mode: 0o770
-      overwrite: true
-      user:
-        name: home
-      group:
-        name: aivault
     - path: /var/mnt/vault/.config/mosquitto/config/mosquitto-passwords
       mode: 0o400
       overwrite: true

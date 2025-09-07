@@ -1,0 +1,332 @@
+- id: turn_on_everything_on_coming
+  alias: Включить отопление, когда пришли
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.home_empty
+      to: "off"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+  actions:
+    - action: switch.turn_on
+      target:
+        entity_id:
+          - switch.plug_group_bathroom
+    - action: cover.open_cover
+      target:
+        entity_id: cover.blind_ikea_lounge
+    - if:
+        - condition: state
+          entity_id: input_boolean.heating
+          state: "on"
+      then:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.heater_micraplus_25_main_away_mode
+        - action: water_heater.set_operation_mode
+          target:
+            entity_id: water_heater.home_domestic_hot_water_0
+          data:
+            operation_mode: "TIME_CONTROLLED"
+        - action: climate.set_temperature
+          target:
+            entity_id: climate.heater_micraplus_25_zone_1_climate
+          data:
+            temperature: 22
+
+- id: night_heating_mode
+  alias: Выключать отопление ночью
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.everyone_sleep
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.heating
+      state: "on"
+  actions:
+    - action: climate.set_temperature
+      target:
+        entity_id: climate.heater_micraplus_25_zone_1_climate
+      data:
+        temperature: >
+          {% if states('input_boolean.everyone_sleep') == 'on' %}
+            18
+          {% else %}
+            22
+          {% endif %}
+
+- id: auto_off_bedroom_heating
+  alias: Автовыключение обогревателя ног через час
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id: switch.plug_ikea_bedroom_heating
+      from: "off"
+      to: "on"
+      for:
+        hours: 1
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: switch.plug_ikea_bedroom_heating
+      state: "on"
+  actions:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.plug_ikea_bedroom_heating
+
+- id: prevent_bacteria_heating_pipes
+  alias: Включения отопления каждый месяц, чтобы бактерии не размножались
+  triggers:
+    - trigger: time
+      at: "08:00:00"
+  conditions:
+    - condition: template
+      value_template: "{{ now().day == 1 }}"
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.home_empty
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.heating
+      state: "off"
+  actions:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.heater_micraplus_25_main_away_mode
+    - action: climate.turn_on
+      target:
+        entity_id: climate.heater_micraplus_25_zone_1_climate
+    - action: climate.set_temperature
+      target:
+        entity_id: climate.heater_micraplus_25_zone_1_climate
+      data:
+        temperature: 30
+    - delay: 00:10:00
+    - action: climate.set_temperature
+      target:
+        entity_id: climate.heater_micraplus_25_zone_1_climate
+      data:
+        temperature: 22
+    - action: climate.turn_off
+      target:
+        entity_id: climate.heater_micraplus_25_zone_1_climate
+
+- id: ac_bedroom_mornig
+  alias: Выключение кондиционера спальни утром
+  mode: single
+  triggers:
+    - trigger: time
+      at: "08:30:00"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+  actions:
+    - action: climate.turn_off
+      target:
+        entity_id: climate.ac_bedroom
+
+- id: ac_bedroom_evening
+  alias: Включение кондиционера спальни вечером
+  mode: single
+  triggers:
+    - trigger: time
+      at: input_datetime.eddie_sleep
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.child_home
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.cooling
+      state: "on"
+  actions:
+    - action: climate.turn_on
+      target:
+        entity_id: climate.ac_bedroom
+    - action: climate.set_hvac_mode
+      target:
+        entity_id: climate.ac_bedroom
+      data:
+        hvac_mode: cool
+
+- id: ac_hall_night
+  alias: Выключение кондиционера зала ночью
+  mode: single
+  triggers:
+    - trigger: time
+      at: input_datetime.sleep_start
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cooling
+      state: "on"
+  actions:
+    - action: climate.turn_off
+      target:
+        entity_id: climate.ac_hall
+
+- id: ac_hall_morning
+  alias: Включение кондиционера зала утром
+  mode: single
+  triggers:
+    - trigger: time
+      at: input_datetime.sleep_end
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cooling
+      state: "on"
+    - condition: state
+      entity_id: binary_sensor.door_ikea_balcony_left_contact
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.door_ikea_balcony_right_contact
+      state: "off"
+  actions:
+    - action: climate.turn_on
+      target:
+        entity_id: climate.ac_hall
+    - action: climate.set_hvac_mode
+      target:
+        entity_id: climate.ac_hall
+      data:
+        hvac_mode: cool
+
+- id: ac_hall_enter
+  alias: Включение кондиционера, когда мы входим
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.home_empty
+      to: "off"
+    - trigger: state
+      entity_id: person.andrey_sitnik
+      from: "not_home"
+      to: "near_home"
+    - trigger: state
+      entity_id: person.ekaterina_sitnik
+      from: "not_home"
+      to: "near_home"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cooling
+      state: "on"
+    - condition: state
+      entity_id: binary_sensor.door_ikea_balcony_left_contact
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.door_ikea_balcony_right_contact
+      state: "off"
+  actions:
+    - action: climate.turn_on
+      target:
+        entity_id: climate.ac_hall
+    - action: climate.set_hvac_mode
+      target:
+        entity_id: climate.ac_hall
+      data:
+        hvac_mode: cool
+
+- id: switch_cooling
+  alias: Включить кондиционера при включении настройки
+  mode: restart
+  trigger:
+    - trigger: state
+      entity_id: input_boolean.cooling
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+  actions:
+    - if:
+        - condition: state
+          entity_id: input_boolean.cooling
+          state: "on"
+      then:
+        - action: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.heating
+        - action: climate.turn_on
+          target:
+            entity_id: climate.ac_hall
+      else:
+        - action: climate.turn_off
+          target:
+            entity_id: climate.ac_hall
+
+- id: switch_heater
+  alias: Включить отопление при включении настройки отопления
+  mode: restart
+  trigger:
+    - trigger: state
+      entity_id: input_boolean.heating
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+  actions:
+    - if:
+        - condition: state
+          entity_id: input_boolean.heating
+          state: "on"
+      then:
+        - action: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.cooling
+        - action: switch.turn_off
+          target:
+            entity_id: switch.heater_micraplus_25_main_away_mode
+        - action: climate.turn_on
+          target:
+            entity_id: climate.heater_micraplus_25_zone_1_climate
+        - action: climate.set_temperature
+          target:
+            entity_id: climate.heater_micraplus_25_zone_1_climate
+          data:
+            temperature: 22
+      else:
+        - action: climate.turn_off
+          target:
+            entity_id: climate.heater_micraplus_25_zone_1_climate

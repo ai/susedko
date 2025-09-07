@@ -1,0 +1,104 @@
+- id: open_blinds_dawn
+  alias: "Открыть шторы на рассвете"
+  mode: single
+  triggers:
+    - trigger: time
+      at: sensor.weather_sun_next_dawn
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+    - or:
+        - condition: time
+          weekday:
+            - mon
+        - condition: time
+          weekday:
+            - tue
+        - condition: time
+          weekday:
+            - wed
+        - condition: time
+          weekday:
+            - thu
+        - condition: time
+          weekday:
+            - fri
+  actions:
+    - action: cover.open_cover
+      target:
+        entity_id:
+          - cover.blind_ikea_bedroom
+          - cover.blind_ikea_lounge
+
+- id: close_bedroom_blind_morning
+  alias: "Закрыть штору в спальне утром"
+  mode: single
+  triggers:
+    - trigger: time
+      at: "10:00:00"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+    - condition: numeric_state
+      entity_id: sensor.weather_accuweather_realfeel_temperature
+      below: 14
+  actions:
+    - action: cover.close_cover
+      target:
+        entity_id: cover.blind_ikea_bedroom
+
+- id: close_bedroom_blind_evening
+  alias: "Закрыть штору в спалье вечером"
+  mode: single
+  triggers:
+    - trigger: time
+      at: input_datetime.eddie_sleep
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.other_people
+      state: "off"
+    - condition: numeric_state
+      entity_id: sensor.weather_accuweather_realfeel_temperature
+      below: 14
+  actions:
+    - action: cover.close_cover
+      target:
+        entity_id: cover.blind_ikea_bedroom
+
+- id: close_lounge_blind_night
+  alias: "Закрыть штору в зале ночью"
+  mode: single
+  triggers:
+    - trigger: time
+      at: "00:00:00"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.stop
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.cat_alone
+      state: "off"
+    - condition: numeric_state
+      entity_id: sensor.weather_accuweather_realfeel_temperature
+      below: 14
+  actions:
+    - action: cover.close_cover
+      target:
+        entity_id: cover.blind_ikea_lounge

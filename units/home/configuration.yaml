@@ -5,7 +5,14 @@ default_config:
 frontend:
   themes: !include_dir_merge_named themes
 
-automation: !include automations.yaml
+automation andrey: !include automations/andrey.yaml
+automation blind: !include automations/blinds.yaml
+automation climate: !include automations/climate.yaml
+automation leaving: !include automations/leaving.yaml
+automation lights: !include automations/lights.yaml
+automation notifications: !include automations/notifications.yaml
+automation tv: !include automations/tv.yaml
+automation water: !include automations/water.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 

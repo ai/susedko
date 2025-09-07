@@ -63,6 +63,12 @@ system to `/dev/mmcblk1` (change `Makefile` for another drive).
 
 After re-installing the server you need to prepare some files on HDD.
 
+Copy Home Assistant configs:
+
+```
+make ha
+```
+
 Create backup:
 
 ```sh
