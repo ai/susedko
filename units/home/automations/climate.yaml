@@ -189,9 +189,6 @@
     - condition: state
       entity_id: input_boolean.other_people
       state: "off"
-    - condition: state
-      entity_id: input_boolean.cooling
-      state: "on"
   actions:
     - action: climate.turn_off
       target:
