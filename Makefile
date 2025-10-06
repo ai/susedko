@@ -13,6 +13,8 @@ ssl_by = "/C=ES/ST=Barcelona/L=Barcelona/O=Sitniks/CN=susedko.local"
 
 test: validate_config
 
+build: config.ign
+
 clean:
 	rm -Rf *.ign *.bu *.iso builder/node_modules
 	rm -Rf units/domains/*.{crt,key,pem,csr}
