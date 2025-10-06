@@ -14,6 +14,9 @@ podman:
     - 8123:8123
   userns: keep-id
   user: 1014:1014
+  cap_add:
+    - NET_ADMIN
+    - NET_RAW
   volumes:
     - /var/mnt/vault/.config/homeassistant:/config:z
     - /usr/local/share/homeassistant-run.sh:/etc/services.d/home-assistant/run:ro

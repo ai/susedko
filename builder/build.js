@@ -98,6 +98,9 @@ function generateService(file, input, uids, userLevel) {
     for (let i of yml.podman.volumes ?? []) {
       run += runLine(`-v ${i}`)
     }
+    for (let i of yml.podman.cap_add ?? []) {
+      run += runLine(`--cap-add ${i}`)
+    }
     for (let i of yml.podman.security ?? []) {
       run += runLine(`--security-opt ${i}`)
     }
