@@ -37,7 +37,7 @@ prepare_eddie_for_sleep:
     - action: media_player.play_media
       data:
         media_content_type: url
-        media_content_id: https://www.youtube.com/watch?v=Uq7kyf1T_lk
+        media_content_id: https://www.youtube.com/watch?v=7sg9WxMtX9w
         entity_id: media_player.tv_remote
 
 alert:
