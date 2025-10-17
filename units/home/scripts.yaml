@@ -75,7 +75,7 @@ heat_bedroom:
             entity_id: switch.plug_ikea_bedroom_heating
 
 bedroom_small_light_toggle:
-  alias: Переключание света в спальне
+  alias: Переключание светильника на шкафе в спальне
   sequence:
     - if:
         - condition: state
@@ -123,6 +123,7 @@ bedroom_light_power_on:
               - light.light_ikea_e27_rgb_bedroom
           data:
             brightness_pct: 100
+            color_temp_kelvin: 2800
       else:
         - action: switch.turn_on
           target:
@@ -137,9 +138,13 @@ bedroom_light_toggle:
   alias: Переключание света в спальне
   sequence:
     - if:
-        - condition: state
-          entity_id: switch.wall_switch_yandex_bedroom_1
-          state: "on"
+        - or:
+            - condition: state
+              entity_id: switch.wall_switch_yandex_bedroom_1
+              state: "on"
+            - condition: state
+              entity_id: switch.plug_ikea_bedroom_light
+              state: "on"
       then:
         - action: light.turn_off
           target:
