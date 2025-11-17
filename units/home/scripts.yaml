@@ -66,9 +66,16 @@ heat_bedroom:
   alias: "Включить отопление в спальне"
   sequence:
     - if:
-        - condition: numeric_state
-          entity_id: sensor.weather_waqi_temperature
-          below: 16
+        or:
+          - condition: numeric_state
+            entity_id: sensor.weather_waqi_temperature
+            below: 16
+          - condition: numeric_state
+            entity_id: sensor.weather_aemet_temperature_feeling
+            below: 16
+          - condition: numeric_state
+            entity_id: sensor.temperature_tuya_bedroom_temperature
+            below: 22
       then:
         - action: switch.turn_on
           target:
