@@ -70,7 +70,6 @@
       light: light.light_aqara_t2_e27_rgb_lounge
       room: lounge
       scene_helper: input_number.lounge_last_scene
-      direct_link: true
 
 - id: bathroom_light_on_motion
   alias: Включить свет в ванной при движении
