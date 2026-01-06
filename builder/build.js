@@ -125,7 +125,7 @@ function generateService(file, input, uids, userLevel) {
   let service = `[Unit]\nDescription=${yml.desc}\n`
   if (yml.wants) service += `Wants=${yml.wants.join(' ')}\n`
   if (yml.after) service += `After=${yml.after.join(' ')}\n`
-  if (yml.restart) service += 'StartLimitBurst=2\nStartLimitInterval=11\n'
+  if (yml.restart) service += 'StartLimitBurst=5\nStartLimitInterval=300s\n'
 
   service += `\n[Service]\n`
   if (yml.user) service += `User=${yml.user}\n`
@@ -150,7 +150,11 @@ function generateService(file, input, uids, userLevel) {
   }
   if (yml.restart) {
     let restartType = yml.restart === true ? 'on-failure' : yml.restart
-    service += `Restart=${restartType}\nRestartSec=3\n`
+    service +=
+      `Restart=${restartType}\n` +
+      `RestartSec=3s\n` +
+      `RestartSteps=1\n` +
+      `RestartMaxDelaySec=60s`
   }
 
   if (!userLevel) {
