@@ -3,7 +3,7 @@ passwd:
     - name: ai
       uid: 1001
       ssh_authorized_keys:
-        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDwZrgt8W9uGndgD2aoMOjN0lhvFYsYzfietr5gu5lUV andrey@sitnik.ru
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHfKri8pwCoINL3A88gGpZDjt3jyfxrIoYfQ8gaY3AoQ andrey@sitnik.es
         - sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAICdU+eT8ehMEMpILicrcF1Uxv2Sj7MSIuwhTaJfRvcOpAAAABHNzaDo= andrey@sitnik.ru
       groups:
         - systemd-journal
