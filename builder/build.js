@@ -6,8 +6,8 @@ import {
   rmSync
 } from 'node:fs'
 import { join, relative, basename, extname } from 'node:path'
-import { parse, stringify } from 'yaml'
 import { fileURLToPath } from 'node:url'
+import { parse, stringify } from 'yaml'
 
 const ROOT = join(fileURLToPath(import.meta.url), '..', '..')
 
@@ -219,6 +219,8 @@ function processFile(path) {
     setHomeUser(dir)
   }
 
+  let autoUpdate = new Map()
+
   for (let file of parsed.storage?.files ?? []) {
     setHomeUser(file)
     if (!file.contents && !file.append && !file.file) {
@@ -233,6 +235,12 @@ function processFile(path) {
           source: `data:;base64,${data.toString('base64')}`
         }
       } else if (existsSync(join(dir, name + '.yml'))) {
+        let yml = parse(read(dir, name + '.yml'))
+        if (yml.podman && file.path.startsWith('/home/')) {
+          let user = file.path.match(/\/home\/([^/]+)\//)[1]
+          let dockerAuth = yml.podman.image.startsWith('docker.io/')
+          autoUpdate.set(user, (autoUpdate.get(user) ?? false) || dockerAuth)
+        }
         file.contents = {
           inline: generateService(name, read(dir, name + '.yml'), uids, 'user')
         }
@@ -241,6 +249,39 @@ function processFile(path) {
           inline: read(dir, name)
         }
       }
+    }
+  }
+
+  for (let [user, dockerAuth] of autoUpdate) {
+    parsed.storage.links = (parsed.storage.links ?? []).concat([
+      {
+        path: `/home/${user}/.config/systemd/user/default.target.wants/podman-auto-update.timer`,
+        target: '/usr/lib/systemd/user/podman-auto-update.timer',
+        hard: false,
+        user: { name: user },
+        group: { name: user }
+      }
+    ])
+    if (dockerAuth) {
+      parsed.storage.directories = (parsed.storage.directories ?? []).concat([
+        {
+          path: `/home/${user}/.config/systemd/user/podman-auto-update.service.d`,
+          user: { name: user },
+          group: { name: user }
+        }
+      ])
+      parsed.storage.files = (parsed.storage.files ?? []).concat([
+        {
+          path: `/home/${user}/.config/systemd/user/podman-auto-update.service.d/auth.conf`,
+          user: { name: user },
+          group: { name: user },
+          contents: {
+            inline:
+              '[Service]\n' +
+              'Environment=REGISTRY_AUTH_FILE=/usr/local/etc/docker-auth.json\n'
+          }
+        }
+      ])
     }
   }
 
