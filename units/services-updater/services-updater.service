@@ -1,6 +1,5 @@
 [Unit]
 Description=Containers auto-update
-Wants=podman-autoupdate@home.service
 Wants=podman-autoupdate@domains.service
 Wants=podman-autoupdate@media.service
 Wants=podman-autoupdate@passwords.service

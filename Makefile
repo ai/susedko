@@ -18,8 +18,6 @@ build: config.ign
 clean:
 	rm -Rf *.ign *.bu *.iso builder/node_modules
 	rm -Rf units/domains/*.{crt,key,pem,csr}
-	rm -f units/home/container-dbus.mod units/home/container-dbus.pp
-	rm -f units/home/mosquitto-passwords
 	rm -Rf $(images)
 	podman rmi --all --force
 
@@ -47,53 +45,13 @@ flash: config.ign fedora-coreos.iso
 	rm ./flash.iso
 	sudo umount $(flash_drive)1
 
-ha: secrets.env
-	scp ./units/home/configuration.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
-	scp ./units/home/scripts.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/
-	scp ./units/home/automations/andrey.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
-	scp ./units/home/automations/blinds.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
-	scp ./units/home/automations/climate.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
-	scp ./units/home/automations/leaving.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
-	scp ./units/home/automations/lights.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
-	scp ./units/home/automations/notifications.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
-	scp ./units/home/automations/tv.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
-	scp ./units/home/automations/water.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/automations/
-	scp ./units/home/wall-switch.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/blueprints/automation/
-			scp ./units/home/presence.yaml \
-	  ai@susedko.local:/var/mnt/vault/.config/homeassistant/blueprints/automation/
-	@HA_TOKEN=$$(grep '^HA_TOKEN=' secrets.env | cut -d '=' -f 2) && \
-	  curl -X POST -H "Authorization: Bearer $$HA_TOKEN" \
-	    https://home.local/api/config/core/check_config && \
-		if [ $$? -eq 0 ]; then \
-	    curl -X POST -H "Authorization: Bearer $$HA_TOKEN" \
-	      https://home.local/api/services/homeassistant/restart; \
-			else \
-		    echo "Configuration check failed. Skipping restart."; \
-		  fi
-
-ha_backup:
-	scp ai@susedko.local:/var/mnt/vault/.config/zigbee2mqtt/configuration.yaml \
-	  ./units/home/zigbee2mqtt-configuration.yaml
-	sed -i '/auth_token:/d' units/home/zigbee2mqtt-configuration.yaml
-
 # Utils
 
 builder/node_modules:
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:24-alpine npm install
 
-config.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.crt secrets.env units/home/container-dbus.pp units/home/mosquitto-passwords
+config.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.crt secrets.env
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  docker.io/node:24-alpine node build.js
 
@@ -101,7 +59,7 @@ config.ign: config.bu
 	podman run --rm -i \
 	  quay.io/coreos/butane:release --strict < ./config.bu > ./config.ign
 
-demo.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.crt secrets.env units/home/container-dbus.pp units/home/mosquitto-passwords
+demo.bu: builder/node_modules units/dockerhub/docker-auth.json units/domains/ssl.crt secrets.env
 	podman run --rm -v "./:/workdir:z" -w /workdir/builder \
 	  -e DEMO=1 \
 	  docker.io/node:24-alpine node build.js
@@ -158,14 +116,4 @@ units/domains/ssl.crt: units/domains/ssl.key
 	rm units/domains/ssl.csr
 
 secrets.env:
-	echo "AI_PASSWORD=$$(dd bs=512 if=/dev/urandom count=1 2>/dev/null | tr -dc '[:alpha:]' | fold -w $${1:-16} | head -n 1)\nHOME_PASSWORD=$$(dd bs=512 if=/dev/urandom count=1 2>/dev/null | tr -dc '[:alpha:]' | fold -w $${1:-16} | head -n 1)\nHA_TOKEN=\n" > secrets.env
-
-units/home/container-dbus.pp: units/home/container-dbus.te
-	checkmodule -M -m -o units/home/container-dbus.mod units/home/container-dbus.te
-	semodule_package -o units/home/container-dbus.pp -m units/home/container-dbus.mod
-	rm units/home/container-dbus.mod
-
-units/home/mosquitto-passwords: secrets.env
-	podman run -v ./units/home:/units/home:Z docker.io/eclipse-mosquitto:latest \
-	  mosquitto_passwd -c -b /units/home/mosquitto-passwords home \
-		$$(grep '^HOME_PASSWORD=' secrets.env | cut -d '=' -f 2)
+	echo "AI_PASSWORD=$$(dd bs=512 if=/dev/urandom count=1 2>/dev/null | tr -dc '[:alpha:]' | fold -w $${1:-16} | head -n 1)\n" > secrets.env
