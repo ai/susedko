@@ -4,7 +4,6 @@
 
 [Fedora CoreOS]: https://docs.fedoraproject.org/en-US/fedora-coreos/getting-started/
 
-
 ## Prepare
 
 To test locally or to flash image to USB drive you need:
@@ -25,7 +24,6 @@ Save your Docker.io token to `units/dockerhub/docker-auth.json`:
 }
 ```
 
-
 ## Development
 
 Run in one terminal:
@@ -44,7 +42,6 @@ Press <kbd>Ctrl + A</kbd> <kbd>X</kbd> to exit demo server shell.
 
 Call `make clean` to remove all temporary files from the dir and system.
 
-
 ## Install
 
 Insert USB flash drive and call:
@@ -58,42 +55,15 @@ It will write image to `/dev/sda`. Change `Makefile` if you need another path.
 Then insert drive to machine and boot it. It will automatically install
 system to `/dev/mmcblk1` (change `Makefile` for another drive).
 
-
 ## Other Setup
 
 After re-installing the server you need to prepare some files on HDD.
-
-Copy Home Assistant configs:
-
-```
-make ha
-```
 
 Create backup:
 
 ```sh
 borg init --encryption repokey-blake2 ai@susedko.local:/var/mnt/vault/ai/backup
 ```
-
-Prepare ngrams and copy them to `/var/mnt/vault/.config/ngrams`:
-
-```sh
-wget https://languagetool.org/download/ngram-data/ngrams-en-20150817.zip
-wget https://languagetool.org/download/ngram-data/ngrams-es-20150915.zip
-wget https://languagetool.org/download/ngram-data/untested/ngram-ru-20150914.zip
-unzip ngrams-en-20150817.zip
-unzip ngrams-es-20150915.zip
-unzip ngram-ru-20150914.zip
-rm ngram*.zip
-```
-
-Set to Nextcloud config at `/var/mnt/vault/nextcloud/config/config.php`:
-
-```php
-  'overwrite.cli.url' => 'https://nextcloud.local',
-  'overwriteprotocol' => 'https',
-```
-
 
 ## Prepare Clients for Local Domains
 
