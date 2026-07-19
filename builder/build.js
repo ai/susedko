@@ -262,14 +262,26 @@ function processFile(path) {
         group: { name: user }
       }
     ])
-    if (dockerAuth) {
-      parsed.storage.directories = (parsed.storage.directories ?? []).concat([
-        {
-          path: `/home/${user}/.config/systemd/user/podman-auto-update.service.d`,
-          user: { name: user },
-          group: { name: user }
+    parsed.storage.directories = (parsed.storage.directories ?? []).concat([
+      {
+        path: `/home/${user}/.config/systemd/user/podman-auto-update.service.d`,
+        user: { name: user },
+        group: { name: user }
+      }
+    ])
+    parsed.storage.files = (parsed.storage.files ?? []).concat([
+      {
+        path: `/home/${user}/.config/systemd/user/podman-auto-update.service.d/prune.conf`,
+        user: { name: user },
+        group: { name: user },
+        contents: {
+          inline:
+            '[Service]\n' +
+            'ExecStartPost=-/usr/bin/podman image prune --all --force\n'
         }
-      ])
+      }
+    ])
+    if (dockerAuth) {
       parsed.storage.files = (parsed.storage.files ?? []).concat([
         {
           path: `/home/${user}/.config/systemd/user/podman-auto-update.service.d/auth.conf`,
