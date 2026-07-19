@@ -6,9 +6,9 @@ waitOnline: true
 podman:
   image: lscr.io/linuxserver/transmission:latest
   ports:
-    - 51414:51414
-    - 51414:51414/udp
-    - 9091:9091
+    - 0.0.0.0:51414:51414
+    - 0.0.0.0:51414:51414/udp
+    - 0.0.0.0:9091:9091
   env:
     PUID: 0
     PGID: 0

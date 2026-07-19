@@ -6,7 +6,7 @@ restart: true
 podman:
   image: ghcr.io/crazy-max/samba:latest
   ports:
-    - 1445:445
+    - 0.0.0.0:1445:445
   security:
     - label=disable
   volumes:

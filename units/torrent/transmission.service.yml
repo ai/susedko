@@ -9,9 +9,9 @@ environmentFiles:
 podman:
   image: lscr.io/linuxserver/transmission:latest
   ports:
-    - 51413:51413
-    - 51413:51413/udp
-    - 9092:9091
+    - 0.0.0.0:51413:51413
+    - 0.0.0.0:51413:51413/udp
+    - 0.0.0.0:9092:9091
   env:
     PUID: 0
     PGID: 0

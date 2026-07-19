@@ -6,4 +6,4 @@ restart: true
 podman:
   image: docker.io/openspeedtest/latest:latest
   ports:
-    - 8633:3000
+    - 127.0.0.1:8633:3000
