@@ -1,3 +1,4 @@
+import { randomBytes, scryptSync } from 'node:crypto'
 import {
   writeFileSync,
   readFileSync,
@@ -37,10 +38,18 @@ function merge(base, add, path) {
   }
 }
 
+function hash(secret) {
+  let salt = randomBytes(16)
+  let key = scryptSync(secret, salt, 32)
+  return `scrypt:${salt.toString('base64')}:${key.toString('base64')}`
+}
+
 function read(...parts) {
   let content = readFileSync(join(...parts)).toString()
   for (let name in secrets) {
-    content = content.replaceAll('$' + name, secrets[name])
+    content = content
+      .replaceAll(`$${name}_HASH`, () => hash(secrets[name]))
+      .replaceAll('$' + name, secrets[name])
   }
   return content
 }
@@ -98,6 +107,9 @@ function generateService(file, input, uids, userLevel) {
     for (let i of yml.podman.volumes ?? []) {
       run += runLine(`-v ${i}`)
     }
+    for (let i of yml.podman.cap_drop ?? []) {
+      run += runLine(`--cap-drop ${i}`)
+    }
     for (let i of yml.podman.cap_add ?? []) {
       run += runLine(`--cap-add ${i}`)
     }
@@ -113,6 +125,9 @@ function generateService(file, input, uids, userLevel) {
     run += runLine(`--name ${name}`)
     run += runLine(`--label "io.containers.autoupdate=registry"`)
     run += `          ${yml.podman.image}`
+    for (let i of yml.podman.command ?? []) {
+      run += ` \\\n          ${i}`
+    }
     yml.execStart = (yml.execStart ?? []).concat([run])
     yml.execStop = (yml.execStop ?? []).concat([
       `/bin/podman stop --ignore --cidfile=%t/%n.ctr-id`

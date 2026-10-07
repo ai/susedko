@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Reboot Susedko</title>
+    <style>
+      :root {
+        --background: #f6f6f6;
+        --text: #222;
+        --muted: #666;
+        --danger: #d62828;
+        --danger-hover: #b51f1f;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: #1b1b1b;
+          --text: #eee;
+          --muted: #aaa;
+          --danger: #e5383b;
+          --danger-hover: #f25c5e;
+        }
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        min-height: 100dvh;
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        color: var(--text);
+        background: var(--background);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .reboot {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+      }
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 200px;
+        padding: 0;
+        color: #fff;
+        cursor: pointer;
+        background: var(--danger);
+        border: none;
+        border-radius: 50%;
+        box-shadow: 0 6px 24px rgb(0 0 0 / 25%);
+      }
+
+      button:hover {
+        background: var(--danger-hover);
+      }
+
+      button:focus-visible {
+        outline: 4px solid var(--text);
+        outline-offset: 4px;
+      }
+
+      button:disabled {
+        cursor: wait;
+        opacity: 0.5;
+      }
+
+      label {
+        font-size: 20px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      p {
+        min-height: 1.5em;
+        margin: 0;
+        padding: 0 16px;
+        color: var(--muted);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Susedko</h1>
+    <div class="reboot">
+      <button id="reboot" type="button">
+        <svg
+          width="96"
+          height="96"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M20 12a8 8 0 1 1-2.34-5.66" />
+          <path d="M13.66 6.34h4v-4" />
+        </svg>
+      </button>
+      <label for="reboot">Reboot</label>
+    </div>
+    <p role="status"></p>
+    <script>
+      let button = document.querySelector('button')
+      let status = document.querySelector('p')
+
+      function wait(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
+      }
+
+      async function isOnline() {
+        try {
+          let response = await fetch('/', {
+            cache: 'no-store',
+            signal: AbortSignal.timeout(5000)
+          })
+          return response.ok
+        } catch {
+          return false
+        }
+      }
+
+      button.addEventListener('click', async () => {
+        if (!confirm('Reboot the server?')) return
+        button.disabled = true
+        status.textContent = 'Sending reboot request…'
+
+        let response
+        try {
+          response = await fetch('/reboot', { method: 'POST' })
+        } catch {}
+        if (!response?.ok) {
+          let code = response ? ` (${response.status})` : ''
+          status.textContent = `Reboot request failed${code}`
+          button.disabled = false
+          return
+        }
+
+        status.textContent = 'Rebooting…'
+        while (await isOnline()) await wait(2000)
+        status.textContent = 'Server is down. Waiting for it to start…'
+        while (!(await isOnline())) await wait(5000)
+        status.textContent = 'Server is back online'
+        button.disabled = false
+      })
+    </script>
+  </body>
+</html>

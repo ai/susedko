@@ -1,0 +1,7 @@
+[Unit]
+Description=Reboot Server by Request from Reboot Button
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rm -f /run/reboot-button/request
+ExecStart=/usr/bin/systemctl reboot

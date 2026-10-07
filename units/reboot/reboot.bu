@@ -1,0 +1,44 @@
+passwd:
+  users:
+    - name: reboot
+      uid: 1015
+      primary_group: reboot
+      shell: /bin/false
+  groups:
+    - name: reboot
+      gid: 1015
+systemd:
+  units:
+    - name: reboot-request.path
+      enabled: true
+    - name: reboot-request.service
+storage:
+  files:
+    - path: /var/lib/systemd/linger/reboot
+      mode: 0o444
+      contents:
+        inline: ''
+    - path: /etc/tmpfiles.d/reboot-button.conf
+      mode: 0o444
+    - path: /usr/local/etc/nginx/conf.d/susedko-reboot.local.conf
+      mode: 0o444
+    - path: /usr/local/etc/reboot-button.passwd
+      mode: 0o400
+      user:
+        name: reboot
+      group:
+        name: reboot
+    - path: /usr/local/share/reboot-button/server.mjs
+      mode: 0o444
+    - path: /usr/local/share/reboot-button/index.html
+      mode: 0o444
+    - path: /home/reboot/.config/systemd/user/reboot-button.service
+  links:
+    - path: /home/reboot/.config/systemd/user/default.target.wants/reboot-button.service
+      target: /home/reboot/.config/systemd/user/reboot-button.service
+      hard: false
+  directories:
+    - path: /home/reboot/.config
+    - path: /home/reboot/.config/systemd
+    - path: /home/reboot/.config/systemd/user
+    - path: /home/reboot/.config/systemd/user/default.target.wants

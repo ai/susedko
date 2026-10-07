@@ -1,0 +1,29 @@
+desc: Reboot Button
+waitOnline: true
+
+restart: true
+
+podman:
+  image: registry.access.redhat.com/hi/nodejs:26
+  readonly: true
+  user: 1015:1015
+  userns: keep-id
+  ports:
+    - 127.0.0.1:8015:8015
+  cap_drop:
+    - ALL
+  security:
+    - no-new-privileges
+  volumes:
+    - /usr/local/share/reboot-button:/app:ro
+    - /usr/local/etc/reboot-button.passwd:/etc/reboot-button.passwd:ro
+    - /run/reboot-button:/run/reboot-button:z
+  command:
+    - node
+    - --permission
+    - --allow-net
+    - --allow-fs-read=/app/
+    - --allow-fs-read=/etc/reboot-button.passwd
+    - --allow-fs-write=/run/reboot-button/request
+    - --disable-warning=ExperimentalWarning
+    - /app/server.mjs
